@@ -1,0 +1,45 @@
+system
+  Atoms
+              C      -0.0000011539      -0.0000275644      -0.0000292157 rdkit.charge=0 rdkit.origNoImplicit=False
+              H       0.5827114349      -0.0282900139      -0.9240899449 rdkit.charge=0 rdkit.isImplicit=1
+              H       0.6769925674       0.0647596247       0.8557449134 rdkit.charge=0 rdkit.isImplicit=1
+              H      -0.6579152606       0.8727718348      -0.0106212620 rdkit.charge=0 rdkit.isImplicit=1
+              H      -0.6017749924      -0.9089130016       0.0793144133 rdkit.charge=0 rdkit.isImplicit=1
+  End
+  BondOrders
+     1 2 1.0
+     1 3 1.0
+     1 4 1.0
+     1 5 1.0
+  End
+End
+
+task SinglePoint
+
+Engine ADF
+  basis
+    type DZP
+  End
+  conceptualdft
+    analysislevel Full
+    enabled yes
+  End
+  qtaim
+    analysislevel Extended
+    enabled yes
+  End
+  relativity
+    level None
+  End
+  solvation
+    charged method=CONJ
+    scf VAR ALL
+    solv name=Tetrahydrofuran cav0=0.0 cav1=0.0067639
+    surf Delley
+  End
+  symmetry NOSYM
+  xc
+    hybrid B3LYP
+  End
+EndEngine
+
