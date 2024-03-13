@@ -1,0 +1,17 @@
+[13.03|14:48:34] Conformers 2024.201,  Nodes: 1, Procs: 8
+[13.03|14:48:35] Molecule: H2O, 3 atoms, 0 rotatable bonds
+[13.03|14:48:35] Reading conformers from file: /Users/vcastor/Documents/PhD_Rouen/filter/plams_workdir/generate/conformers.rkf
+[13.03|14:48:35] 0 high energy conformers filtered out
+[13.03|14:48:35] 1 conformers read from file.
+[13.03|14:48:35] Running 1 geometry optimizations at level Normal
+[13.03|14:48:52] All 1 geometry optimizations done! Time taken: 0:00:17s
+[13.03|14:48:52] 1 out of 1 optimizations succeeded
+[13.03|14:48:52] Filtering 1 conformers
+[13.03|14:48:52] Conformer filtering complete! Time taken: 0:00:00s
+[13.03|14:48:52] 0 conformers filtered out as duplicates
+[13.03|14:48:52] 0 high energy conformers filtered out
+[13.03|14:48:52] Filtering 1 conformers
+[13.03|14:48:52] Conformer filtering complete! Time taken: 0:00:00s
+[13.03|14:48:52] 0 conformers filtered out as duplicates
+[13.03|14:48:52] 0 high energy conformers filtered out
+[13.03|14:48:52] Found 1 unique conformers.

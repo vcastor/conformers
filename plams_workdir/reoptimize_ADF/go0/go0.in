@@ -1,0 +1,40 @@
+GeometryOptimization
+  Convergence
+    Quality Normal
+  End
+  Method Quasi-Newton
+End
+
+Task GeometryOptimization
+
+system
+  Atoms
+              O      -0.0000394297       0.0631472451       0.0000000000 rdkit.charge=0 rdkit.origNoImplicit=False
+              H      -0.7720086142      -0.5016420185       0.0000000000 rdkit.charge=0 rdkit.isImplicit=1
+              H       0.7726344718      -0.5006775042       0.0000000000 rdkit.charge=0 rdkit.isImplicit=1
+  End
+  BondOrders
+     1 2 1.0
+     1 3 1.0
+  End
+End
+
+Engine ADF
+  basis
+    type DZP
+  End
+  relativity
+    level None
+  End
+  solvation
+    charged method=CONJ
+    scf VAR ALL
+    solv name=Tetrahydrofuran cav0=0.0 cav1=0.0067639
+    surf Delley
+  End
+  symmetry NOSYM
+  xc
+    hybrid B3LYP
+  End
+EndEngine
+

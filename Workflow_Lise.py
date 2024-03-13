@@ -2,7 +2,7 @@
 # Sans la première ligne il n'est pas possible d'utiliser des caractères spéciaux (emojis ☺️ )
 from scm.plams import *
 from scm.conformers import ConformersJob, ConformersResults
-from scm.plams.recipes.adfcosmorscompound import *
+#from scm.plams.recipes.adfcosmorscompound import *
 import os
 import numpy as np
 import json
@@ -17,9 +17,8 @@ from task_settings import *
 
 #
 # Funtion to run the calculations ✨
-def run_jobs(smile, solvent):
+def run_jobs(molecule, solvent):
     global temperature
-    molecule = from_smiles(smile)
     # RDKit generator
     generate_settings = settings_for_task('Generate', user_settings)
     generate_job = ConformersJob(name='generate', molecule=molecule, settings=generate_settings)
@@ -50,21 +49,21 @@ user_settings = validate_settings(user_settings)
 temperature = user_settings['temperature']
 unit = 'kcal/mol'
 
-
+Results_smiles = {}
+# Main loop
 for system in systems:
-    adf_SP_job = run_jobs(system['smiles'], system['solvent'])
+    adf_SP_job = run_jobs(from_smiles(system['smiles']), system['solvent'])
     adf_results = adf_SP_job.run()
+
+    natoms, atoms = get_atoms(system['smiles'])
     
     path = os.path.abspath(adf_SP_job.results.rkfpath())
-    paths = [path[0:len(path)-14] + str(element) for element in adf_results.files if 'Score' in element and element.endswith('.out') and 'CreateAtoms.out' not in element]
-    paths = sorted(paths, key=extract_number)
+    paths = score_paths(path, adf_results)
 
-    content = [open(path, 'r', encoding='unicode_escape').read() for path in paths]
+    pops = np.array(adf_SP_job.results.get_boltzmann_distribution(temperature))
 
-    pops = np.array(get_main_results(adf_SP_job, temperature, unit)[2])
-
-    molecule = {'number_atoms': atoms(content[0])[0],
-                'atoms': atoms(content[0])[1],
+    molecule = {'number_atoms': natoms,
+                'atoms': atoms,
                 'number_conformers': len(pops),
                 'conformers': {'weights': [],
                                 'IDM': [],
@@ -72,20 +71,22 @@ for system in systems:
                                 's2': [],
                                 'OE': []}}
 
+    content = [open(path, 'r', encoding='unicode_escape').read() for path in paths]
+
     for i, conformer in enumerate(content):
         molecule['conformers']['weights'].append(pops[i])
-        molecule['conformers']['IDM'].append(distance_matrix(conformer))
-        molecule['conformers']['Hirshfeld'].append(hirshfeld(conformer))
-        molecule['conformers']['s2'].append(s2(conformer))
+        molecule['conformers']['IDM'].append(distance_matrix(natoms, conformer))
+        molecule['conformers']['Hirshfeld'].append(hirshfeld(natoms, conformer))
+        molecule['conformers']['s2'].append(s2(natoms, conformer))
         molecule['conformers']['OE'].append(orbital_energies(conformer))
              
     Results_smiles[system['smiles']] = molecule
 
+# Output
 output_file = input_file.replace('.csv', '.out')
 file = open('results.txt', 'w', encoding='utf8')
 
 #FIXME
-mol_list = list(Results_smiles.keys())
 for smiles in Results_smiles:
     writer(f"================================ {smiles} ================================", file)
     molecule = Results_smiles[smiles]

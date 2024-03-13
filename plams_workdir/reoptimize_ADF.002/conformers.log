@@ -1,0 +1,17 @@
+[13.03|14:49:02] Conformers 2024.201,  Nodes: 1, Procs: 8
+[13.03|14:49:03] Molecule: CH4, 5 atoms, 0 rotatable bonds
+[13.03|14:49:03] Reading conformers from file: /Users/vcastor/Documents/PhD_Rouen/filter/plams_workdir/generate.002/conformers.rkf
+[13.03|14:49:03] 0 high energy conformers filtered out
+[13.03|14:49:03] 1 conformers read from file.
+[13.03|14:49:03] Running 1 geometry optimizations at level Normal
+[13.03|14:49:25] All 1 geometry optimizations done! Time taken: 0:00:22s
+[13.03|14:49:25] 1 out of 1 optimizations succeeded
+[13.03|14:49:25] Filtering 1 conformers
+[13.03|14:49:25] Conformer filtering complete! Time taken: 0:00:00s
+[13.03|14:49:25] 0 conformers filtered out as duplicates
+[13.03|14:49:25] 0 high energy conformers filtered out
+[13.03|14:49:25] Filtering 1 conformers
+[13.03|14:49:25] Conformer filtering complete! Time taken: 0:00:00s
+[13.03|14:49:25] 0 conformers filtered out as duplicates
+[13.03|14:49:25] 0 high energy conformers filtered out
+[13.03|14:49:25] Found 1 unique conformers.

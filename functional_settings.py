@@ -133,7 +133,7 @@ def functional_settings(functional, settings):
     functional = functional.strip().lower()
 
     if functional in gga_functionals_lower:
-        settings.input.ADF.XC.GGA = gga_funtionals_lower[functional]
+        settings.input.ADF.XC.GGA = gga_functionals_lower[functional]
     elif functional in gga_dispersion_functionals_lower:
         func, disp = gga_dispersion_functionals_lower[functional]
         settings.input.ADF.XC.GGA = func

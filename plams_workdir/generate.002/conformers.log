@@ -1,0 +1,20 @@
+[13.03|14:48:58] Conformers 2024.201,  Nodes: 1, Procs: 8
+[13.03|14:48:59] Molecule: CH4, 5 atoms, 0 rotatable bonds
+[13.03|14:48:59] Optimizing initial conformer...
+[13.03|14:49:00] Initial conformer optimized.
+[13.03|14:49:00] Generating 20 conformers with RDKit ...
+[13.03|14:49:00] RDKit conformer generation finished! Time taken: 0:00:00s
+[13.03|14:49:01] Running 20 geometry optimizations with 8 workers
+[13.03|14:49:01] All 20 geometry optimizations done! Time taken: 0:00:01s
+[13.03|14:49:01] 20 out of 20 geometry optimizations succeeded
+[13.03|14:49:01] Filtering 20 conformers
+[13.03|14:49:01] Conformer filtering complete! Time taken: 0:00:00s
+[13.03|14:49:01] 20 conformers filtered out as duplicates
+[13.03|14:49:01] 0 high energy conformers filtered out
+[13.03|14:49:01] Remaining number of conformers in set is 1
+[13.03|14:49:01] Final duplicate filtration
+[13.03|14:49:01] Filtering 1 conformers
+[13.03|14:49:01] Conformer filtering complete! Time taken: 0:00:00s
+[13.03|14:49:01] 0 conformers filtered out as duplicates
+[13.03|14:49:01] 0 high energy conformers filtered out
+[13.03|14:49:01] Found 1 unique conformers.

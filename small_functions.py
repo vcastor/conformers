@@ -1,6 +1,21 @@
 # -*- coding: UTF-8 -*-
 import re
 import numpy as np
+from scm.plams import *
+
+def score_paths(path, adf_results):
+    """
+    This function just gets full Score job paths and sorts them.
+    """
+    paths = [
+        path[0:len(path)-14] + str(element)
+        for element in adf_results.files
+        if 'Score' in element
+        and element.endswith('.out')
+        and 'CreateAtoms.out' not in element
+    ]
+    return sorted(paths, key=extract_number)
+
 
 def conversion(dic):
     """
@@ -21,16 +36,6 @@ def extract_number(string):
         return int(match.group(1))
     else:
         return 0
-
-def extractor(content, start_marker, end_marker):
-    start_marker_pattern = re.compile(start_marker)
-    start_index = start_marker_pattern.search(content)
-    n = start_index.start()
-    #start_index = content.index(start_marker)
-    #end_index = content.index(end_marker, start_index + len(start_marker))
-    end_index = content.index(end_marker, n)
-    table = content[n:end_index].strip()
-    return [line.strip() for line in table.split('\n') if line.strip()]
 
 def verification_geom_converged(content):
     return "Geometry optimization converged" in content

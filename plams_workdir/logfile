@@ -1,0 +1,65 @@
+[13.03|14:48:30] JOB generate STARTED
+[13.03|14:48:30] Starting generate.prerun()
+[13.03|14:48:30] generate.prerun() finished
+[13.03|14:48:30] JOB generate RUNNING
+[13.03|14:48:30] Executing generate.run
+[13.03|14:48:34] Execution of generate.run finished with returncode 0
+[13.03|14:48:34] JOB generate FINISHED
+[13.03|14:48:34] Starting generate.postrun()
+[13.03|14:48:34] generate.postrun() finished
+[13.03|14:48:34] JOB generate SUCCESSFUL
+[13.03|14:48:34] JOB reoptimize_ADF STARTED
+[13.03|14:48:34] Starting reoptimize_ADF.prerun()
+[13.03|14:48:34] reoptimize_ADF.prerun() finished
+[13.03|14:48:34] JOB reoptimize_ADF RUNNING
+[13.03|14:48:34] Executing reoptimize_ADF.run
+[13.03|14:48:52] Execution of reoptimize_ADF.run finished with returncode 0
+[13.03|14:48:52] JOB reoptimize_ADF FINISHED
+[13.03|14:48:52] Starting reoptimize_ADF.postrun()
+[13.03|14:48:52] reoptimize_ADF.postrun() finished
+[13.03|14:48:52] JOB reoptimize_ADF SUCCESSFUL
+[13.03|14:48:52] JOB SP_ADF STARTED
+[13.03|14:48:52] Starting SP_ADF.prerun()
+[13.03|14:48:52] SP_ADF.prerun() finished
+[13.03|14:48:52] JOB SP_ADF RUNNING
+[13.03|14:48:52] Executing SP_ADF.run
+[13.03|14:48:58] Execution of SP_ADF.run finished with returncode 0
+[13.03|14:48:58] JOB SP_ADF FINISHED
+[13.03|14:48:58] Starting SP_ADF.postrun()
+[13.03|14:48:58] SP_ADF.postrun() finished
+[13.03|14:48:58] JOB SP_ADF SUCCESSFUL
+[13.03|14:48:58] JOB generate STARTED
+[13.03|14:48:58] Renaming job generate to generate.002
+[13.03|14:48:58] Starting generate.002.prerun()
+[13.03|14:48:58] generate.002.prerun() finished
+[13.03|14:48:58] JOB generate.002 RUNNING
+[13.03|14:48:58] Executing generate.002.run
+[13.03|14:49:01] Execution of generate.002.run finished with returncode 0
+[13.03|14:49:01] JOB generate.002 FINISHED
+[13.03|14:49:01] Starting generate.002.postrun()
+[13.03|14:49:01] generate.002.postrun() finished
+[13.03|14:49:01] JOB generate.002 SUCCESSFUL
+[13.03|14:49:01] JOB reoptimize_ADF STARTED
+[13.03|14:49:01] Renaming job reoptimize_ADF to reoptimize_ADF.002
+[13.03|14:49:01] Starting reoptimize_ADF.002.prerun()
+[13.03|14:49:01] reoptimize_ADF.002.prerun() finished
+[13.03|14:49:01] JOB reoptimize_ADF.002 RUNNING
+[13.03|14:49:01] Executing reoptimize_ADF.002.run
+[13.03|14:49:25] Execution of reoptimize_ADF.002.run finished with returncode 0
+[13.03|14:49:25] JOB reoptimize_ADF.002 FINISHED
+[13.03|14:49:25] Starting reoptimize_ADF.002.postrun()
+[13.03|14:49:25] reoptimize_ADF.002.postrun() finished
+[13.03|14:49:25] JOB reoptimize_ADF.002 SUCCESSFUL
+[13.03|14:49:25] JOB SP_ADF STARTED
+[13.03|14:49:25] Renaming job SP_ADF to SP_ADF.002
+[13.03|14:49:25] Starting SP_ADF.002.prerun()
+[13.03|14:49:25] SP_ADF.002.prerun() finished
+[13.03|14:49:25] JOB SP_ADF.002 RUNNING
+[13.03|14:49:25] Executing SP_ADF.002.run
+[13.03|14:49:34] Execution of SP_ADF.002.run finished with returncode 0
+[13.03|14:49:34] JOB SP_ADF.002 FINISHED
+[13.03|14:49:34] Starting SP_ADF.002.postrun()
+[13.03|14:49:34] SP_ADF.002.postrun() finished
+[13.03|14:49:34] JOB SP_ADF.002 SUCCESSFUL
+[13.03|14:49:34] PLAMS environment cleaned up successfully
+[13.03|14:49:34] PLAMS run finished. Goodbye

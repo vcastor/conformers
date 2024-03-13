@@ -1,0 +1,9 @@
+[13.03|14:49:26] Conformers 2024.201,  Nodes: 1, Procs: 8
+[13.03|14:49:26] Molecule: CH4, 5 atoms, 0 rotatable bonds
+[13.03|14:49:26] Reading conformers from file: /Users/vcastor/Documents/PhD_Rouen/filter/plams_workdir/reoptimize_ADF.002/conformers.rkf
+[13.03|14:49:26] 0 high energy conformers filtered out
+[13.03|14:49:26] 1 conformers read from file.
+[13.03|14:49:26] Scoring 1 conformers
+[13.03|14:49:34] All conformers scored! Time taken: 0:00:08s
+[13.03|14:49:34] 0 conformers filtered out as duplicates
+[13.03|14:49:34] Found 1 unique conformers.

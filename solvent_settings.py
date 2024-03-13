@@ -18,7 +18,8 @@ def solvent_name(solvent):
     }
     normalized_solvent = solvent.lower()
     # Update the solvent name if it is the dictionary
-    solvent = solvent_mapping.get(normalized_solvent)
+    if normalized_solvent in solvent_mapping:
+        solvent = solvent_mapping.get(normalized_solvent)
     return solvent
 
 def solvent_settings(solvent):

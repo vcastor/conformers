@@ -5,21 +5,20 @@ from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 
-def get_main_results(job:ConformersJob, temperature, unit):
+def get_main_results(job:ConformersJob, temperature):
     """
     Results from a ConformersJob, optionally including the molecules
-    Relies on global variables temperature and unit
 
     Returns:
     - A tuple with the molecules, energies, and populations
     """
     molecules = job.results.get_conformers()
-    energies = job.results.get_relative_energies(unit)
+    energies = job.results.get_relative_energies('kcal/mol')
     populations = job.results.get_boltzmann_distribution(temperature)
 
     return molecules, energies, populations
 
-def print_results(job:ConformersJob, temperature, unit):
+def print_results(job:ConformersJob, temperature):
     """
     Print formatted results from a ConformersJob
 
@@ -29,7 +28,7 @@ def print_results(job:ConformersJob, temperature, unit):
     _, energies, populations = get_main_results(job, return_molecules=False)
 
     print(f"Total # conformers in set: {len(energies)}")
-    dE_header = f"ΔE [{unit}]"
+    dE_header = f"ΔE [kcal/mol]"
     pop_header = f"Pop. (T = {temperature} K)"
     print(f'{"#":>4s} {dE_header:>14s} {pop_header:>18s}')
 
@@ -45,7 +44,7 @@ def plot_conformers(job:ConformersJob, temperature):
     - indices: Specific indices of conformers to plot or an integer specifying how many to plot.
     - lowest: If True and indices is an int, plot the lowest N conformers. Otherwise, spread evenly.
     """
-    molecules, energies, populations = get_main_results(job, temperature, 'kcal/mol')
+    molecules, energies, populations = get_main_results(job, temperature)
 
     indices = np.arange(min(3, len(energies)))
 

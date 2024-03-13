@@ -1,0 +1,1005 @@
+
+
+JSONified input:
+++++++++++++++++
+{
+  "Create": "C m=12.000000000000000 /Users/vcastor/amshome/atomicdata/ADF/DZP/C.1s",
+  "relativity": {
+    "level": "None"
+  },
+  "xc": {
+    "hybrid": "B3LYP"
+  }
+}
+
+
+JSONified input traversal:
+++++++++++++++++++++++++++
+2 3 , path = 
+7 0 Create, path = Create
+2 1 relativity, path = relativity
+7 0 level, path = relativity%level
+2 1 xc, path = xc
+7 0 hybrid, path = xc%hybrid
+ Carbon (DZP, 1s frozen)
+
+
+
+ ===========================
+ A T T A C H E D   F I L E S
+ ===========================
+  
+ CREATE - Data File:    /Users/vcastor/amshome/atomicdata/ADF/DZP/C.1s
+                        Carbon (DZP, 1s frozen)
+
+
+
+ ===============================
+ M O D E L   P A R A M E T E R S
+ ===============================
+  
+ DENSITY FUNCTIONAL POTENTIAL (scf)
+    Hybrid:                            B3LYP                                   == Not Default ==
+
+ SPIN  (restricted / unrestr.)
+    Molecule:                          Restricted                               
+
+ OTHER ASPECTS
+    Relativistic Corrections:          ---                                     == Not Default ==
+
+    Nuclear Charge Density Model:      Point Charge Nuclei                      
+    Core Treatment:                    Frozen Orbital(s)                        
+
+    Hyperfine or Zeeman Interaction:   ---                                      
+
+
+
+ =====================================
+ S Y M M E T R Y ,   E L E C T R O N S
+ =====================================
+  
+ Symmetry: ATOM
+
+ Irreducible Representations, including subspecies
+ -------------------------------------------------
+ S
+ P:x  P:y  P:z
+ D:z2  D:x2-y2  D:xy  D:xz  D:yz
+ F:z3  F:z  F:xyz  F:z2x  F:z2y  F:x  F:y
+
+
+ Configuration of Valence Electrons
+ ==================================
+
+          Occupation Numbers
+          -------------------------------------------------
+ S        2
+ P        2
+ D        0
+ F        0
+          -------------------------------------------------
+
+ Total:   4
+
+ Net Charge: 0 (Nuclei minus Electrons)
+
+ Preset values for MO occupations will be applied through SCF cycle no. 1000000
+ Thereafter, the program will assign electrons to MOs that are spatially
+ similar to the occupied MOs in a "reference" cycle ("KeepOrbitals").
+ The reference cycle is always the PREVIOUS cycle: it will evolve with
+ the SCF procedure.
+
+
+
+ ================================
+ (Slater-type)  F U N C T I O N S  ***  (Basis and Fit)  ***
+ ================================
+  
+
+ Atom Type    1  (C)
+ ==============
+
+ Valence Basis Sets:   6
+ -----------------------
+   1 S    5.400000
+   2 S    1.240000
+   2 S    1.980000
+   2 P    0.960000
+   2 P    2.200000
+   3 D    2.200000
+
+ Frozen Core Shells
+ ------------------
+    S:  1
+
+ Charge Fitting Sets (for the computation of the Coulomb Potential):  20
+ -----------------------------------------------------------------------
+   1 S   10.800000
+   2 S   11.590000
+   2 S    7.590000
+   2 S    4.970000
+   3 S    4.790000
+   3 S    3.350000
+   3 S    2.340000
+   3 S    1.640000
+   2 P    8.340000
+   2 P    5.140000
+   3 P    4.670000
+   3 P    3.100000
+   3 P    2.060000
+   3 D    5.880000
+   3 D    3.840000
+   3 D    2.510000
+   3 D    1.640000
+   4 F    5.400000
+   4 F    3.550000
+   5 G    4.500000
+
+
+ BAS: List of all Elementary Cartesian Basis Functions
+ =====================================================
+
+ The numbering in the list below (to the right of the function characteristics) is referred
+ to in print-outs of MO eigenvectors and Mulliken populations in the BAS representation
+ (as contrasted to the SFO representation).
+
+ Notes:
+ 1. The functions are characterized by a polynomial prefactor (powers of x,y,z and r) and
+    an exponential decay factor alpha.
+ 2. Since the basis sets are specific for an atom TYPE, the individual functions occur on
+    all atoms of that type.
+ 3. The word 'Core' in the left margin signals that it is a Core Function (CF) : not a
+    degree of freedom in the valence set, but only used to ensure orthogonalization of
+    the other valence basis functions on the frozen Core Orbitals.
+
+
+ (power of) X  Y  Z  R     Alpha  on Atom
+            ==========     =====     ==========
+
+ C                                    1
+                                  ---------------------------------------------------------------------------
+    Core    0  0  0  0     5.400      1
+            0  0  0  1     1.240      2
+            0  0  0  1     1.980      3
+            1  0  0  0     0.960      4
+            0  1  0  0     0.960      5
+            0  0  1  0     0.960      6
+            1  0  0  0     2.200      7
+            0  1  0  0     2.200      8
+            0  0  1  0     2.200      9
+            2  0  0  0     2.200     10
+            1  1  0  0     2.200     11
+            1  0  1  0     2.200     12
+            0  2  0  0     2.200     13
+            0  1  1  0     2.200     14
+            0  0  2  0     2.200     15
+
+ Total number of charge fitting functions (nprimf)        82
+ Total number of Cartesian basis functions (naos)         15
+ Total number of Cartesian core functions  (ncos)          1
+
+
+
+ BAS: List of all Elementary Cartesian Basis Functions
+ =====================================================
+
+ The numbering in the list below (to the right of the function characteristics) is referred
+ to in print-outs of MO eigenvectors and Mulliken populations in the BAS representation
+ (as contrasted to the SFO representation).
+
+ Notes:
+ 1. The functions are characterized by a polynomial prefactor (powers of x,y,z and r) and
+    an exponential decay factor alpha.
+ 2. Since the basis sets are specific for an atom TYPE, the individual functions occur on
+    all atoms of that type.
+ 3. The word 'Core' in the left margin signals that it is a Core Function (CF) : not a
+    degree of freedom in the valence set, but only used to ensure orthogonalization of
+    the other valence basis functions on the frozen Core Orbitals.
+
+
+ (power of) X  Y  Z  R     Alpha  on Atom
+            ==========     =====     ==========
+
+ C                                    1
+                                  ---------------------------------------------------------------------------
+    Core    0  0  0  0     5.400      1
+            0  0  0  1     1.240      2
+            0  0  0  1     1.980      3
+            1  0  0  0     0.960      4
+            0  1  0  0     0.960      5
+            0  0  1  0     0.960      6
+            1  0  0  0     2.200      7
+            0  1  0  0     2.200      8
+            0  0  1  0     2.200      9
+            2  0  0  0     2.200     10
+            1  1  0  0     2.200     11
+            1  0  1  0     2.200     12
+            0  2  0  0     2.200     13
+            0  1  1  0     2.200     14
+            0  0  2  0     2.200     15
+1
+ ***************************************************************************************************
+
+
+
+                                              ***********************
+                                              *  T E C H N I C A L  *
+                                              ***********************
+  
+
+
+
+ =============================================================
+ P A R A L L E L I Z A T I O N  and  V E C T O R I Z A T I O N
+ =============================================================
+  
+ Nr of parallel processes:                                1
+ Maximum vector length in NumInt loops:                 128
+
+
+
+ =====================
+ S C F   U P D A T E S
+ =====================
+  
+ Max. nr. of cycles:                               300
+ Convergence criterion:                              0.0000000100
+   secondary criterion:                              0.0000000100
+
+ Mix parameter (when DIIS does not apply):           0.2000000000
+ Special mix parameter for the first cycle:          1.0000000000
+ Mixed ADIIS+SDIIS will be used                  
+    Max number of expansion vectors:                10
+    Pure ADIIS when Max([F,P]) is above              0.1000000000
+    Pure SDIIS when Max([F,P]) is below              0.0010000000
+ Automatic ElectronSmearing (in case of problematic SCF convergence) disabled
+
+
+
+ =================
+ P R E C I S I O N  ***  (General: NumInt, NeglectFunctionTails, ...)  ***
+ =================
+  
+
+ NumInt:           Target precision:                12.0000000000
+ -------           Initial precision:               10.0000000000
+                   Min. precision (optimization):   10.0000000000
+
+ Neglect Functions:          Basis functions:        0.1000000000E-13
+ ------------------          Fit functions:          0.1000000000E-13
+
+
+
+ ===========================
+ L I N E A R   S C A L I N G
+ ===========================
+  
+
+ Cut-off radii density fit:                        0.1000000000E-97
+ Overlap cut-off criterion AO matrix elements:     0.1000000000E-97
+ Cut-offs for Coulomb potential and fitted density:0.1000000000E-97
+ Cut-off criterion for Coulomb multipole terms:    0.1000000000E-97
+ Progressive Convergence parameter:                 0.000000000    
+1
+ ***************************************************************************************************
+
+
+
+                                            ***************************
+                                            *  C O M P U T A T I O N  *
+                                            ***************************
+  
+
+ Number of elements of the density matrix on this node (used, total):       120       120
+
+
+
+ ===========================================
+ Numerical Integration : Fuzzy Cells (Becke)
+ ===========================================
+  
+ Becke grid quality: VERYGOOD       
+  
+ Lebedev angular grid order:             min:  13 max:  41
+ Nr. of radial points:                   min:  68 max:  68
+
+ Total nr. of points:         68
+ Nr. of blocks:                1
+ Block length:                68
+ Nr. of dummy points:          0
+
+
+ Test of Precision of the Numerical Integration Grid
+ ===================================================
+
+ Integral of the Total Core Density:                   1.99999999985293
+ Relative Error:                                      -7.353E-11
+
+
+
+ ========================
+ Density Fitting (zlmFit)
+ ========================
+  
+ ZlmFit Fit Quality: VERYGOOD       
+  
+ Max L-expansion:                        min:   0 max:   0
+ Nr. of radial interpolation points:     min: 140 max: 140
+
+
+
+ ======================
+ RI Hartree-Fock Scheme
+ ======================
+  
+ Fit Set Quality     : NORMAL
+ Threshold Quality   : NORMAL
+ Integration Quality : NORMAL
+ Fit Generation Method : AUTO
+ Response Quality    : DEFAULT
+ Is Range Separated  :  F
+ 
+ RIHartreeFock Dependency: number of modified vectors:           0
+
+
+
+ =====
+ S C F  ***  ScaSCF  ***
+ =====
+  
+
+ CYCLE    1
+ SCF Error: norm([F,P])=      0.000000000000, max([F,P])=      0.000000000000
+ orbitals (Q,E):
+ ---------------
+ S :1...2            ( 2.00    -2.6082)  ( 0.00    -0.9996)
+ P :1...2            ( 2.00    -2.3607)  ( 0.00    -0.9607)
+ D :1...1            ( 0.00    -0.6973)
+
+ CYCLE    2
+ SCF Error: norm([F,P])=      0.988804956465, max([F,P])=      0.871891759637
+ orbitals (Q,E):
+ ---------------
+ S :1...2            ( 2.00    -0.2226)  ( 0.00     0.8303)
+ P :1...2            ( 2.00     0.0843)  ( 0.00     0.8922)
+ D :1...1            ( 0.00     1.6304)
+
+ CYCLE    3
+  SDIIS (wt  0.000):  0.3965  0.6035
+ A-DIIS (wt  1.000):  0.1214  0.8786
+  DIIS coefficients:  0.1214  0.8786
+ SCF Error: norm([F,P])=      0.649958533451, max([F,P])=      0.556348433082
+ orbitals (Q,E):
+ ---------------
+ S :1...2            ( 2.00    -0.7239)  ( 0.00     0.3894)
+ P :1...2            ( 2.00    -0.3528)  ( 0.00     0.3464)
+ D :1...1            ( 0.00     1.1178)
+
+ CYCLE    4
+  SDIIS (wt  0.000):  0.2996  0.7004
+ A-DIIS (wt  1.000):  0.0071  0.9929
+  DIIS coefficients:  0.0071  0.9929
+ SCF Error: norm([F,P])=      0.278499367357, max([F,P])=      0.224563869096
+ orbitals (Q,E):
+ ---------------
+ S :1...2            ( 2.00    -0.4646)  ( 0.00     0.5947)
+ P :1...2            ( 2.00    -0.1075)  ( 0.00     0.5801)
+ D :1...1            ( 0.00     1.3766)
+
+ CYCLE    5
+  SDIIS (wt  0.000):  0.4070  0.5930
+ A-DIIS (wt  1.000):  0.2507  0.7493
+  DIIS coefficients:  0.2507  0.7493
+ SCF Error: norm([F,P])=      0.191172937319, max([F,P])=      0.156870949559
+ orbitals (Q,E):
+ ---------------
+ S :1...2            ( 2.00    -0.5873)  ( 0.00     0.4935)
+ P :1...2            ( 2.00    -0.2182)  ( 0.00     0.4597)
+ D :1...1            ( 0.00     1.2538)
+
+ CYCLE    6
+  SDIIS (wt  0.619):  0.2003  0.7997
+ A-DIIS (wt  0.381):  0.0000  1.0000
+  DIIS coefficients:  0.1240  0.8760
+ SCF Error: norm([F,P])=      0.047887484622, max([F,P])=      0.038689114594
+ orbitals (Q,E):
+ ---------------
+ S :1...2            ( 2.00    -0.5548)  ( 0.00     0.5194)
+ P :1...2            ( 2.00    -0.1879)  ( 0.00     0.4896)
+ D :1...1            ( 0.00     1.2861)
+
+ CYCLE    7
+  SDIIS (wt  0.904):  0.2122  0.7878
+ A-DIIS (wt  0.096):  0.0000  1.0000
+  DIIS coefficients:  0.1918  0.8082
+ SCF Error: norm([F,P])=      0.012898784355, max([F,P])=      0.010503613159
+ orbitals (Q,E):
+ ---------------
+ S :1...2            ( 2.00    -0.5619)  ( 0.00     0.5137)
+ P :1...2            ( 2.00    -0.1945)  ( 0.00     0.4830)
+ D :1...1            ( 0.00     1.2792)
+
+ CYCLE    8
+  SDIIS (wt  1.000):  0.0570  0.9430
+  DIIS coefficients:  0.0570  0.9430
+ SCF Error: norm([F,P])=      0.000779022749, max([F,P])=      0.000628034354
+ orbitals (Q,E):
+ ---------------
+ S :1...2            ( 2.00    -0.5615)  ( 0.00     0.5141)
+ P :1...2            ( 2.00    -0.1941)  ( 0.00     0.4834)
+ D :1...1            ( 0.00     1.2796)
+
+ CYCLE    9
+  SDIIS (wt  1.000):  0.0078  0.9922
+  DIIS coefficients:  0.0078  0.9922
+ SCF Error: norm([F,P])=      0.000006138894, max([F,P])=      0.000005347060
+ orbitals (Q,E):
+ ---------------
+ S :1...2            ( 2.00    -0.5615)  ( 0.00     0.5140)
+ P :1...2            ( 2.00    -0.1941)  ( 0.00     0.4834)
+ D :1...1            ( 0.00     1.2796)
+
+ CYCLE   10
+  SDIIS (wt  1.000): -0.0743  1.0743
+  DIIS coefficients: -0.0743  1.0743
+ SCF Error: norm([F,P])=      0.000000424576, max([F,P])=      0.000000370194
+ orbitals (Q,E):
+ ---------------
+ S :1...2            ( 2.00    -0.5615)  ( 0.00     0.5140)
+ P :1...2            ( 2.00    -0.1941)  ( 0.00     0.4834)
+ D :1...1            ( 0.00     1.2796)
+
+ CYCLE   11
+  SDIIS (wt  1.000): -0.0013  1.0013
+  DIIS coefficients: -0.0013  1.0013
+ SCF Error: norm([F,P])=      0.000000000555, max([F,P])=      0.000000000480
+ orbitals (Q,E):
+ ---------------
+ S :1...2            ( 2.00    -0.5615)  ( 0.00     0.5140)
+ P :1...2            ( 2.00    -0.1941)  ( 0.00     0.4834)
+ D :1...1            ( 0.00     1.2796)
+
+ SCF CONVERGED
+
+ CYCLE   12
+1
+ ***************************************************************************************************
+
+
+
+                                                *******************
+                                                *  R E S U L T S  *
+                                                *******************
+  
+  
+ Hartree-Fock exchange energy:  -0.98324914206020408     
+ *** Using FIT density in Focky
+  SDIIS (wt  1.000):  0.0090  0.9910
+  DIIS coefficients:  0.0090  0.9910
+ SCF Error: norm([F,P])=      0.000000000005, max([F,P])=      0.000000000004
+
+ Orbital Energies, per Irrep and Spin:
+ ======================================
+                        Occup              E (au)              E (eV)       Diff (eV) with prev. cycle
+                        -----      --------------------        ------       --------------------------
+ S
+               1        2.000     -0.56148944899652E+00       -15.279               6.95E-11
+               2        0.000      0.51404926161136E+00        13.988
+ P
+               1        2.000     -0.19406471559607E+00        -5.281               5.87E-11
+               2        0.000      0.48342072779501E+00        13.155
+ D
+               1        0.000      0.12796325736758E+01        34.821
+
+
+ Partially Occupied:
+               1 P                -0.19406471559607E+00
+  
+ HOMO :        1 S                -0.56148944899652E+00
+ LUMO :        2 P                 0.48342072779501E+00
+  
+
+
+ Orbital Energies, all Irreps
+ ========================================
+
+ Irrep        no.  (spin)   Occup              E (au)                E (eV)
+ ---------------------------------------------------------------------------
+ S             1             2.00       -0.56148944899652E+00       -15.2789
+ P             1             2.00       -0.19406471559607E+00        -5.2808
+ P             2             0.00        0.48342072779501E+00        13.1545
+ S             2             0.00        0.51404926161136E+00        13.9880
+ D             1             0.00        0.12796325736758E+01        34.8206
+
+
+ Orbital Energies of the Core Orbitals:
+ ======================================
+ WARNING : The XC part is not included correctly in these core orbital energies!
+ (Note that the atoms are grouped by atomtype, see the labels, and may hence NOT be in input order)
+
+ AtomType  Orbital  Atom                   E (au)                        E (eV)
+ --------  -------  ----           --------------------        ----------------
+ C           1S        1          -0.78499203784099E+01                -213.607
+
+
+
+ =======================================
+ M U L L I K E N   P O P U L A T I O N S
+ =======================================
+  
+ The survey below gives for each atom:
+ a) the total charge (Z minus electrons)
+ b) the net spin polarization (nr of electrons spin-A minus spin-B)
+ c) for each spin the atomic electron valence density (integrated) per L-value.
+
+ Atom              Charge    Spin density          S         P         D         F
+ ----              ------    ------------       ------    ------    ------    ------
+ 1 C              -0.0000                       2.0000    2.0000    0.0000    0.0000
+
+ Populations of individual BAS functions
+ ----------------------------------------
+ 1 C            0.0003  0.9022  1.0975  0.3791  0.3791  0.3791  0.2876  0.2876  0.2876  0.0000
+                0.0000  0.0000  0.0000  0.0000  0.0000
+
+ Gross Charges per Atom (Z minus electrons)
+ ==========================================
+            -0.0000
+ Net Total: -0.00000000
+
+
+
+ =======================================================================
+ Electrostatic potential at the Nuclei due to electrons and other nuclei
+ =======================================================================
+  
+         Atom                  Potential
+         ----                  ---------
+     1)   C                  14.57827683
+
+
+JSONified input:
+++++++++++++++++
+{
+  "Create": "H m=1.0078250000000000 /Users/vcastor/amshome/atomicdata/ADF/DZP/H",
+  "relativity": {
+    "level": "None"
+  },
+  "xc": {
+    "hybrid": "B3LYP"
+  }
+}
+
+
+JSONified input traversal:
+++++++++++++++++++++++++++
+2 3 , path = 
+7 0 Create, path = Create
+2 1 relativity, path = relativity
+7 0 level, path = relativity%level
+2 1 xc, path = xc
+7 0 hybrid, path = xc%hybrid
+ Hydrogen (DZP)
+
+
+
+ ===========================
+ A T T A C H E D   F I L E S
+ ===========================
+  
+ CREATE - Data File:    /Users/vcastor/amshome/atomicdata/ADF/DZP/H
+                        Hydrogen (DZP)
+
+
+
+ ===============================
+ M O D E L   P A R A M E T E R S
+ ===============================
+  
+ DENSITY FUNCTIONAL POTENTIAL (scf)
+    Hybrid:                            B3LYP                                   == Not Default ==
+
+ SPIN  (restricted / unrestr.)
+    Molecule:                          Restricted                               
+
+ OTHER ASPECTS
+    Relativistic Corrections:          ---                                     == Not Default ==
+
+    Nuclear Charge Density Model:      Point Charge Nuclei                      
+    Core Treatment:                    Frozen Orbital(s)                        
+
+    Hyperfine or Zeeman Interaction:   ---                                      
+
+
+
+ =====================================
+ S Y M M E T R Y ,   E L E C T R O N S
+ =====================================
+  
+ Symmetry: ATOM
+
+ Irreducible Representations, including subspecies
+ -------------------------------------------------
+ S
+ P:x  P:y  P:z
+ D:z2  D:x2-y2  D:xy  D:xz  D:yz
+ F:z3  F:z  F:xyz  F:z2x  F:z2y  F:x  F:y
+
+ Symmetry is NOT used when fitting density
+
+
+ Configuration of Valence Electrons
+ ==================================
+
+          Occupation Numbers
+          -------------------------------------------------
+ S        1
+ P        0
+ D        0
+ F        0
+          -------------------------------------------------
+
+ Total:   1
+
+ Net Charge: 0 (Nuclei minus Electrons)
+
+ Preset values for MO occupations will be applied through SCF cycle no. 1000000
+ Thereafter, the program will assign electrons to MOs that are spatially
+ similar to the occupied MOs in a "reference" cycle ("KeepOrbitals").
+ The reference cycle is always the PREVIOUS cycle: it will evolve with
+ the SCF procedure.
+
+
+
+ ================================
+ (Slater-type)  F U N C T I O N S  ***  (Basis and Fit)  ***
+ ================================
+  
+
+ Atom Type    1  (H)
+ ==============
+
+ Valence Basis Sets:   3
+ -----------------------
+   1 S    0.760000
+   1 S    1.280000
+   2 P    1.250000
+
+ Charge Fitting Sets (for the computation of the Coulomb Potential):  11
+ -----------------------------------------------------------------------
+   1 S    3.160000
+   1 S    2.090000
+   1 S    1.380000
+   2 S    1.500000
+   2 P    4.000000
+   2 P    2.650000
+   2 P    1.750000
+   3 D    4.000000
+   3 D    2.500000
+   4 F    3.000000
+   5 G    4.000000
+
+
+ BAS: List of all Elementary Cartesian Basis Functions
+ =====================================================
+
+ The numbering in the list below (to the right of the function characteristics) is referred
+ to in print-outs of MO eigenvectors and Mulliken populations in the BAS representation
+ (as contrasted to the SFO representation).
+
+ Notes:
+ 1. The functions are characterized by a polynomial prefactor (powers of x,y,z and r) and
+    an exponential decay factor alpha.
+ 2. Since the basis sets are specific for an atom TYPE, the individual functions occur on
+    all atoms of that type.
+ 3. The word 'Core' in the left margin signals that it is a Core Function (CF) : not a
+    degree of freedom in the valence set, but only used to ensure orthogonalization of
+    the other valence basis functions on the frozen Core Orbitals.
+
+
+ (power of) X  Y  Z  R     Alpha  on Atom
+            ==========     =====     ==========
+
+ H                                    1
+                                  ---------------------------------------------------------------------------
+            0  0  0  0     0.760      1
+            0  0  0  0     1.280      2
+            1  0  0  0     1.250      3
+            0  1  0  0     1.250      4
+            0  0  1  0     1.250      5
+
+ Total number of charge fitting functions (nprimf)        50
+ Total number of Cartesian basis functions (naos)          5
+ Total number of Cartesian core functions  (ncos)          0
+
+
+
+ BAS: List of all Elementary Cartesian Basis Functions
+ =====================================================
+
+ The numbering in the list below (to the right of the function characteristics) is referred
+ to in print-outs of MO eigenvectors and Mulliken populations in the BAS representation
+ (as contrasted to the SFO representation).
+
+ Notes:
+ 1. The functions are characterized by a polynomial prefactor (powers of x,y,z and r) and
+    an exponential decay factor alpha.
+ 2. Since the basis sets are specific for an atom TYPE, the individual functions occur on
+    all atoms of that type.
+ 3. The word 'Core' in the left margin signals that it is a Core Function (CF) : not a
+    degree of freedom in the valence set, but only used to ensure orthogonalization of
+    the other valence basis functions on the frozen Core Orbitals.
+
+
+ (power of) X  Y  Z  R     Alpha  on Atom
+            ==========     =====     ==========
+
+ H                                    1
+                                  ---------------------------------------------------------------------------
+            0  0  0  0     0.760      1
+            0  0  0  0     1.280      2
+            1  0  0  0     1.250      3
+            0  1  0  0     1.250      4
+            0  0  1  0     1.250      5
+1
+ ***************************************************************************************************
+
+
+
+                                              ***********************
+                                              *  T E C H N I C A L  *
+                                              ***********************
+  
+
+
+
+ =============================================================
+ P A R A L L E L I Z A T I O N  and  V E C T O R I Z A T I O N
+ =============================================================
+  
+ Nr of parallel processes:                                1
+ Maximum vector length in NumInt loops:                 128
+
+
+
+ =====================
+ S C F   U P D A T E S
+ =====================
+  
+ Max. nr. of cycles:                               300
+ Convergence criterion:                              0.0000000100
+   secondary criterion:                              0.0000000100
+
+ Mix parameter (when DIIS does not apply):           0.2000000000
+ Special mix parameter for the first cycle:          1.0000000000
+ Mixed ADIIS+SDIIS will be used                  
+    Max number of expansion vectors:                10
+    Pure ADIIS when Max([F,P]) is above              0.1000000000
+    Pure SDIIS when Max([F,P]) is below              0.0010000000
+ Automatic ElectronSmearing (in case of problematic SCF convergence) disabled
+
+
+
+ =================
+ P R E C I S I O N  ***  (General: NumInt, NeglectFunctionTails, ...)  ***
+ =================
+  
+
+ NumInt:           Target precision:                12.0000000000
+ -------           Initial precision:               10.0000000000
+                   Min. precision (optimization):   10.0000000000
+
+ Neglect Functions:          Basis functions:        0.1000000000E-13
+ ------------------          Fit functions:          0.1000000000E-13
+
+
+
+ ===========================
+ L I N E A R   S C A L I N G
+ ===========================
+  
+
+ Cut-off radii density fit:                        0.1000000000E-97
+ Overlap cut-off criterion AO matrix elements:     0.1000000000E-97
+ Cut-offs for Coulomb potential and fitted density:0.1000000000E-97
+ Cut-off criterion for Coulomb multipole terms:    0.1000000000E-97
+ Progressive Convergence parameter:                 0.000000000    
+1
+ ***************************************************************************************************
+
+
+
+                                            ***************************
+                                            *  C O M P U T A T I O N  *
+                                            ***************************
+  
+
+ Number of elements of the density matrix on this node (used, total):        15        15
+
+
+
+ ===========================================
+ Numerical Integration : Fuzzy Cells (Becke)
+ ===========================================
+  
+ Becke grid quality: VERYGOOD       
+  
+ Lebedev angular grid order:             min:  13 max:  41
+ Nr. of radial points:                   min:  64 max:  64
+
+ Total nr. of points:         64
+ Nr. of blocks:                1
+ Block length:                64
+ Nr. of dummy points:          0
+
+
+ Test of Precision of the Numerical Integration Grid
+ ===================================================
+
+ Integral of the Total Core Density:                   0.00000000000000
+
+
+
+ ========================
+ Density Fitting (zlmFit)
+ ========================
+  
+ ZlmFit Fit Quality: VERYGOOD       
+  
+ Max L-expansion:                        min:   0 max:   0
+ Nr. of radial interpolation points:     min: 120 max: 120
+
+
+
+ ======================
+ RI Hartree-Fock Scheme
+ ======================
+  
+ Fit Set Quality     : NORMAL
+ Threshold Quality   : NORMAL
+ Integration Quality : NORMAL
+ Fit Generation Method : AUTO
+ Response Quality    : DEFAULT
+ Is Range Separated  :  F
+ 
+ RIHartreeFock Dependency: number of modified vectors:           0
+
+
+
+ =====
+ S C F  ***  ScaSCF  ***
+ =====
+  
+
+ CYCLE    1
+ SCF Error: norm([F,P])=      0.000000000000, max([F,P])=      0.000000000000
+ orbitals (Q,E):
+ ---------------
+ S :1...2            ( 1.00    -0.4983)  ( 0.00     0.1718)
+ P :1...1            ( 0.00     0.1562)
+
+ CYCLE    2
+ SCF Error: norm([F,P])=      0.043433571855, max([F,P])=      0.043433571855
+ orbitals (Q,E):
+ ---------------
+ S :1...2            ( 1.00    -0.2292)  ( 0.00     0.4326)
+ P :1...1            ( 0.00     0.4487)
+
+ CYCLE    3
+  SDIIS (wt  0.000):  0.1218  0.8782
+ A-DIIS (wt  1.000):  0.0000  1.0000
+  DIIS coefficients:  0.0000  1.0000
+ SCF Error: norm([F,P])=      0.006025588434, max([F,P])=      0.006025588434
+ orbitals (Q,E):
+ ---------------
+ S :1...2            ( 1.00    -0.2459)  ( 0.00     0.4177)
+ P :1...1            ( 0.00     0.4344)
+
+ CYCLE    4
+  SDIIS (wt  1.000):  0.1170  0.8830
+  DIIS coefficients:  0.1170  0.8830
+ SCF Error: norm([F,P])=      0.000798685900, max([F,P])=      0.000798685900
+ orbitals (Q,E):
+ ---------------
+ S :1...2            ( 1.00    -0.2439)  ( 0.00     0.4195)
+ P :1...1            ( 0.00     0.4361)
+
+ CYCLE    5
+  SDIIS (wt  1.000):  0.0008  0.9992
+  DIIS coefficients:  0.0008  0.9992
+ SCF Error: norm([F,P])=      0.000000610510, max([F,P])=      0.000000610510
+ orbitals (Q,E):
+ ---------------
+ S :1...2            ( 1.00    -0.2439)  ( 0.00     0.4195)
+ P :1...1            ( 0.00     0.4361)
+
+ CYCLE    6
+  SDIIS (wt  1.000): -0.0001  1.0001
+  DIIS coefficients: -0.0001  1.0001
+ SCF Error: norm([F,P])=      0.000000000061, max([F,P])=      0.000000000061
+ orbitals (Q,E):
+ ---------------
+ S :1...2            ( 1.00    -0.2439)  ( 0.00     0.4195)
+ P :1...1            ( 0.00     0.4361)
+
+ SCF CONVERGED
+
+ CYCLE    7
+1
+ ***************************************************************************************************
+
+
+
+                                                *******************
+                                                *  R E S U L T S  *
+                                                *******************
+  
+  
+ Hartree-Fock exchange energy:  -0.14202064897311051     
+ *** Using FIT density in Focky
+  SDIIS (wt  1.000):  0.0000  1.0000
+  DIIS coefficients:  0.0000  1.0000
+ SCF Error: norm([F,P])=      0.000000000000, max([F,P])=      0.000000000000
+
+ Orbital Energies, per Irrep and Spin:
+ ======================================
+                        Occup              E (au)              E (eV)       Diff (eV) with prev. cycle
+                        -----      --------------------        ------       --------------------------
+ S
+               1        1.000     -0.24391147113715E+00        -6.637              -2.19E-14
+               2        0.000      0.41948217108696E+00        11.415
+ P
+               1        0.000      0.43611785708346E+00        11.867
+
+
+ Partially Occupied:
+               1 S                -0.24391147113715E+00
+  
+ LUMO :        2 S                 0.41948217108696E+00
+  
+
+
+ Orbital Energies, all Irreps
+ ========================================
+
+ Irrep        no.  (spin)   Occup              E (au)                E (eV)
+ ---------------------------------------------------------------------------
+ S             1             1.00       -0.24391147113715E+00        -6.6372
+ S             2             0.00        0.41948217108696E+00        11.4147
+ P             1             0.00        0.43611785708346E+00        11.8674
+
+
+ All Electron Calculation, thus no Orbital Energies of the Core Orbitals are calculated
+
+
+
+ =======================================
+ M U L L I K E N   P O P U L A T I O N S
+ =======================================
+  
+ The survey below gives for each atom:
+ a) the total charge (Z minus electrons)
+ b) the net spin polarization (nr of electrons spin-A minus spin-B)
+ c) for each spin the atomic electron valence density (integrated) per L-value.
+
+ Atom              Charge    Spin density          S         P         D         F
+ ----              ------    ------------       ------    ------    ------    ------
+ 1 H              -0.0000                       1.0000    0.0000    0.0000    0.0000
+
+ Populations of individual BAS functions
+ ----------------------------------------
+ 1 H            0.6771  0.3229  0.0000  0.0000  0.0000
+
+ Gross Charges per Atom (Z minus electrons)
+ ==========================================
+            -0.0000
+ Net Total: -0.00000000
+
+
+
+ =======================================================================
+ Electrostatic potential at the Nuclei due to electrons and other nuclei
+ =======================================================================
+  
+         Atom                  Potential
+         ----                  ---------
+     1)   H                   0.92788883
