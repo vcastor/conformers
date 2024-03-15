@@ -1,4 +1,4 @@
-from small_functions import *
+from .small_functions import *
 
 gga_functionals = { 
     "BP86" : "BP86",
@@ -146,5 +146,4 @@ dispersion_models = {
     "UFF"     : "UFF"
 }
 dispersion_models = to_lower_dict(dispersion_models)
-
 

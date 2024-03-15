@@ -1,9 +1,8 @@
 # -*- coding: UTF-8 -*-
 from scm.plams import *
 from scm.conformers import ConformersJob
-from input_reader import *
-from small_functions import *
-import gvariables
+from .small_functions import *
+from .gvariables import gconfig
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -16,7 +15,7 @@ def get_main_results(job:ConformersJob):
     """
     molecules = job.results.get_conformers()
     energies = job.results.get_relative_energies('kcal/mol')
-    populations = job.results.get_boltzmann_distribution(gvariables.temperature)
+    populations = job.results.get_boltzmann_distribution(gconfig['temperature'])
 
     return molecules, energies, populations
 
@@ -29,7 +28,7 @@ def print_results(job:ConformersJob):
     """
     _, energies, populations = get_main_results(job, return_molecules=False)
 
-    temperature = gvariables.temperature
+    temperature = gconfig['temperature']
     print(f"Total # conformers in set: {len(energies)}")
     dE_header = f"ΔE [kcal/mol]"
     pop_header = f"Pop. (T = {temperature} K)"
@@ -47,9 +46,9 @@ def plot_conformers(job:ConformersJob):
     - indices: Specific indices of conformers to plot or an integer specifying how many to plot.
     - lowest: If True and indices is an int, plot the lowest N conformers. Otherwise, spread evenly.
     """
-    temperature = gvariables.temperature
-    n_system = gvariables.system_nth
-    plot_name = gvariables.input_file_name.replace('.csv', '')
+    temperature = gconfig['temperature']
+    n_system = gconfig['system_nth']
+    plot_name = gconfig['input_file_name'].replace('.csv', '')
     molecules, energies, populations = get_main_results(job)
 
     indices = np.arange(min(3, len(energies)))
@@ -68,7 +67,7 @@ def plot_conformers(job:ConformersJob):
 
     plt.tight_layout()
     plt.savefig(f'{plot_name}_system_{n_system}.png')
-    gvariables.system_nth += 1
+    gconfig['system_nth'] += 1
 
 def format_list(values, max_values_per_line=7):
     formatted_output = ""
@@ -115,8 +114,8 @@ def json_writer(outfile, system_results):
         json.dump(conversion(system_results), file, ensure_ascii=False, indent=4)
 
 def output_writer(system_results):
-    out_file = gvariables.input_file_name.replace('.csv', '.out')
-    json_file = gvariables.input_file_name.replace('.csv', '.json')
+    out_file = gconfig['input_file_name'].replace('.csv', '.out')
+    json_file = gconfig['input_file_name'].replace('.csv', '.json')
     plain_text_output(out_file, system_results)
     json_writer(json_file, system_results)
 

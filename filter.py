@@ -4,14 +4,7 @@ from scm.plams import *
 from scm.conformers import ConformersJob, ConformersResults
 import os
 import numpy as np
-# local imports
-from descriptors import *
-from functional_settings import *
-from input_reader import *
-from output_writer import *
-from small_functions import *
-from solvent_settings import *
-from task_settings import *
+from lise_functions import * # local functions
 
 #
 # Funtion to run the calculations ✨
@@ -38,8 +31,10 @@ def run_jobs(molecule, solvent):
 init()
 
 input_file = get_input_file()
+
 systems, user_settings = input_reader(input_file)
 user_settings = validate_settings(user_settings)
+
 temperature = user_settings['temperature']
 
 system_results = {}

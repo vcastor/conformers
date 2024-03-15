@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 import os
 import sys
-import gvariables
+from .gvariables import gconfig
 import pandas as pd
 
 def get_input_file():
@@ -10,7 +10,7 @@ def get_input_file():
     """
     input_file = next((os.path.abspath(arg) for arg in sys.argv[1:] if arg.endswith('.csv')), None)
     if input_file:
-        gvariables.input_file_name = input_file
+        gconfig['input_file_name'] = input_file
         return input_file
     else:
         print("Run the script like:\n $AMSBIN/plams Workflow.py -v input_file.csv")
@@ -85,7 +85,7 @@ def process_systems(systems):
             print('{:*^72}'.format(' input waring '))
             print(f"Duplicated system detected: {identifier}, will be computed once.")
 
-    gvariables.total_systems = len(unique)
+    gconfig['total_systems'] = len(unique)
     return unique
 
 def validate_settings(settings):
@@ -122,7 +122,7 @@ def validate_settings(settings):
         if key not in validated_settings:
             validated_settings[key] = value
 
-    gvariables.temperature = validated_settings['temperature']
+    gconfig['temperature'] = validated_settings['temperature']
 
     return validated_settings
 

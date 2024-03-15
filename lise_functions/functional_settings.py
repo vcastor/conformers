@@ -1,9 +1,8 @@
 # -*- coding: UTF-8 -*
-# Just loooooong data (dictionaries) about functionals
-from small_functions import *
 from scm.plams import *
-from functionals import *
-from model_dftb import *
+from .small_functions import *
+from .functionals import *
+from .model_dftb import *
 
 def model_dftb(model, settings):
     model = model.strip().lower()

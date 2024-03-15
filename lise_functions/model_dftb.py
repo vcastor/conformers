@@ -1,4 +1,4 @@
-from small_functions import *
+from .small_functions import *
 
 models = {
     "DFTB"  : "DFTB",

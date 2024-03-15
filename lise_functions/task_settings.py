@@ -2,9 +2,9 @@
 # Setting task
 from scm.plams import Settings
 from scm.plams.recipes.adfcosmorscompound import *
-from small_functions import *
-from solvent_settings import *
-from functional_settings import *
+from .small_functions import *
+from .solvent_settings import *
+from .functional_settings import *
 
 def task_settings(task, user_settings):
     s = Settings()

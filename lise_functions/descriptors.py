@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 import numpy as np
 from scm.plams import *
-from small_functions import *
+from .small_functions import *
 
 def get_atoms(system):
     """ Number of atoms and atom types """
@@ -80,3 +80,4 @@ def orbital_energies(content):
             break
 
     return np.array(E_ev, dtype=float)
+

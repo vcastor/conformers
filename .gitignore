@@ -11,3 +11,4 @@ plams-workdir/
 *swp
 *t21*
 *t15*
+*.pyc
