@@ -19,24 +19,6 @@ def get_main_results(job:ConformersJob):
 
     return molecules, energies, populations
 
-def print_results(job:ConformersJob):
-    """
-    Print formatted results from a ConformersJob
-
-    Parameters:
-    - job: the ConformersJob object
-    """
-    _, energies, populations = get_main_results(job, return_molecules=False)
-
-    temperature = gconfig['temperature']
-    print(f"Total # conformers in set: {len(energies)}")
-    dE_header = f"ΔE [kcal/mol]"
-    pop_header = f"Pop. (T = {temperature} K)"
-    print(f'{"#":>4s} {dE_header:>14s} {pop_header:>18s}')
-
-    for i, (E, pop) in enumerate(zip(energies, populations)):
-        print(f'{i+1:4d} {E:14.2f} {pop:18.3f}')
-
 def plot_conformers(job:ConformersJob):
     """
     Plot conformers with their relative energies and populations.
@@ -68,17 +50,6 @@ def plot_conformers(job:ConformersJob):
     plt.tight_layout()
     plt.savefig(f'{plot_name}_system_{n_system}.png')
     gconfig['system_nth'] += 1
-
-def format_list(values, max_values_per_line=7):
-    formatted_output = ""
-    values = [values.tolist() if isinstance(values, np.ndarray) else values]
-    for i, value in enumerate(values):
-        if i % max_values_per_line == 0 and i > 0:
-            formatted_output += ",\n      "
-        elif i > 0:
-            formatted_output += ", "
-        formatted_output += repr(value)
-    return formatted_output.strip()
 
 def plain_text_output(output_file, system_results):
     with open(output_file, "w", encoding="utf-8") as file:

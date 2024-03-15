@@ -44,3 +44,14 @@ def to_lower_dict(d):
     """Converts dictionary keys to lowercase."""
     return {key.lower(): value for key, value in d.items()}
 
+def format_list(values, max_values_per_line=7):
+    formatted_output = ""
+    values = [values.tolist() if isinstance(values, np.ndarray) else values]
+    for i, value in enumerate(values):
+        if i % max_values_per_line == 0 and i > 0:
+            formatted_output += ",\n         "
+        elif i > 0:
+            formatted_output += ", "
+        formatted_output += repr(value)
+    return formatted_output.strip()
+
