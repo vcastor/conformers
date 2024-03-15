@@ -7,12 +7,12 @@ def solvent_name(solvent):
     ADF input case insensitive, but the solvent name must be correct.
     """
     solvent_mapping = {
-        'thf': 'Tetrahydrofuran',
+        'thf' : 'Tetrahydrofuran',
         'mecn': 'Acetonitrile',
         'dimethyl sulfoxide': 'DMSO',
-        'dimethylsulfoxide': 'DMSO',
-        'dmf': 'DMFA',
-        'dimethylformamide': 'DMFA',
+        'dimethylsulfoxide' : 'DMSO',
+        'dmf' : 'DMFA',
+        'dimethylformamide' : 'DMFA',
         'et2o': 'DiethylEther',
         'diethyl ether': 'DiethylEther'
     }
@@ -25,11 +25,8 @@ def solvent_name(solvent):
 def solvent_settings(solvent):
     """
     ADF input needs some extra information, not only the name of the solvent.
-    This function returns a dictionary with the required settings.
     """
     solvent_settings = Settings()
-    #solvent_settings = ADFCOSMORSCompoundJob.solvation_settings()
-    #radii = ADFCOSMORSCompoundJob._get_radii() # Klamt's radii
     # Constant, linear terms of Ecd
     # taken from ADF code $AMSHOME/src/lib/dft/solvation/SolventConfig.f90
     # (T. N. Truong, E. V. Stefanovich, Chem. Phys. Lett 240 , 253-260 (1995)
@@ -40,3 +37,4 @@ def solvent_settings(solvent):
     solvent_settings.input.ADF.Solvation.SCF = 'VAR ALL'
     solvent_settings.input.ADF.Solvation.Surf = 'Delley'
     return solvent_settings
+

@@ -44,25 +44,25 @@ May use up to 3906MB of RAM as shared memory on node 0
  Licensed to: Prof. Laurent Joubert, Prof. Vincent Tognetti / Lab. COBRA, Universit? de Rouen / Mont St Aignan / FR 2024-02-22 17:14:24
  SCM User ID: u17435
   
- AMS 2024.201  RunTime: Mar13-2024 14:49:03  ShM Nodes: 1  Procs: 8
+ AMS 2024.201  RunTime: Mar15-2024 16:42:13  ShM Nodes: 1  Procs: 8
 
  AMS jobname: go0
- AMS jobid  : 369593868
+ AMS jobid  : 1977914697
 
- Start   directory: /Users/vcastor/Documents/PhD_Rouen/filter/plams_workdir/reoptimize_ADF.002/go0/
- Results directory: /Users/vcastor/Documents/PhD_Rouen/filter/plams_workdir/reoptimize_ADF.002/go0/
- Scratch directory: /tmp/amstmp_go0_kid0.369593868/
+ Start   directory: /Users/vcastor/Documents/PhD_Rouen/plamsfilter/plams_workdir/reoptimize_ADF.002/go0/
+ Results directory: /Users/vcastor/Documents/PhD_Rouen/plamsfilter/plams_workdir/reoptimize_ADF.002/go0/
+ Scratch directory: /tmp/amstmp_go0_kid0.1977914697/
 
 
- Communication costs MPI_COMM_WORLD:      3.999 usec per message,   0.3364 usec per 8-byte item
- Communication costs for intra-node:      2.216 usec per message,   0.0337 usec per 8-byte item
+ Communication costs MPI_COMM_WORLD:      2.356 usec per message,   0.0522 usec per 8-byte item
+ Communication costs for intra-node:      2.607 usec per message,   0.0235 usec per 8-byte item
 
- RNG seed: 1149979185 -2536321 -80258011 1112580802 -1670042056 13438351 916613038 1392766808
+ RNG seed: 1641016406 1210823429 1414730500 -658821325 445140090 -518883986 -1660835101 1486632065
 
 
 
                       ************************************************************************
-                      *  ADF 2024.201  RunTime: Mar13-2024 14:49:04  ShM Nodes: 1  Procs: 8  *
+                      *  ADF 2024.201  RunTime: Mar15-2024 16:42:14  ShM Nodes: 1  Procs: 8  *
                       ************************************************************************
   
 
@@ -109,11 +109,11 @@ Geometry
 Formula: CH4
 Atoms
   Index Symbol   x (angstrom)   y (angstrom)   z (angstrom)
-      1      C     0.00000048    -0.00000027     0.00000042       rdkit.charge=0 rdkit.origNoImplicit=False
-      2      H     0.52896160     0.74606467    -0.58560973       rdkit.charge=0 rdkit.isImplicit=1
-      3      H     0.71458573    -0.58531565     0.57107294       rdkit.charge=0 rdkit.isImplicit=1
-      4      H    -0.55535495    -0.65497809    -0.66478346       rdkit.charge=0 rdkit.isImplicit=1
-      5      H    -0.68819808     0.49423226     0.67931519       rdkit.charge=0 rdkit.isImplicit=1
+      1      C     0.00000018    -0.00000030     0.00000026       rdkit.charge=0 rdkit.origNoImplicit=False
+      2      H     0.52896269     0.74606405    -0.58560910       rdkit.charge=0 rdkit.isImplicit=1
+      3      H     0.71458609    -0.58531465     0.57107302       rdkit.charge=0 rdkit.isImplicit=1
+      4      H    -0.55535384    -0.65497810    -0.66478338       rdkit.charge=0 rdkit.isImplicit=1
+      5      H    -0.68819707     0.49423228     0.67931640       rdkit.charge=0 rdkit.isImplicit=1
 
 Total System Charge             0.00000
 Bonding info available!
@@ -136,9 +136,6 @@ ADF Engine Input
  surf Delley
  End
  symmetry NOSYM
- xc
- hybrid B3LYP
- End
  
 
  Title: *** (NO TITLE) ***
@@ -181,28 +178,24 @@ ADF Engine Input
   Volume           =          249.174
   Number of Points =          536
  -------------------------------------------
- 
- RIHartreeFock Dependency: number of modified vectors:           0
- cosmo_calcen: 0.5 (esolb+esolc) (Hartrees) =   -0.000434
+ cosmo_calcen: 0.5 (esolb+esolc) (Hartrees) =   -0.000552
 
- Solvation energy (screening term,uncorrected) =     -0.272414 kcal/mol
+ Solvation energy (screening term,uncorrected) =     -0.346343 kcal/mol
 
  Solvation energy (dispersion and cavitation terms) =      0.333687 kcal/mol
  Solvation Energy Contributions (Hartrees)
           esola   esolb+esolc
-     0.00043412   -0.00086824
- esol last cycle   -0.00043412
-  
- Hartree-Fock exchange energy:   -2.9230111741974913     
- cosmo_calcen: 0.5 (esolb+esolc) (Hartrees) =   -0.000434
+     0.00055193   -0.00110386
+ esol last cycle   -0.00055193
+ cosmo_calcen: 0.5 (esolb+esolc) (Hartrees) =   -0.000552
 
- Solvation energy (screening term,uncorrected) =     -0.272415 kcal/mol
+ Solvation energy (screening term,uncorrected) =     -0.346342 kcal/mol
 
  Solvation energy (dispersion and cavitation terms) =      0.333687 kcal/mol
  Solvation Energy Contributions (Hartrees)
           esola   esolb+esolc
-     0.00043412   -0.00086824
- esol last cycle   -0.00043412
+     0.00055193   -0.00110386
+ esol last cycle   -0.00055193
 
  Energy gradients wrt nuclear displacements
  ==========================================
@@ -210,25 +203,25 @@ ADF Engine Input
      Atom      Cartesian (a.u./angstrom)
                  X         Y         Z
  ----------------------------------------
-     1 C     0.000221 -0.000099 -0.000074
-     2 H    -0.004268 -0.006049  0.004781
-     3 H    -0.005848  0.004759 -0.004644
-     4 H     0.004414  0.005313  0.005361
-     5 H     0.005481 -0.003924 -0.005424
+     1 C     0.000135 -0.000053 -0.000121
+     2 H    -0.007974 -0.011249  0.008853
+     3 H    -0.010810  0.008805 -0.008568
+     4 H     0.008299  0.009892  0.010046
+     5 H     0.010350 -0.007396 -0.010210
  ----------------------------------------
  Mulliken charges used for AMS results%charges...
 
 ----------------------------------------------------------------------
 Geometry Convergence after Step   1       (Hartree/Angstrom,Angstrom)
 ----------------------------------------------------------------------
-current energy                               -0.98861954 Hartree
-energy change                      -0.98861954     0.00005000    F
-constrained gradient max            0.00603647     0.00100000    F
-constrained gradient rms            0.00452730     0.00066667    F
-gradient max                        0.00603647
-gradient rms                        0.00452730
-cart. step max                      0.00335693     0.01000000    T
-cart. step rms                      0.00252598     0.00666667    T
+current energy                               -0.90697653 Hartree
+energy change                      -0.90697653     0.00005000    F
+constrained gradient max            0.01122435     0.00100000    F
+constrained gradient rms            0.00844591     0.00066667    F
+gradient max                        0.01122435
+gradient rms                        0.00844591
+cart. step max                      0.00621762     0.01000000    T
+cart. step rms                      0.00471281     0.00666667    T
 
 
 --------
@@ -237,11 +230,11 @@ Geometry
 Formula: CH4
 Atoms
   Index Symbol   x (angstrom)   y (angstrom)   z (angstrom)
-      1      C    -0.00004887     0.00003159     0.00002663       rdkit.charge=0 rdkit.origNoImplicit=False
-      2      H     0.53132930     0.74942160    -0.58828247       rdkit.charge=0 rdkit.isImplicit=1
-      3      H     0.71779387    -0.58798678     0.57364931       rdkit.charge=0 rdkit.isImplicit=1
-      4      H    -0.55780164    -0.65792703    -0.66778746       rdkit.charge=0 rdkit.isImplicit=1
-      5      H    -0.69127788     0.49646355     0.68238937       rdkit.charge=0 rdkit.isImplicit=1
+      1      C    -0.00005381     0.00002797     0.00005086       rdkit.charge=0 rdkit.origNoImplicit=False
+      2      H     0.53342139     0.75228166    -0.59055240       rdkit.charge=0 rdkit.isImplicit=1
+      3      H     0.72059844    -0.59023575     0.57582410       rdkit.charge=0 rdkit.isImplicit=1
+      4      H    -0.55996051    -0.66048156    -0.67039136       rdkit.charge=0 rdkit.isImplicit=1
+      5      H    -0.69400746     0.49841095     0.68506600       rdkit.charge=0 rdkit.isImplicit=1
 
 Total System Charge             0.00000
 Bonding info available!
@@ -279,32 +272,28 @@ Bonding info available!
 
  -------------------------------------------
   COSMO surface
-  Area             =          203.444
-  Volume           =          249.953
-  Number of Points =          538
+  Area             =          203.983
+  Volume           =          250.756
+  Number of Points =          539
  -------------------------------------------
- 
- RIHartreeFock Dependency: number of modified vectors:           0
- cosmo_calcen: 0.5 (esolb+esolc) (Hartrees) =   -0.000446
+ cosmo_calcen: 0.5 (esolb+esolc) (Hartrees) =   -0.000579
 
- Solvation energy (screening term,uncorrected) =     -0.279885 kcal/mol
+ Solvation energy (screening term,uncorrected) =     -0.363472 kcal/mol
 
- Solvation energy (dispersion and cavitation terms) =      0.334504 kcal/mol
+ Solvation energy (dispersion and cavitation terms) =      0.335389 kcal/mol
  Solvation Energy Contributions (Hartrees)
           esola   esolb+esolc
-     0.00044602   -0.00089205
- esol last cycle   -0.00044602
-  
- Hartree-Fock exchange energy:   -2.9158901704686131     
- cosmo_calcen: 0.5 (esolb+esolc) (Hartrees) =   -0.000446
+     0.00057923   -0.00115846
+ esol last cycle   -0.00057923
+ cosmo_calcen: 0.5 (esolb+esolc) (Hartrees) =   -0.000579
 
- Solvation energy (screening term,uncorrected) =     -0.279884 kcal/mol
+ Solvation energy (screening term,uncorrected) =     -0.363472 kcal/mol
 
- Solvation energy (dispersion and cavitation terms) =      0.334504 kcal/mol
+ Solvation energy (dispersion and cavitation terms) =      0.335389 kcal/mol
  Solvation Energy Contributions (Hartrees)
           esola   esolb+esolc
-     0.00044602   -0.00089205
- esol last cycle   -0.00044602
+     0.00057923   -0.00115846
+ esol last cycle   -0.00057923
 
  Energy gradients wrt nuclear displacements
  ==========================================
@@ -312,27 +301,27 @@ Bonding info available!
      Atom      Cartesian (a.u./angstrom)
                  X         Y         Z
  ----------------------------------------
-     1 C     0.000067 -0.000113 -0.000065
-     2 H    -0.001250 -0.001789  0.001422
-     3 H    -0.001774  0.001415 -0.001382
-     4 H     0.001321  0.001627  0.001627
-     5 H     0.001636 -0.001140 -0.001602
+     1 C     0.000066 -0.000031 -0.000070
+     2 H    -0.002467 -0.003512  0.002760
+     3 H    -0.003385  0.002728 -0.002657
+     4 H     0.002559  0.003090  0.003140
+     5 H     0.003228 -0.002276 -0.003172
  ----------------------------------------
  Mulliken charges used for AMS results%charges...
 
- dE(predicted):    -0.85763E-04, dE(actual):    -0.13577E-03, Trust radius:    0.200000, all in a.u.
+ dE(predicted):    -0.29852E-03, dE(actual):    -0.38744E-03, Trust radius:    0.200000, all in a.u.
 
 ----------------------------------------------------------------------
 Geometry Convergence after Step   2       (Hartree/Angstrom,Angstrom)
 ----------------------------------------------------------------------
-current energy                               -0.98875531 Hartree
-energy change                      -0.00013577     0.00005000    F
-constrained gradient max            0.00177380     0.00100000    F
-constrained gradient rms            0.00135261     0.00066667    F
-gradient max                        0.00177380
-gradient rms                        0.00135261
-cart. step max                      0.00140221     0.01000000    T
-cart. step rms                      0.00107586     0.00666667    T
+current energy                               -0.90736397 Hartree
+energy change                      -0.00038744     0.00005000    F
+constrained gradient max            0.00348730     0.00100000    F
+constrained gradient rms            0.00262831     0.00066667    F
+gradient max                        0.00348730
+gradient rms                        0.00262831
+cart. step max                      0.00278754     0.01000000    T
+cart. step rms                      0.00212921     0.00666667    T
 
 
 --------
@@ -341,11 +330,11 @@ Geometry
 Formula: CH4
 Atoms
   Index Symbol   x (angstrom)   y (angstrom)   z (angstrom)
-      1      C    -0.00007709     0.00007287     0.00005899       rdkit.charge=0 rdkit.origNoImplicit=False
-      2      H     0.53234440     0.75082381    -0.58941722       rdkit.charge=0 rdkit.isImplicit=1
-      3      H     0.71917583    -0.58912172     0.57473083       rdkit.charge=0 rdkit.isImplicit=1
-      4      H    -0.55884431    -0.65918500    -0.66907640       rdkit.charge=0 rdkit.isImplicit=1
-      5      H    -0.69260404     0.49741295     0.68369917       rdkit.charge=0 rdkit.isImplicit=1
+      1      C    -0.00009176     0.00004851     0.00009462       rdkit.charge=0 rdkit.origNoImplicit=False
+      2      H     0.53543472     0.75506920    -0.59279586       rdkit.charge=0 rdkit.isImplicit=1
+      3      H     0.72332203    -0.59246075     0.57795984       rdkit.charge=0 rdkit.isImplicit=1
+      4      H    -0.56202375    -0.66295966    -0.67293564       rdkit.charge=0 rdkit.isImplicit=1
+      5      H    -0.69664318     0.50030597     0.68767423       rdkit.charge=0 rdkit.isImplicit=1
 
 Total System Charge             0.00000
 Bonding info available!
@@ -383,32 +372,28 @@ Bonding info available!
 
  -------------------------------------------
   COSMO surface
-  Area             =          203.680
-  Volume           =          250.314
-  Number of Points =          538
+  Area             =          204.456
+  Volume           =          251.479
+  Number of Points =          540
  -------------------------------------------
- 
- RIHartreeFock Dependency: number of modified vectors:           0
- cosmo_calcen: 0.5 (esolb+esolc) (Hartrees) =   -0.000451
+ cosmo_calcen: 0.5 (esolb+esolc) (Hartrees) =   -0.000592
 
- Solvation energy (screening term,uncorrected) =     -0.283118 kcal/mol
+ Solvation energy (screening term,uncorrected) =     -0.371384 kcal/mol
 
- Solvation energy (dispersion and cavitation terms) =      0.334892 kcal/mol
+ Solvation energy (dispersion and cavitation terms) =      0.336168 kcal/mol
  Solvation Energy Contributions (Hartrees)
           esola   esolb+esolc
-     0.00045118   -0.00090235
- esol last cycle   -0.00045118
-  
- Hartree-Fock exchange energy:   -2.9128684477697826     
- cosmo_calcen: 0.5 (esolb+esolc) (Hartrees) =   -0.000451
+     0.00059184   -0.00118367
+ esol last cycle   -0.00059184
+ cosmo_calcen: 0.5 (esolb+esolc) (Hartrees) =   -0.000592
 
- Solvation energy (screening term,uncorrected) =     -0.283118 kcal/mol
+ Solvation energy (screening term,uncorrected) =     -0.371384 kcal/mol
 
- Solvation energy (dispersion and cavitation terms) =      0.334892 kcal/mol
+ Solvation energy (dispersion and cavitation terms) =      0.336168 kcal/mol
  Solvation Energy Contributions (Hartrees)
           esola   esolb+esolc
-     0.00045118   -0.00090235
- esol last cycle   -0.00045118
+     0.00059184   -0.00118367
+ esol last cycle   -0.00059184
 
  Energy gradients wrt nuclear displacements
  ==========================================
@@ -416,27 +401,27 @@ Bonding info available!
      Atom      Cartesian (a.u./angstrom)
                  X         Y         Z
  ----------------------------------------
-     1 C     0.000009 -0.000047 -0.000022
-     2 H    -0.000003 -0.000036  0.000026
-     3 H    -0.000063  0.000014 -0.000026
-     4 H     0.000014  0.000063  0.000044
-     5 H     0.000044  0.000006 -0.000022
+     1 C     0.000022 -0.000012 -0.000027
+     2 H    -0.000068 -0.000145  0.000102
+     3 H    -0.000145  0.000079 -0.000087
+     4 H     0.000064  0.000127  0.000124
+     5 H     0.000128 -0.000049 -0.000111
  ----------------------------------------
  Mulliken charges used for AMS results%charges...
 
- dE(predicted):    -0.10911E-04, dE(actual):    -0.21320E-04, Trust radius:    0.200000, all in a.u.
+ dE(predicted):    -0.41969E-04, dE(actual):    -0.42061E-04, Trust radius:    0.200000, all in a.u.
 
 ---------------------------------------------------------
 Geometry Convergence after Step   3       ** CONVERGED **
 ---------------------------------------------------------
-current energy                               -0.98877663 Hartree
-energy change                      -0.00002132     0.00005000    T
-constrained gradient max            0.00004733     0.00100000    T
-constrained gradient rms            0.00003178     0.00066667    T
-gradient max                        0.00004733
-gradient rms                        0.00003178
-cart. step max                      0.00003747     0.01000000    T
-cart. step rms                      0.00002347     0.00666667    T
+current energy                               -0.90740603 Hartree
+energy change                      -0.00004206     0.00005000    T
+constrained gradient max            0.00012440     0.00100000    T
+constrained gradient rms            0.00009468     0.00066667    T
+gradient max                        0.00012440
+gradient rms                        0.00009468
+cart. step max                      0.00010421     0.01000000    T
+cart. step rms                      0.00007944     0.00666667    T
 
 Geometry optimization converged
 
@@ -448,11 +433,11 @@ Geometry
 Formula: CH4
 Atoms
   Index Symbol   x (angstrom)   y (angstrom)   z (angstrom)
-      1      C    -0.00007709     0.00007287     0.00005899       rdkit.charge=0 rdkit.origNoImplicit=False
-      2      H     0.53234440     0.75082381    -0.58941722       rdkit.charge=0 rdkit.isImplicit=1
-      3      H     0.71917583    -0.58912172     0.57473083       rdkit.charge=0 rdkit.isImplicit=1
-      4      H    -0.55884431    -0.65918500    -0.66907640       rdkit.charge=0 rdkit.isImplicit=1
-      5      H    -0.69260404     0.49741295     0.68369917       rdkit.charge=0 rdkit.isImplicit=1
+      1      C    -0.00009176     0.00004851     0.00009462       rdkit.charge=0 rdkit.origNoImplicit=False
+      2      H     0.53543472     0.75506920    -0.59279586       rdkit.charge=0 rdkit.isImplicit=1
+      3      H     0.72332203    -0.59246075     0.57795984       rdkit.charge=0 rdkit.isImplicit=1
+      4      H    -0.56202375    -0.66295966    -0.67293564       rdkit.charge=0 rdkit.isImplicit=1
+      5      H    -0.69664318     0.50030597     0.68767423       rdkit.charge=0 rdkit.isImplicit=1
 
 Total System Charge             0.00000
 Bonding info available!
@@ -467,7 +452,7 @@ Performing a single point calculation on the final geometry ...
  A T T A C H E D   F I L E S
  ===========================
   
- Restart/tmp/amstmp_go0_kid0.369593868/GO1_GOStep3.rkf*** GO1_GOStep3 ***
+ Restart/tmp/amstmp_go0_kid0.1977914697/GO1_GOStep3.rkf*** GO1_GOStep3 ***
 
 
 
@@ -476,7 +461,8 @@ Performing a single point calculation on the final geometry ...
  ===============================
   
  DENSITY FUNCTIONAL POTENTIAL (scf)
-    Hybrid:                            B3LYP                                   == Not Default ==
+    LDA:                               VWN                                      
+    Gradient Corrections:              ---                                      
 
  SPIN  (restricted / unrestr.)
     Molecule:                          Restricted                               
@@ -529,34 +515,34 @@ Performing a single point calculation on the final geometry ...
  =====                            X Y Z                    CHARGE                     RADIUS
                                 (Angstrom)             Nucl     +Core       At.Mass (Angstrom)
                        --------------------------    ----------------       ------- ----------
-    1  C              -0.0001    0.0001    0.0001      6.00      4.00       12.0000    1.7000
-    2  H               0.5323    0.7508   -0.5894      1.00      1.00        1.0078    1.3500
-    3  H               0.7192   -0.5891    0.5747      1.00      1.00        1.0078    1.3500
-    4  H              -0.5588   -0.6592   -0.6691      1.00      1.00        1.0078    1.3500
-    5  H              -0.6926    0.4974    0.6837      1.00      1.00        1.0078    1.3500
+    1  C              -0.0001    0.0000    0.0001      6.00      4.00       12.0000    1.7000
+    2  H               0.5354    0.7551   -0.5928      1.00      1.00        1.0078    1.3500
+    3  H               0.7233   -0.5925    0.5780      1.00      1.00        1.0078    1.3500
+    4  H              -0.5620   -0.6630   -0.6729      1.00      1.00        1.0078    1.3500
+    5  H              -0.6966    0.5003    0.6877      1.00      1.00        1.0078    1.3500
 
 
  FRAGMENTS
  =========                                     Atoms in this Fragment     Cart. coord.s (Angstrom)
                                                -------------------------------------------------------
-    1  C                                                 1  C           -0.0001    0.0001    0.0001
-    2  H                                                 2  H            0.5323    0.7508   -0.5894
-    3  H                                                 3  H            0.7192   -0.5891    0.5747
-    4  H                                                 4  H           -0.5588   -0.6592   -0.6691
-    5  H                                                 5  H           -0.6926    0.4974    0.6837
+    1  C                                                 1  C           -0.0001    0.0000    0.0001
+    2  H                                                 2  H            0.5354    0.7551   -0.5928
+    3  H                                                 3  H            0.7233   -0.5925    0.5780
+    4  H                                                 4  H           -0.5620   -0.6630   -0.6729
+    5  H                                                 5  H           -0.6966    0.5003    0.6877
 
 
  Interatomic Distance Matrix (Angstrom)
  --------------------------------------
 
    1)     0.000
-   2)     1.093   0.000
-   3)     1.093   1.785   0.000
-   4)     1.093   1.785   1.785   0.000
-   5)     1.093   1.785   1.785   1.785   0.000
+   2)     1.099   0.000
+   3)     1.099   1.795   0.000
+   4)     1.099   1.795   1.795   0.000
+   5)     1.099   1.795   1.795   1.795   0.000
 
- Min. Distance =    1.0928
- Max. Distance =    1.7848
+ Min. Distance =    1.0992
+ Max. Distance =    1.7952
 
 
 
@@ -569,8 +555,6 @@ Performing a single point calculation on the final geometry ...
  Irreducible Representations, including subspecies
  -------------------------------------------------
  A
-
- Symmetry is NOT used when fitting density
 
 
  Configuration of Valence Electrons
@@ -633,72 +617,72 @@ Performing a single point calculation on the final geometry ...
     SFO  (index         Fragment          Generating    Expansion in Fragment Orbitals
   indx  incl.CFs)   Occup   Orb.Energy   FragmentType  Coeff.   Orbital     on Fragment
  --------------------------------------------------------------------------------------
-     1       2      2.000      -0.561 au  C             1.00      1 S               1
-                        (     -15.279 eV)
-     2       3       --         0.514 au  C             1.00      2 S               1
-                        (      13.988 eV)
-     3       4      0.667      -0.194 au  C             1.00      1 P:x             1
-                        (      -5.281 eV)
-     4       5       --         0.483 au  C             1.00      2 P:x             1
-                        (      13.155 eV)
-     5       6      0.667      -0.194 au  C             1.00      1 P:y             1
-                        (      -5.281 eV)
-     6       7       --         0.483 au  C             1.00      2 P:y             1
-                        (      13.155 eV)
-     7       8      0.667      -0.194 au  C             1.00      1 P:z             1
-                        (      -5.281 eV)
-     8       9       --         0.483 au  C             1.00      2 P:z             1
-                        (      13.155 eV)
-     9      10       --         1.280 au  C             1.00      1 D:z2            1
-                        (      34.821 eV)
-    10      11       --         1.280 au  C             1.00      1 D:x2-y2         1
-                        (      34.821 eV)
-    11      12       --         1.280 au  C             1.00      1 D:xy            1
-                        (      34.821 eV)
-    12      13       --         1.280 au  C             1.00      1 D:xz            1
-                        (      34.821 eV)
-    13      14       --         1.280 au  C             1.00      1 D:yz            1
-                        (      34.821 eV)
-    14      15      1.000      -0.244 au  H             1.00      1 S               2
-                        (      -6.637 eV)
-    15      16       --         0.419 au  H             1.00      2 S               2
-                        (      11.415 eV)
-    16      17       --         0.436 au  H             1.00      1 P:x             2
-                        (      11.867 eV)
-    17      18       --         0.436 au  H             1.00      1 P:y             2
-                        (      11.867 eV)
-    18      19       --         0.436 au  H             1.00      1 P:z             2
-                        (      11.867 eV)
-    19      20      1.000      -0.244 au  H             1.00      1 S               3
-                        (      -6.637 eV)
-    20      21       --         0.419 au  H             1.00      2 S               3
-                        (      11.415 eV)
-    21      22       --         0.436 au  H             1.00      1 P:x             3
-                        (      11.867 eV)
-    22      23       --         0.436 au  H             1.00      1 P:y             3
-                        (      11.867 eV)
-    23      24       --         0.436 au  H             1.00      1 P:z             3
-                        (      11.867 eV)
-    24      25      1.000      -0.244 au  H             1.00      1 S               4
-                        (      -6.637 eV)
-    25      26       --         0.419 au  H             1.00      2 S               4
-                        (      11.415 eV)
-    26      27       --         0.436 au  H             1.00      1 P:x             4
-                        (      11.867 eV)
-    27      28       --         0.436 au  H             1.00      1 P:y             4
-                        (      11.867 eV)
-    28      29       --         0.436 au  H             1.00      1 P:z             4
-                        (      11.867 eV)
-    29      30      1.000      -0.244 au  H             1.00      1 S               5
-                        (      -6.637 eV)
-    30      31       --         0.419 au  H             1.00      2 S               5
-                        (      11.415 eV)
-    31      32       --         0.436 au  H             1.00      1 P:x             5
-                        (      11.867 eV)
-    32      33       --         0.436 au  H             1.00      1 P:y             5
-                        (      11.867 eV)
-    33      34       --         0.436 au  H             1.00      1 P:z             5
-                        (      11.867 eV)
+     1       2      2.000      -0.508 au  C             1.00      1 S               1
+                        (     -13.814 eV)
+     2       3       --         0.470 au  C             1.00      2 S               1
+                        (      12.782 eV)
+     3       4      0.667      -0.206 au  C             1.00      1 P:x             1
+                        (      -5.600 eV)
+     4       5       --         0.432 au  C             1.00      2 P:x             1
+                        (      11.757 eV)
+     5       6      0.667      -0.206 au  C             1.00      1 P:y             1
+                        (      -5.600 eV)
+     6       7       --         0.432 au  C             1.00      2 P:y             1
+                        (      11.757 eV)
+     7       8      0.667      -0.206 au  C             1.00      1 P:z             1
+                        (      -5.600 eV)
+     8       9       --         0.432 au  C             1.00      2 P:z             1
+                        (      11.757 eV)
+     9      10       --         1.227 au  C             1.00      1 D:z2            1
+                        (      33.385 eV)
+    10      11       --         1.227 au  C             1.00      1 D:x2-y2         1
+                        (      33.385 eV)
+    11      12       --         1.227 au  C             1.00      1 D:xy            1
+                        (      33.385 eV)
+    12      13       --         1.227 au  C             1.00      1 D:xz            1
+                        (      33.385 eV)
+    13      14       --         1.227 au  C             1.00      1 D:yz            1
+                        (      33.385 eV)
+    14      15      1.000      -0.234 au  H             1.00      1 S               2
+                        (      -6.379 eV)
+    15      16       --         0.403 au  H             1.00      2 S               2
+                        (      10.964 eV)
+    16      17       --         0.402 au  H             1.00      1 P:x             2
+                        (      10.945 eV)
+    17      18       --         0.402 au  H             1.00      1 P:y             2
+                        (      10.945 eV)
+    18      19       --         0.402 au  H             1.00      1 P:z             2
+                        (      10.945 eV)
+    19      20      1.000      -0.234 au  H             1.00      1 S               3
+                        (      -6.379 eV)
+    20      21       --         0.403 au  H             1.00      2 S               3
+                        (      10.964 eV)
+    21      22       --         0.402 au  H             1.00      1 P:x             3
+                        (      10.945 eV)
+    22      23       --         0.402 au  H             1.00      1 P:y             3
+                        (      10.945 eV)
+    23      24       --         0.402 au  H             1.00      1 P:z             3
+                        (      10.945 eV)
+    24      25      1.000      -0.234 au  H             1.00      1 S               4
+                        (      -6.379 eV)
+    25      26       --         0.403 au  H             1.00      2 S               4
+                        (      10.964 eV)
+    26      27       --         0.402 au  H             1.00      1 P:x             4
+                        (      10.945 eV)
+    27      28       --         0.402 au  H             1.00      1 P:y             4
+                        (      10.945 eV)
+    28      29       --         0.402 au  H             1.00      1 P:z             4
+                        (      10.945 eV)
+    29      30      1.000      -0.234 au  H             1.00      1 S               5
+                        (      -6.379 eV)
+    30      31       --         0.403 au  H             1.00      2 S               5
+                        (      10.964 eV)
+    31      32       --         0.402 au  H             1.00      1 P:x             5
+                        (      10.945 eV)
+    32      33       --         0.402 au  H             1.00      1 P:y             5
+                        (      10.945 eV)
+    33      34       --         0.402 au  H             1.00      1 P:z             5
+                        (      10.945 eV)
 
 
 
@@ -723,29 +707,6 @@ Performing a single point calculation on the final geometry ...
  ------------------
     S:  1
 
- Charge Fitting Sets (for the computation of the Coulomb Potential):  20
- -----------------------------------------------------------------------
-   1 S   10.800000
-   2 S   11.590000
-   2 S    7.590000
-   2 S    4.970000
-   3 S    4.790000
-   3 S    3.350000
-   3 S    2.340000
-   3 S    1.640000
-   2 P    8.340000
-   2 P    5.140000
-   3 P    4.670000
-   3 P    3.100000
-   3 P    2.060000
-   3 D    5.880000
-   3 D    3.840000
-   3 D    2.510000
-   3 D    1.640000
-   4 F    5.400000
-   4 F    3.550000
-   5 G    4.500000
-
  Atom Type    2  (H)
  ==============
 
@@ -754,20 +715,6 @@ Performing a single point calculation on the final geometry ...
    1 S    0.760000
    1 S    1.280000
    2 P    1.250000
-
- Charge Fitting Sets (for the computation of the Coulomb Potential):  11
- -----------------------------------------------------------------------
-   1 S    3.160000
-   1 S    2.090000
-   1 S    1.380000
-   2 S    1.500000
-   2 P    4.000000
-   2 P    2.650000
-   2 P    1.750000
-   3 D    4.000000
-   3 D    2.500000
-   4 F    3.000000
-   5 G    4.000000
 
 
  BAS: List of all Elementary Cartesian Basis Functions
@@ -905,15 +852,15 @@ Performing a single point calculation on the final geometry ...
  Test of Precision of the Numerical Integration Grid
  ===================================================
 
- Integral of the Total Core Density:                   1.99999552350781
- Relative Error:                                      -2.238E-06
+ Integral of the Total Core Density:                   1.99999564742816
+ Relative Error:                                      -2.176E-06
 
 
  -------------------------------------------
   COSMO surface
-  Area             =          203.680
-  Volume           =          250.314
-  Number of Points =          538
+  Area             =          204.456
+  Volume           =          251.479
+  Number of Points =          540
  -------------------------------------------
 
 
@@ -929,21 +876,6 @@ Performing a single point calculation on the final geometry ...
 
 
 
- ======================
- RI Hartree-Fock Scheme
- ======================
-  
- Fit Set Quality     : NORMAL
- Threshold Quality   : NORMAL
- Integration Quality : NORMAL
- Fit Generation Method : AUTO
- Response Quality    : DEFAULT
- Is Range Separated  :  F
- 
- RIHartreeFock Dependency: number of modified vectors:           0
-
-
-
  =====
  S C F  ***  ScaSCF  ***
  =====
@@ -952,73 +884,73 @@ Performing a single point calculation on the final geometry ...
 
  CYCLE    1
   ***********************************************************
-  ** : orbital data taken from :/tmp/amstmp_go0_kid0.369593868/GO1_GOStep3.rkf
+  ** : orbital data taken from :/tmp/amstmp_go0_kid0.1977914697/GO1_GOStep3.rkf
   ***********************************************************
- SCF Error: norm([F,P])=      0.005006879503, max([F,P])=      0.001096231610
+ SCF Error: norm([F,P])=      0.006058209083, max([F,P])=      0.001346871702
  orbitals (Q,E):
  ---------------
- A :1...14           ( 2.00    -0.6916)  ( 2.00    -0.3987)  ( 2.00    -0.3986)  ( 2.00    -0.3985)
-                     ( 0.00     0.0466)  ( 0.00     0.1560)  ( 0.00     0.1560)  ( 0.00     0.1560)
-                     ( 0.00     0.3550)  ( 0.00     0.3550)  ( 0.00     0.3550)  ( 0.00     0.4145)
-                     ( 0.00     0.4145)  ( 0.00     0.5750)
+ A :1...14           ( 2.00    -0.6254)  ( 2.00    -0.3527)  ( 2.00    -0.3527)  ( 2.00    -0.3527)
+                     ( 0.00     0.0227)  ( 0.00     0.1205)  ( 0.00     0.1205)  ( 0.00     0.1205)
+                     ( 0.00     0.3202)  ( 0.00     0.3202)  ( 0.00     0.3202)  ( 0.00     0.3702)
+                     ( 0.00     0.3702)  ( 0.00     0.5293)
 
  CYCLE    2
-  SDIIS (wt  0.000):  0.5977  0.4023
- A-DIIS (wt  1.000):  0.6440  0.3560
-  DIIS coefficients:  0.6440  0.3560
- SCF Error: norm([F,P])=      0.007238023140, max([F,P])=      0.001907975502
+  SDIIS (wt  0.000):  0.6454  0.3546
+ A-DIIS (wt  1.000):  0.7017  0.2983
+  DIIS coefficients:  0.7017  0.2983
+ SCF Error: norm([F,P])=      0.010496225018, max([F,P])=      0.002874344866
  orbitals (Q,E):
  ---------------
- A :1...5            ( 2.00    -0.6912)  ( 2.00    -0.3980)  ( 2.00    -0.3979)  ( 2.00    -0.3979)
-                     ( 0.00     0.0479)
+ A :1...5            ( 2.00    -0.6253)  ( 2.00    -0.3524)  ( 2.00    -0.3524)  ( 2.00    -0.3524)
+                     ( 0.00     0.0238)
 
  CYCLE    3
-  SDIIS (wt  0.000):  0.3984  0.0596  0.5420
- A-DIIS (wt  1.000):  0.3022  0.0000  0.6978
-  DIIS coefficients:  0.3022  0.0000  0.6978
- SCF Error: norm([F,P])=      0.003022245591, max([F,P])=      0.000585798211
+  SDIIS (wt  0.000):  0.4244  0.0374  0.5382
+ A-DIIS (wt  1.000):  0.3582  0.0000  0.6418
+  DIIS coefficients:  0.3582  0.0000  0.6418
+ SCF Error: norm([F,P])=      0.004190759679, max([F,P])=      0.000862871213
  orbitals (Q,E):
  ---------------
- A :1...5            ( 2.00    -0.6899)  ( 2.00    -0.3967)  ( 2.00    -0.3966)  ( 2.00    -0.3965)
-                     ( 0.00     0.0495)
+ A :1...5            ( 2.00    -0.6241)  ( 2.00    -0.3511)  ( 2.00    -0.3511)  ( 2.00    -0.3510)
+                     ( 0.00     0.0255)
 
  CYCLE    4
-  SDIIS (wt  1.000): -0.0168 -0.9238  1.9406
-  DIIS coefficients: -0.0168 -0.9238  1.9406
- SCF Error: norm([F,P])=      0.001491085957, max([F,P])=      0.000301804841
+  SDIIS (wt  1.000): -0.0093 -0.9606  1.9700
+  DIIS coefficients: -0.0093 -0.9606  1.9700
+ SCF Error: norm([F,P])=      0.002085833505, max([F,P])=      0.000433563921
  orbitals (Q,E):
  ---------------
- A :1...5            ( 2.00    -0.6888)  ( 2.00    -0.3955)  ( 2.00    -0.3954)  ( 2.00    -0.3954)
-                     ( 0.00     0.0509)
+ A :1...5            ( 2.00    -0.6228)  ( 2.00    -0.3497)  ( 2.00    -0.3497)  ( 2.00    -0.3497)
+                     ( 0.00     0.0272)
 
  CYCLE    5
-  SDIIS (wt  1.000):  0.0061  0.0495 -0.1223  1.0667
-  DIIS coefficients:  0.0061  0.0495 -0.1223  1.0667
- SCF Error: norm([F,P])=      0.000022706613, max([F,P])=      0.000005434552
+  SDIIS (wt  1.000):  0.0035 -0.1053  0.2014  0.9003
+  DIIS coefficients:  0.0035 -0.1053  0.2014  0.9003
+ SCF Error: norm([F,P])=      0.000038872986, max([F,P])=      0.000009822522
  orbitals (Q,E):
  ---------------
- A :1...5            ( 2.00    -0.6888)  ( 2.00    -0.3955)  ( 2.00    -0.3954)  ( 2.00    -0.3954)
-                     ( 0.00     0.0509)
+ A :1...5            ( 2.00    -0.6228)  ( 2.00    -0.3497)  ( 2.00    -0.3497)  ( 2.00    -0.3497)
+                     ( 0.00     0.0272)
 
  CYCLE    6
-  SDIIS (wt  1.000):  0.0004  0.0039 -0.0093  0.0485  0.9565
-  DIIS coefficients:  0.0004  0.0039 -0.0093  0.0485  0.9565
- SCF Error: norm([F,P])=      0.000000648089, max([F,P])=      0.000000134382
+  SDIIS (wt  1.000):  0.0002  0.0012 -0.0030  0.0674  0.9342
+  DIIS coefficients:  0.0002  0.0012 -0.0030  0.0674  0.9342
+ SCF Error: norm([F,P])=      0.000002056231, max([F,P])=      0.000000501750
  orbitals (Q,E):
  ---------------
- A :1...5            ( 2.00    -0.6888)  ( 2.00    -0.3955)  ( 2.00    -0.3954)  ( 2.00    -0.3954)
-                     ( 0.00     0.0509)
+ A :1...5            ( 2.00    -0.6228)  ( 2.00    -0.3497)  ( 2.00    -0.3497)  ( 2.00    -0.3497)
+                     ( 0.00     0.0272)
 
  SCF CONVERGED
- cosmo_calcen: 0.5 (esolb+esolc) (Hartrees) =   -0.000451
+ cosmo_calcen: 0.5 (esolb+esolc) (Hartrees) =   -0.000592
 
- Solvation energy (screening term,uncorrected) =     -0.283118 kcal/mol
+ Solvation energy (screening term,uncorrected) =     -0.371384 kcal/mol
 
- Solvation energy (dispersion and cavitation terms) =      0.334892 kcal/mol
+ Solvation energy (dispersion and cavitation terms) =      0.336168 kcal/mol
  Solvation Energy Contributions (Hartrees)
           esola   esolb+esolc
-     0.00045118   -0.00090235
- esol last cycle   -0.00045118
+     0.00059184   -0.00118367
+ esol last cycle   -0.00059184
 
  CYCLE    7
 1
@@ -1030,61 +962,58 @@ Performing a single point calculation on the final geometry ...
                                                 *  R E S U L T S  *
                                                 *******************
   
-  
- Hartree-Fock exchange energy:   -2.9128684438137942     
  *** Using FIT density in Focky
-  SDIIS (wt  1.000): -0.0000 -0.0001  0.0002 -0.0084  0.2034  0.8049
-  DIIS coefficients: -0.0000 -0.0001  0.0002 -0.0084  0.2034  0.8049
- SCF Error: norm([F,P])=      0.000000177366, max([F,P])=      0.000000048185
+  SDIIS (wt  1.000):  0.0001  0.0005 -0.0011  0.0212  0.3079  0.6715
+  DIIS coefficients:  0.0001  0.0005 -0.0011  0.0212  0.3079  0.6715
+ SCF Error: norm([F,P])=      0.000000152936, max([F,P])=      0.000000041930
 
  Orbital Energies, per Irrep and Spin:
  ======================================
                         Occup              E (au)              E (eV)       Diff (eV) with prev. cycle
                         -----      --------------------        ------       --------------------------
  A
-               1        2.000     -0.68881266482370E+00       -18.744               5.11E-07
-               2        2.000     -0.39549216690141E+00       -10.762               1.19E-06
-               3        2.000     -0.39539528749123E+00       -10.759              -1.34E-07
-               4        2.000     -0.39536276638519E+00       -10.758               1.51E-07
-               5        0.000      0.50875531777550E-01         1.384
-               6        0.000      0.16089842359287E+00         4.378
-               7        0.000      0.16091000283848E+00         4.379
-               8        0.000      0.16094282019012E+00         4.379
-               9        0.000      0.35809995256244E+00         9.744
-              10        0.000      0.35813294452700E+00         9.745
-              11        0.000      0.35815274439856E+00         9.746
-              12        0.000      0.41765355661523E+00        11.365
-              13        0.000      0.41767252542520E+00        11.365
-              14        0.000      0.57924133628049E+00        15.762
+               1        2.000     -0.62276497573667E+00       -16.946               1.15E-07
+               2        2.000     -0.34972486579592E+00        -9.516               1.96E-07
+               3        2.000     -0.34966668101214E+00        -9.515               4.38E-07
+               4        2.000     -0.34965315600590E+00        -9.515              -3.08E-07
+               5        0.000      0.27231384357203E-01         0.741
+               6        0.000      0.12555673233775E+00         3.417
+               7        0.000      0.12556177951519E+00         3.417
+               8        0.000      0.12558551987546E+00         3.417
+               9        0.000      0.32319352415378E+00         8.795
+              10        0.000      0.32322775671017E+00         8.795
+              11        0.000      0.32324347169195E+00         8.796
+              12        0.000      0.37332086505626E+00        10.159
+              13        0.000      0.37333205264088E+00        10.159
+              14        0.000      0.53359350269197E+00        14.520
   
- HOMO :        4 A                -0.39536276638519E+00
- LUMO :        5 A                 0.50875531777550E-01
+ HOMO :        4 A                -0.34965315600590E+00
+ LUMO :        5 A                 0.27231384357203E-01
   
- cosmo_calcen: 0.5 (esolb+esolc) (Hartrees) =   -0.000451
+ cosmo_calcen: 0.5 (esolb+esolc) (Hartrees) =   -0.000592
 
- Solvation energy (screening term,uncorrected) =     -0.283118 kcal/mol
+ Solvation energy (screening term,uncorrected) =     -0.371384 kcal/mol
 
- Solvation energy (dispersion and cavitation terms) =      0.334892 kcal/mol
+ Solvation energy (dispersion and cavitation terms) =      0.336168 kcal/mol
  Solvation Energy Contributions (Hartrees)
           esola   esolb+esolc
-     0.00045118   -0.00090235
- esol last cycle   -0.00045118
+     0.00059184   -0.00118367
+ esol last cycle   -0.00059184
 
 
  Orbital Energies of the Core Orbitals:
  ======================================
- WARNING : The XC part is not included correctly in these core orbital energies!
  (Note that the atoms are grouped by atomtype, see the labels, and may hence NOT be in input order)
 
  AtomType  Orbital  Atom                   E (au)                        E (eV)
  --------  -------  ----           --------------------        ----------------
- C           1S        1          -0.76490277166531E+01                -208.141
+ C           1S        1          -0.97620359051905E+01                -265.639
 
 
  Fit test: (difference of exact and fit density, squared integrated, result summed over spins)
          Sum-of-Fragments:                             0.00000000000196
-         Orthogonalized Fragments:                     0.00002504035550
-         SCF:                                          0.00019838604240
+         Orthogonalized Fragments:                     0.00002463671451
+         SCF:                                          0.00018470510188
 
 
 
@@ -1098,11 +1027,11 @@ Performing a single point calculation on the final geometry ...
 
          Atom        Nuclear Radius (Angstrom)             Electron Density (a.u.)
          ----        -------------------------             -----------------------
-     1)   C                 0.0000320678                              124.68813
-     2)   H                 0.0000181514                                0.50493
-     3)   H                 0.0000181514                                0.50493
-     4)   H                 0.0000181514                                0.50499
-     5)   H                 0.0000181514                                0.50499
+     1)   C                 0.0000320678                              124.75250
+     2)   H                 0.0000181514                                0.47019
+     3)   H                 0.0000181514                                0.47022
+     4)   H                 0.0000181514                                0.47023
+     5)   H                 0.0000181514                                0.47022
 
 
 
@@ -1117,35 +1046,35 @@ Performing a single point calculation on the final geometry ...
 
  Atom              Charge    Spin density          S         P         D         F
  ----              ------    ------------       ------    ------    ------    ------
- 1 C               0.0771                       1.1299    2.7673    0.0257    0.0000
- 2 H              -0.0192                       0.9567    0.0625    0.0000    0.0000
- 3 H              -0.0193                       0.9568    0.0625    0.0000    0.0000
- 4 H              -0.0193                       0.9568    0.0625    0.0000    0.0000
- 5 H              -0.0193                       0.9567    0.0626    0.0000    0.0000
+ 1 C              -0.0994                       1.1945    2.8851    0.0197    0.0000
+ 2 H               0.0248                       0.9096    0.0656    0.0000    0.0000
+ 3 H               0.0249                       0.9095    0.0656    0.0000    0.0000
+ 4 H               0.0249                       0.9095    0.0656    0.0000    0.0000
+ 5 H               0.0248                       0.9096    0.0656    0.0000    0.0000
 
  Populations of individual BAS functions
  ----------------------------------------
- 1 C            0.0004  0.4049  0.7247  0.3100  0.3100  0.3100  0.6125  0.6124  0.6124  0.0003
-                0.0080  0.0085  0.0004  0.0084  0.0001
- 2 H            0.1389  0.8178  0.0212  0.0204  0.0210
- 3 H            0.1390  0.8178  0.0205  0.0210  0.0210
- 4 H            0.1389  0.8179  0.0211  0.0208  0.0207
- 5 H            0.1387  0.8179  0.0206  0.0213  0.0207
+ 1 C            0.0004  0.4565  0.7376  0.3381  0.3382  0.3382  0.6235  0.6235  0.6235  0.0002
+                0.0062  0.0066  0.0003  0.0064  0.0001
+ 2 H            0.1411  0.7684  0.0225  0.0210  0.0221
+ 3 H            0.1410  0.7685  0.0212  0.0221  0.0222
+ 4 H            0.1410  0.7685  0.0223  0.0217  0.0216
+ 5 H            0.1412  0.7685  0.0214  0.0227  0.0215
 
  Gross Charges per Atom (Z minus electrons)
  ==========================================
-             0.0771   -0.0192   -0.0193   -0.0193   -0.0193
+            -0.0994    0.0248    0.0249    0.0249    0.0248
  Net Total:  0.00000000
 
 
  Atom-Atom Population Matrix (off-diagonal elements not doubled)
  ===============================================================
 
-     1 :     2.2842
-     2 :     0.4096    0.7295
-     3 :     0.4096   -0.0400    0.7296
-     4 :     0.4096   -0.0400   -0.0400    0.7296
-     5 :     0.4098   -0.0400   -0.0399   -0.0399    0.7293
+     1 :     2.4639
+     2 :     0.4088    0.6742
+     3 :     0.4088   -0.0360    0.6741
+     4 :     0.4088   -0.0360   -0.0359    0.6741
+     5 :     0.4090   -0.0360   -0.0359   -0.0359    0.6741
 
 
 
@@ -1161,13 +1090,13 @@ Performing a single point calculation on the final geometry ...
  chemical type are grouped together. This may not be the order in which you listed them
  in the input file!
 
-    1  C                        -0.1581
-    2  H                         0.0396
-    3  H                         0.0395
-    4  H                         0.0395
-    5  H                         0.0396
+    1  C                        -0.1880
+    2  H                         0.0470
+    3  H                         0.0470
+    4  H                         0.0470
+    5  H                         0.0470
 
- Sum of these charges (accuracy NumInt/Tails) =           0.00001615
+ Sum of these charges (accuracy NumInt/Tails) =           0.00001561
 
 
 
@@ -1193,11 +1122,11 @@ Performing a single point calculation on the final geometry ...
   Atom                Initial                    OrthFrag                   SCF
              Sphere RestCell NetTotal   Sphere RestCell NetTotal   Sphere RestCell NetTotal      VDD
  -----       ------------------------   ------------------------   ------------------------    -----
-    1 C      -2.129   -1.952    1.919   -2.257   -2.355    1.388   -2.157   -2.042    1.800   -0.118
-    2 H      -0.072   -1.402   -0.474   -0.095   -1.249   -0.344   -0.110   -1.335   -0.446    0.029
-    3 H      -0.072   -1.393   -0.466   -0.095   -1.246   -0.341   -0.110   -1.332   -0.442    0.024
-    4 H      -0.072   -1.411   -0.483   -0.095   -1.253   -0.347   -0.110   -1.343   -0.452    0.030
-    5 H      -0.073   -1.423   -0.496   -0.095   -1.261   -0.356   -0.110   -1.350   -0.461    0.035
+    1 C      -2.136   -1.998    1.866   -2.264   -2.396    1.340   -2.163   -2.110    1.728   -0.139
+    2 H      -0.071   -1.392   -0.463   -0.092   -1.242   -0.333   -0.104   -1.325   -0.429    0.034
+    3 H      -0.071   -1.383   -0.453   -0.092   -1.238   -0.329   -0.103   -1.320   -0.424    0.030
+    4 H      -0.071   -1.398   -0.469   -0.092   -1.244   -0.335   -0.103   -1.330   -0.433    0.036
+    5 H      -0.071   -1.410   -0.481   -0.092   -1.250   -0.342   -0.104   -1.338   -0.442    0.039
  ---------------------------------------------------------------------------------------------------
  Total NetCharge:               0.000                      0.000                      0.000    0.000
  (accuracy NumInt/Tails)
@@ -1237,11 +1166,11 @@ Performing a single point calculation on the final geometry ...
 
    atom        charge        dip-x     dip-y     dip-z      quad-xx   quad-xy   quad-xz   quad-yy   quad-yz   quad-zz
  --------------------------------------------------------------------------------------------------------------------
-    1 C      0.289601     0.000071  0.000038 -0.000021    -0.000054 -0.000083 -0.000188 -0.000017  0.000033  0.000071
-    2 H     -0.072391    -0.000008 -0.000007 -0.000030    -0.036850  0.085855 -0.067584  0.053235 -0.094934 -0.016386
-    3 H     -0.072429    -0.000038 -0.000002 -0.000086     0.038339 -0.091027  0.088808 -0.016645 -0.072868 -0.021694
-    4 H     -0.072441     0.000091 -0.000012  0.000040    -0.027537  0.079242  0.080445  0.011483  0.094764  0.016054
-    5 H     -0.072340    -0.000092 -0.000029  0.000071     0.025951 -0.074144 -0.101553 -0.048147  0.073221  0.022197
+    1 C      0.227409     0.000136  0.000040 -0.000078     0.000059 -0.000149 -0.000217 -0.000122  0.000086  0.000063
+    2 H     -0.056860    -0.000077 -0.000173  0.000059    -0.037903  0.088290 -0.069482  0.054751 -0.097652 -0.016848
+    3 H     -0.056858    -0.000126  0.000082 -0.000162     0.039482 -0.093627  0.091322 -0.017106 -0.074912 -0.022375
+    4 H     -0.056860     0.000161  0.000088  0.000119    -0.028343  0.081474  0.082704  0.011838  0.097463  0.016505
+    5 H     -0.056830     0.000068 -0.000118 -0.000091     0.026754 -0.076230 -0.104460 -0.049586  0.075264  0.022831
 
  --------------------------------------- 
  Multipole derived atomic charges (a.u.)
@@ -1253,11 +1182,11 @@ Performing a single point calculation on the final geometry ...
 
         Atom    Level:     MDC-m        MDC-d        MDC-q
  ---------------------------------------------------------
-     1     C            0.289601     0.239929   -13.675539
-     2     H           -0.072391    -0.059968     3.416015
-     3     H           -0.072429    -0.060010     3.420659
-     4     H           -0.072441    -0.060021     3.419539
-     5     H           -0.072340    -0.059930     3.419327
+     1     C            0.227409     0.188593   -55.889373
+     2     H           -0.056860    -0.047120    13.958740
+     3     H           -0.056858    -0.047130    13.966091
+     4     H           -0.056860    -0.047136    13.968056
+     5     H           -0.056830    -0.047207    13.996484
 
  ------------------------------------------------ 
  Average absolute deviations in atomic multipoles
@@ -1273,8 +1202,8 @@ Performing a single point calculation on the final geometry ...
  Level:                                 MDC-d        MDC-q
  ---------------------------------------------------------
  Charge   (a.u.)                       0.0000       0.0000
- Dipole   (Debye)                      0.0000       0.0459
- Quad.    (a.u.)                       0.0279       0.0059
+ Dipole   (Debye)                      0.0000       0.0354
+ Quad.    (a.u.)                       0.0286       0.0049
 
  --------------------------------------- 
  Represented molecular multipole moments
@@ -1286,11 +1215,11 @@ Performing a single point calculation on the final geometry ...
             Q (a.u.)             Dipole moment (Debye)                                          Quadrupole moment (a.u.)
                                  x         y         z              xx        xy        xz        yy        yz        zz
 ------------------------------------------------------------------------------------------------------------------------
-MDC-m         0.0000       -0.0003    0.0005    0.0003          0.0001   -0.0001   -0.0003   -0.0000    0.0000   -0.0000
-MDC-d         0.0000       -0.0002    0.0005    0.0003          0.0001   -0.0000   -0.0003   -0.0000    0.0000   -0.0000
-MDC-q         0.0000        0.0018   -0.0223    0.0075          0.0006   -0.0118    0.0078   -0.0030    0.0058    0.0024
+MDC-m         0.0000       -0.0002    0.0001    0.0002          0.0000   -0.0000   -0.0000    0.0000    0.0000   -0.0000
+MDC-d         0.0000        0.0002   -0.0001   -0.0002         -0.0000    0.0002    0.0002    0.0001   -0.0002   -0.0001
+MDC-q        -0.0000       -0.0952    0.0241    0.0830          0.0169   -0.0826   -0.0772   -0.0392    0.0900    0.0224
 
-Fit.Dens.     0.0000       -0.0002    0.0005    0.0003         -0.0001   -0.0004   -0.0012   -0.0001    0.0003    0.0002
+Fit.Dens.     0.0000        0.0002   -0.0001   -0.0002          0.0001   -0.0004   -0.0006   -0.0003    0.0003    0.0002
 
 
 
@@ -1298,8 +1227,8 @@ Fit.Dens.     0.0000       -0.0002    0.0005    0.0003         -0.0001   -0.0004
  Dipole Moment  ***  (Debye)  ***
  =============
   
- Vector   :        -0.00021846      0.00044281      0.00020787
- Magnitude:         0.00053574
+ Vector   :         0.00020459     -0.00013623     -0.00021749
+ Magnitude:         0.00032820
 
  This molecular dipole moment is calculated with analytic integration
 
@@ -1310,7 +1239,7 @@ Fit.Dens.     0.0000       -0.0002    0.0005    0.0003         -0.0001   -0.0004
  =========================================
   
       quad-xx        quad-xy        quad-xz        quad-yy        quad-yz        quad-zz
-     -0.00016442    -0.00044330    -0.00104821    -0.00021346     0.00049606     0.00037788
+      0.00004610    -0.00051543    -0.00056483    -0.00041068     0.00052497     0.00036458
 
  This molecular quadrupole moment is calculated with analytic integration
 1
@@ -1346,72 +1275,83 @@ on the meaning of the various terms.
 
                                                    hartree              eV         kcal/mol           kJ/mol
                                       --------------------     -----------       ----------      -----------
-  pauli hf:                              0.163993752205488          4.4625           102.91           430.57
-  elstat hf:                            -0.237442754654027         -6.4611          -149.00          -623.41
 
 Pauli Repulsion
-  Kinetic (Delta T^0):                   5.727805538830623        155.8615          3594.25         15038.35
-  Delta V^Pauli Coulomb:                -2.712746366167977        -73.8176         -1702.27         -7122.31
-  Delta V^Pauli Hybrid-X:               -0.552550809724980        -15.0357          -346.73         -1450.72
-  Delta V^Pauli Hybrid-C:               -0.052842151365372         -1.4379           -33.16          -138.74
-  Delta V^Pauli HF-Exchange:            -0.073449002448540         -1.9986           -46.09          -192.84
+  Kinetic (Delta T^0):                   5.635525834165188        153.3505          3536.35         14796.07
+  Delta V^Pauli Coulomb:                -2.670724314035934        -72.6741         -1675.90         -7011.99
+  Delta V^Pauli LDA-XC:                 -0.753634522492188        -20.5074          -472.91         -1978.67
                                       --------------------     -----------       ----------      -----------
-  Total Pauli Repulsion:                 2.336217209123753         63.5717          1466.00          6133.74
+  Total Pauli Repulsion:                 2.211166997637066         60.1689          1387.53          5805.42
  (Total Pauli Repulsion =
   Delta E^Pauli in BB paper)
 
 Steric Interaction
-  Pauli Repulsion (Delta E^Pauli):       2.336217209123753         63.5717          1466.00          6133.74
-  Electrostatic Interaction:            -0.338460789513203         -9.2100          -212.39          -888.63
+  Pauli Repulsion (Delta E^Pauli):       2.211166997637066         60.1689          1387.53          5805.42
+  Electrostatic Interaction:            -0.339682951332790         -9.2432          -213.15          -891.84
  (Electrostatic Interaction =
   Delta V_elstat in the BB paper)
                                       --------------------     -----------       ----------      -----------
-  Total Steric Interaction:              1.997756419610550         54.3617          1253.61          5245.11
+  Total Steric Interaction:              1.871484046304276         50.9257          1174.37          4913.58
  (Total Steric Interaction =
   Delta E^0 in the BB paper)
 
 Orbital Interactions
-  A:                                    -2.986562205550819        -81.2685         -1874.10         -7841.22
-  HF orbital correction:                -0.000000003878466         -0.0000            -0.00            -0.00
+  A:                                    -2.778782070614087        -75.6145         -1743.71         -7295.69
                                       --------------------     -----------       ----------      -----------
-  Total Orbital Interactions:           -2.986562209429285        -81.2685         -1874.10         -7841.22
+  Total Orbital Interactions:           -2.778782070614086        -75.6145         -1743.71         -7295.69
 
 Alternative Decomposition Orb.Int.
-  Kinetic:                              -4.784497030574768       -130.1928         -3002.32        -12561.70
-  Coulomb:                               2.007817912211594         54.6355          1259.92          5271.53
-  XC+HF:                                -0.209883091066110         -5.7112          -131.70          -551.05
-  XC only:                              -0.011024752342421         -0.3000            -6.92           -28.95
-  HF Orbital:                           -0.198858338723690         -5.4112          -124.79          -522.10
+  Kinetic:                              -4.782401494486457       -130.1358         -3001.00        -12556.19
+  Coulomb:                               2.029414811368344         55.2232          1273.48          5328.23
+  XC:                                   -0.025795387495973         -0.7019           -16.19           -67.73
                                       --------------------     -----------       ----------      -----------
-  Total Orbital Interactions:           -2.986562209429285        -81.2685         -1874.10         -7841.22
+  Total Orbital Interactions:           -2.778782070614086        -75.6145         -1743.71         -7295.69
 
-  Residu (E=Steric+OrbInt+Res):         -0.000053346586978         -0.0015            -0.03            -0.14
+  Residu (E=Steric+OrbInt+Res):         -0.000051891062842         -0.0014            -0.03            -0.14
 
 
-  Solvation Energy (el):                -0.000451176783329         -0.0123            -0.28            -1.18
+  Solvation Energy (el):                -0.000591837311944         -0.0161            -0.37            -1.55
 
 Post-SCF Solvation Energies
-  Solvation Energy (cd):                 0.000533683757213          0.0145             0.33             1.40
+  Solvation Energy (cd):                 0.000535718091891          0.0146             0.34             1.41
 
-Total Bonding Energy:                   -0.988776629431830        -26.9060          -620.47         -2596.03
+Total Bonding Energy:                   -0.907406034592705        -24.6918          -569.41         -2382.39
 
 
 Summary of Bonding Energy (energy terms are taken from the energy decomposition above)
 ======================================================================================
 
-  Electrostatic Energy:                 -0.338460789513203         -9.2100          -212.39          -888.63
-  Kinetic Energy:                        0.943308508255854         25.6687           591.94          2476.66
-  Coulomb (Steric+OrbInt) Energy:       -0.704981800543361        -19.1835          -442.38         -1850.93
-  XC Energy:                            -0.888725054605003        -24.1834          -557.68         -2333.35
-  Solvation:                             0.000082506973884          0.0022             0.05             0.22
+  Electrostatic Energy:                 -0.339682951332790         -9.2432          -213.15          -891.84
+  Kinetic Energy:                        0.853124339678731         23.2147           535.34          2239.88
+  Coulomb (Steric+OrbInt) Energy:       -0.641361393730431        -17.4523          -402.46         -1683.89
+  XC Energy:                            -0.779429909988161        -21.2094          -489.10         -2046.39
+  Solvation:                            -0.000056119220053         -0.0015            -0.04            -0.15
                                       --------------------     -----------       ----------      -----------
-  Total Bonding Energy:                 -0.988776629431829        -26.9060          -620.47         -2596.03
+  Total Bonding Energy:                 -0.907406034592705        -24.6918          -569.41         -2382.39
 
 
 Correction terms (incorporated in energies above; only for test purposes):
 
-1. Indication of fit-quality: 1st-order fit-correction used in the energy (hartree):   0.0000825295
+1. Indication of fit-quality: 1st-order fit-correction used in the energy (hartree):   0.0000811702
 2. Electrostatic (Fit correction):   0.0000000000
+
+
+
+ =========================================
+ F R A G M E N T   E N E R G Y   T E R M S  ***  (summed over all fragments)  ***
+ =========================================
+  
+
+The energy terms below are (parts of) the Total Energy of the fragments from which the molecule
+ is built.
+
+Exchange and Correlation
+  Exchange LDA:                         -5.123059785764919       -139.4055         -3214.77        -13450.59
+  Exchange GGA:                          0.000000000000000          0.0000             0.00             0.00
+  Correlation LDA:                      -0.529085818789770        -14.3972          -332.01         -1389.11
+  Correlation GGA:                       0.000000000000000          0.0000             0.00             0.00
+                                      --------------------     -----------       ----------      -----------
+  Total XC:                             -5.652145604554690       -153.8027         -3546.78        -14839.71
 1
 
 
@@ -1434,35 +1374,34 @@ Correction terms (incorporated in energies above; only for test purposes):
  occup:     2.00   2.00   2.00   2.00   0.00   0.00   0.00   0.00
  CF+SFO     ----   ----   ----   ----   ----   ----   ----   ----
  ------
-      2:   56.78  -0.00  -0.00   0.00   7.34  -0.00  -0.00   0.00
-      3:   -0.28   0.00   0.00  -0.00 -38.41  -0.00  -0.00  -0.00
-      4:    0.00  15.57   3.77  27.74  -0.00   3.32  24.29   4.98
-      5:   -0.00  -0.32  -0.08  -0.57   0.00  -2.60 -19.01  -3.91
-      6:    0.00   8.91  38.17   0.00   0.00  15.12   8.02   9.45
-      7:    0.00  -0.18  -0.78  -0.00  -0.00 -11.83  -6.28  -7.41
-      8:   -0.00  22.61   5.13  19.34   0.00  14.16   0.29  18.14
-      9:    0.00  -0.46  -0.10  -0.39  -0.00 -11.08  -0.23 -14.22
-     15:   10.81   4.38  30.34   0.02  21.11  31.48  35.59   3.51
-     16:   -1.28   0.45   3.11   0.00  12.91   0.90   1.02   0.10
-     20:   10.81   2.14   7.76  24.84  21.11  60.21   8.65   1.70
-     21:   -1.28   0.22   0.80   2.55  12.91   1.72   0.25   0.05
-     22:    0.58   0.02   0.77  -0.34  -0.55  -1.29   0.01   0.01
-     23:    0.39  -0.00   0.05   0.61  -0.37  -1.08   0.41   0.13
-     24:    0.37   0.98  -0.06  -0.24  -0.35  -1.03  -0.12   0.67
-     25:   10.81   5.35   8.20  21.19  21.10   1.72  45.01  23.88
-     26:   -1.28   0.55   0.84   2.18  12.91   0.05   1.29   0.69
-     30:   10.82  34.43   0.02   0.27  21.09   0.71   4.86  65.05
-     31:   -1.28   3.54   0.00   0.03  12.90   0.02   0.14   1.88
-     32:    0.54  -0.08   0.11   0.46  -0.52   0.03   0.23  -1.37
-     34:    0.53  -0.25   0.14   0.62  -0.50   0.51  -0.01  -1.56
+      2:   59.96   0.00   0.00   0.00   8.16  -0.00  -0.00   0.00
+      3:   -0.23  -0.00  -0.00   0.00 -34.92  -0.00  -0.00  -0.00
+      4:    0.00  15.82  19.09  14.25  -0.00   4.09  18.19  10.77
+      5:   -0.00  -0.35  -0.42  -0.31   0.00  -2.99 -13.29  -7.87
+      6:   -0.00  12.56   3.14  33.46   0.00  24.50   0.01   8.54
+      7:    0.00  -0.27  -0.07  -0.73  -0.00 -17.89  -0.01  -6.25
+      8:    0.00  20.78  26.93   1.45   0.00   4.47  14.85  13.73
+      9:    0.00  -0.45  -0.59  -0.03  -0.00  -3.26 -10.85 -10.04
+     15:   10.10   2.60   2.41  28.24  20.95  63.80   0.01   5.28
+     16:   -1.24   0.26   0.24   2.86  11.60  -0.18  -0.00  -0.01
+     18:    0.57   0.84  -0.03  -0.33  -0.42  -1.37  -0.00   0.74
+     20:   10.10   3.07  29.10   1.08  20.95  12.54  49.88   6.67
+     21:   -1.24   0.31   2.95   0.11  11.60  -0.04  -0.14  -0.02
+     24:    0.34   1.04  -0.25  -0.01  -0.25  -0.17  -0.67   0.95
+     25:   10.10   5.66  12.75  14.83  20.95  15.53  42.00  11.58
+     26:   -1.24   0.57   1.29   1.51  11.60  -0.05  -0.12  -0.03
+     27:    0.32   1.04  -0.12  -0.13  -0.23  -0.19  -0.56   0.92
+     30:   10.10  33.00   0.07   0.18  20.94   0.26   0.24  68.61
+     31:   -1.24   3.35   0.01   0.02  11.60  -0.00  -0.00  -0.18
+     34:    0.48  -0.16   0.76   0.01  -0.35   0.10   0.63  -1.05
 
 
  Summation over all MOs, multiplied by occupation: Total SFO Gross Populations in this Irrep
  ===========================================================================================
 
-     0.00    1.14   -0.01    0.94   -0.02    0.94   -0.02    0.94   -0.02    0.00    0.00    0.01
-     0.01    0.01    0.91    0.05    0.02    0.02    0.02    0.91    0.05    0.02    0.02    0.02
-     0.91    0.05    0.02    0.02    0.02    0.91    0.05    0.02    0.02    0.02
+     0.00    1.20   -0.00    0.98   -0.02    0.98   -0.02    0.98   -0.02    0.00    0.00    0.01
+     0.01    0.01    0.87    0.04    0.02    0.02    0.02    0.87    0.04    0.02    0.02    0.02
+     0.87    0.04    0.02    0.02    0.02    0.87    0.04    0.02    0.02    0.02
 
 
 
@@ -1479,82 +1418,78 @@ Correction terms (incorporated in energies above; only for test purposes):
        E(eV)  Occ       MO           %     SFO (first member)   E(eV)  Occ   Fragment
  -------------------------------------------------------------------------------------
 
-     -18.744  2.00     1 A         56.78%     1 S             -15.279  2.00     1 C
-                                   10.82%     1 S              -6.637  1.00     5 H
-                                   10.81%     1 S              -6.637  1.00     4 H
-                                   10.81%     1 S              -6.637  1.00     2 H
-                                   10.81%     1 S              -6.637  1.00     3 H
-                                   -1.28%     2 S              11.415  0.00     2 H
-                                   -1.28%     2 S              11.415  0.00     4 H
-                                   -1.28%     2 S              11.415  0.00     3 H
-                                   -1.28%     2 S              11.415  0.00     5 H
-     -10.762  2.00     2 A         34.43%     1 S              -6.637  1.00     5 H
-                                   22.61%     1 P:z            -5.281  0.67     1 C
-                                   15.57%     1 P:x            -5.281  0.67     1 C
-                                    8.91%     1 P:y            -5.281  0.67     1 C
-                                    5.35%     1 S              -6.637  1.00     4 H
-                                    4.38%     1 S              -6.637  1.00     2 H
-                                    3.54%     2 S              11.415  0.00     5 H
-                                    2.14%     1 S              -6.637  1.00     3 H
-     -10.759  2.00     3 A         38.17%     1 P:y            -5.281  0.67     1 C
-                                   30.34%     1 S              -6.637  1.00     2 H
-                                    8.20%     1 S              -6.637  1.00     4 H
-                                    7.76%     1 S              -6.637  1.00     3 H
-                                    5.13%     1 P:z            -5.281  0.67     1 C
-                                    3.77%     1 P:x            -5.281  0.67     1 C
-                                    3.11%     2 S              11.415  0.00     2 H
-     -10.758  2.00     4 A         27.74%     1 P:x            -5.281  0.67     1 C
-                                   24.84%     1 S              -6.637  1.00     3 H
-                                   21.19%     1 S              -6.637  1.00     4 H
-                                   19.34%     1 P:z            -5.281  0.67     1 C
-                                    2.55%     2 S              11.415  0.00     3 H
-                                    2.18%     2 S              11.415  0.00     4 H
-       1.384  0.00     5 A        -38.41%     2 S              13.988  0.00     1 C
-                                   21.11%     1 S              -6.637  1.00     2 H
-                                   21.11%     1 S              -6.637  1.00     3 H
-                                   21.10%     1 S              -6.637  1.00     4 H
-                                   21.09%     1 S              -6.637  1.00     5 H
-                                   12.91%     2 S              11.415  0.00     2 H
-                                   12.91%     2 S              11.415  0.00     3 H
-                                   12.91%     2 S              11.415  0.00     4 H
-                                   12.90%     2 S              11.415  0.00     5 H
-                                    7.34%     1 S             -15.279  2.00     1 C
-       4.378  0.00     6 A         60.21%     1 S              -6.637  1.00     3 H
-                                   31.48%     1 S              -6.637  1.00     2 H
-                                   15.12%     1 P:y            -5.281  0.67     1 C
-                                   14.16%     1 P:z            -5.281  0.67     1 C
-                                  -11.83%     2 P:y            13.155  0.00     1 C
-                                  -11.08%     2 P:z            13.155  0.00     1 C
-                                    3.32%     1 P:x            -5.281  0.67     1 C
-                                   -2.60%     2 P:x            13.155  0.00     1 C
-                                    1.72%     2 S              11.415  0.00     3 H
-                                    1.72%     1 S              -6.637  1.00     4 H
-                                   -1.29%     1 P:x            11.867  0.00     3 H
-                                   -1.08%     1 P:y            11.867  0.00     3 H
-                                   -1.03%     1 P:z            11.867  0.00     3 H
-       4.379  0.00     7 A         45.01%     1 S              -6.637  1.00     4 H
-                                   35.59%     1 S              -6.637  1.00     2 H
-                                   24.29%     1 P:x            -5.281  0.67     1 C
-                                  -19.01%     2 P:x            13.155  0.00     1 C
-                                    8.65%     1 S              -6.637  1.00     3 H
-                                    8.02%     1 P:y            -5.281  0.67     1 C
-                                   -6.28%     2 P:y            13.155  0.00     1 C
-                                    4.86%     1 S              -6.637  1.00     5 H
-                                    1.29%     2 S              11.415  0.00     4 H
-                                    1.02%     2 S              11.415  0.00     2 H
-       4.379  0.00     8 A         65.05%     1 S              -6.637  1.00     5 H
-                                   23.88%     1 S              -6.637  1.00     4 H
-                                   18.14%     1 P:z            -5.281  0.67     1 C
-                                  -14.22%     2 P:z            13.155  0.00     1 C
-                                    9.45%     1 P:y            -5.281  0.67     1 C
-                                   -7.41%     2 P:y            13.155  0.00     1 C
-                                    4.98%     1 P:x            -5.281  0.67     1 C
-                                   -3.91%     2 P:x            13.155  0.00     1 C
-                                    3.51%     1 S              -6.637  1.00     2 H
-                                    1.88%     2 S              11.415  0.00     5 H
-                                    1.70%     1 S              -6.637  1.00     3 H
-                                   -1.56%     1 P:z            11.867  0.00     5 H
-                                   -1.37%     1 P:x            11.867  0.00     5 H
+     -16.946  2.00     1 A         59.96%     1 S             -13.814  2.00     1 C
+                                   10.10%     1 S              -6.379  1.00     5 H
+                                   10.10%     1 S              -6.379  1.00     3 H
+                                   10.10%     1 S              -6.379  1.00     4 H
+                                   10.10%     1 S              -6.379  1.00     2 H
+                                   -1.24%     2 S              10.964  0.00     4 H
+                                   -1.24%     2 S              10.964  0.00     3 H
+                                   -1.24%     2 S              10.964  0.00     2 H
+                                   -1.24%     2 S              10.964  0.00     5 H
+      -9.516  2.00     2 A         33.00%     1 S              -6.379  1.00     5 H
+                                   20.78%     1 P:z            -5.600  0.67     1 C
+                                   15.82%     1 P:x            -5.600  0.67     1 C
+                                   12.56%     1 P:y            -5.600  0.67     1 C
+                                    5.66%     1 S              -6.379  1.00     4 H
+                                    3.35%     2 S              10.964  0.00     5 H
+                                    3.07%     1 S              -6.379  1.00     3 H
+                                    2.60%     1 S              -6.379  1.00     2 H
+                                    1.04%     1 P:x            10.945  0.00     4 H
+                                    1.04%     1 P:z            10.945  0.00     3 H
+      -9.515  2.00     3 A         29.10%     1 S              -6.379  1.00     3 H
+                                   26.93%     1 P:z            -5.600  0.67     1 C
+                                   19.09%     1 P:x            -5.600  0.67     1 C
+                                   12.75%     1 S              -6.379  1.00     4 H
+                                    3.14%     1 P:y            -5.600  0.67     1 C
+                                    2.95%     2 S              10.964  0.00     3 H
+                                    2.41%     1 S              -6.379  1.00     2 H
+                                    1.29%     2 S              10.964  0.00     4 H
+      -9.515  2.00     4 A         33.46%     1 P:y            -5.600  0.67     1 C
+                                   28.24%     1 S              -6.379  1.00     2 H
+                                   14.83%     1 S              -6.379  1.00     4 H
+                                   14.25%     1 P:x            -5.600  0.67     1 C
+                                    2.86%     2 S              10.964  0.00     2 H
+                                    1.51%     2 S              10.964  0.00     4 H
+                                    1.45%     1 P:z            -5.600  0.67     1 C
+                                    1.08%     1 S              -6.379  1.00     3 H
+       0.741  0.00     5 A        -34.92%     2 S              12.782  0.00     1 C
+                                   20.95%     1 S              -6.379  1.00     4 H
+                                   20.95%     1 S              -6.379  1.00     3 H
+                                   20.95%     1 S              -6.379  1.00     2 H
+                                   20.94%     1 S              -6.379  1.00     5 H
+                                   11.60%     2 S              10.964  0.00     4 H
+                                   11.60%     2 S              10.964  0.00     3 H
+                                   11.60%     2 S              10.964  0.00     2 H
+                                   11.60%     2 S              10.964  0.00     5 H
+                                    8.16%     1 S             -13.814  2.00     1 C
+       3.417  0.00     6 A         63.80%     1 S              -6.379  1.00     2 H
+                                   24.50%     1 P:y            -5.600  0.67     1 C
+                                  -17.89%     2 P:y            11.757  0.00     1 C
+                                   15.53%     1 S              -6.379  1.00     4 H
+                                   12.54%     1 S              -6.379  1.00     3 H
+                                    4.47%     1 P:z            -5.600  0.67     1 C
+                                    4.09%     1 P:x            -5.600  0.67     1 C
+                                   -3.26%     2 P:z            11.757  0.00     1 C
+                                   -2.99%     2 P:x            11.757  0.00     1 C
+                                   -1.37%     1 P:y            10.945  0.00     2 H
+       3.417  0.00     7 A         49.88%     1 S              -6.379  1.00     3 H
+                                   42.00%     1 S              -6.379  1.00     4 H
+                                   18.19%     1 P:x            -5.600  0.67     1 C
+                                   14.85%     1 P:z            -5.600  0.67     1 C
+                                  -13.29%     2 P:x            11.757  0.00     1 C
+                                  -10.85%     2 P:z            11.757  0.00     1 C
+       3.417  0.00     8 A         68.61%     1 S              -6.379  1.00     5 H
+                                   13.73%     1 P:z            -5.600  0.67     1 C
+                                   11.58%     1 S              -6.379  1.00     4 H
+                                   10.77%     1 P:x            -5.600  0.67     1 C
+                                  -10.04%     2 P:z            11.757  0.00     1 C
+                                    8.54%     1 P:y            -5.600  0.67     1 C
+                                   -7.87%     2 P:x            11.757  0.00     1 C
+                                    6.67%     1 S              -6.379  1.00     3 H
+                                   -6.25%     2 P:y            11.757  0.00     1 C
+                                    5.28%     1 S              -6.379  1.00     2 H
+                                   -1.05%     1 P:z            10.945  0.00     5 H
 
  Energy gradients wrt nuclear displacements
  ==========================================
@@ -1562,11 +1497,11 @@ Correction terms (incorporated in energies above; only for test purposes):
      Atom      Cartesian (a.u./angstrom)
                  X         Y         Z
  ----------------------------------------
-     1 C     0.000009 -0.000047 -0.000022
-     2 H    -0.000003 -0.000036  0.000026
-     3 H    -0.000063  0.000014 -0.000026
-     4 H     0.000014  0.000063  0.000044
-     5 H     0.000044  0.000006 -0.000022
+     1 C     0.000022 -0.000012 -0.000027
+     2 H    -0.000068 -0.000145  0.000102
+     3 H    -0.000145  0.000079 -0.000087
+     4 H     0.000064  0.000127  0.000124
+     5 H     0.000128 -0.000049 -0.000111
  ----------------------------------------
 
 
@@ -1577,11 +1512,11 @@ Correction terms (incorporated in energies above; only for test purposes):
   
          Atom                  Potential
          ----                  ---------
-     1)   C                  14.71914889
-     2)   H                   1.11788755
-     3)   H                   1.11797565
-     4)   H                   1.11804561
-     5)   H                   1.11783655
+     1)   C                  14.74696080
+     2)   H                   1.08926385
+     3)   H                   1.08932241
+     4)   H                   1.08936197
+     5)   H                   1.08921592
  Mulliken charges used for AMS results%charges...
  MEMORY DEALLOCATION WARNING: Cosmo gSolv%cosmoData%csp NOT FOUND
 
@@ -1590,30 +1525,30 @@ Correction terms (incorporated in energies above; only for test purposes):
      CALCULATION RESULTS
     =====================
 
-Energy (hartree)            -0.98877663
+Energy (hartree)            -0.90740603
 
 Gradients (hartree/bohr)
   Index   Atom            d/dx            d/dy            d/dz
-      1      C    0.0000046830   -0.0000250548   -0.0000117014
-      2      H   -0.0000017409   -0.0000190513    0.0000137314
-      3      H   -0.0000331292    0.0000075912   -0.0000136557
-      4      H    0.0000071633    0.0000332853    0.0000230529
-      5      H    0.0000230238    0.0000032296   -0.0000114272
+      1      C    0.0000114138   -0.0000065866   -0.0000142393
+      2      H   -0.0000362399   -0.0000765466    0.0000537314
+      3      H   -0.0000766967    0.0000415651   -0.0000460595
+      4      H    0.0000337622    0.0000673121    0.0000653953
+      5      H    0.0000677605   -0.0000257440   -0.0000588280
 
 
 --------------
 Atomic charges
 --------------
   Index   Atom    Charge
-      1      C    0.0771
-      2      H   -0.0192
-      3      H   -0.0193
-      4      H   -0.0193
-      5      H   -0.0193
+      1      C   -0.0994
+      2      H    0.0248
+      3      H    0.0249
+      4      H    0.0249
+      5      H    0.0248
 
 
-Dipole moment vector    (Debye):    -0.00021846    0.00044281    0.00020787
-              magnitude (Debye):     0.00053574
+Dipole moment vector    (Debye):     0.00020459   -0.00013623   -0.00021749
+              magnitude (Debye):     0.00032820
 
 
 -----------------------
@@ -1622,47 +1557,47 @@ Molecular orbitals info
 n orbitals:               33
 n spin:                    1
 
-HOMO (eV):             -10.7584
-LUMO (eV):               1.3844
-HOMO-LUMO gap (eV):     12.1428
+HOMO (eV):              -9.5145
+LUMO (eV):               0.7410
+HOMO-LUMO gap (eV):     10.2556
 
    Index   Energy (eV)    Occupation
-      33       72.7255         0.000       
-      32       72.7238         0.000       
-      31       72.7230         0.000       
-      30       53.7661         0.000       
-      29       53.7648         0.000       
-      28       47.1602         0.000       
-      27       44.6432         0.000       
-      26       44.6369         0.000       
-      25       44.6355         0.000       
-      24       40.6623         0.000       
-      23       40.6580         0.000       
-      22       40.6570         0.000       
-      21       34.8593         0.000       
-      20       23.7053         0.000       
-      19       23.7041         0.000       
-      18       23.7032         0.000       
-      17       22.2265         0.000       
-      16       22.2255         0.000       
-      15       22.2252         0.000       
-      14       15.7620         0.000       
-      13       11.3654         0.000       
-      12       11.3649         0.000       
-      11        9.7458         0.000       
-      10        9.7453         0.000       
-       9        9.7444         0.000       
-       8        4.3795         0.000       
-       7        4.3786         0.000       
-       6        4.3783         0.000       
-       5        1.3844         0.000 < LUMO
-       4      -10.7584         2.000 < HOMO
-       3      -10.7593         2.000       
-       2      -10.7619         2.000       
-       1      -18.7435         2.000       
+      33       70.5790         0.000       
+      32       70.5786         0.000       
+      31       70.5734         0.000       
+      30       51.6688         0.000       
+      29       51.6684         0.000       
+      28       45.8414         0.000       
+      27       42.8358         0.000       
+      26       42.8254         0.000       
+      25       42.8220         0.000       
+      24       38.8073         0.000       
+      23       38.8035         0.000       
+      22       38.8032         0.000       
+      21       32.6536         0.000       
+      20       22.2074         0.000       
+      19       22.2051         0.000       
+      18       22.2043         0.000       
+      17       20.7280         0.000       
+      16       20.7275         0.000       
+      15       20.7268         0.000       
+      14       14.5198         0.000       
+      13       10.1589         0.000       
+      12       10.1586         0.000       
+      11        8.7959         0.000       
+      10        8.7955         0.000       
+       9        8.7945         0.000       
+       8        3.4174         0.000       
+       7        3.4167         0.000       
+       6        3.4166         0.000       
+       5        0.7410         0.000 < LUMO
+       4       -9.5145         2.000 < HOMO
+       3       -9.5149         2.000       
+       2       -9.5165         2.000       
+       1      -16.9463         2.000       
 
 AMS application finished. Exiting.
 NORMAL TERMINATION
-     Total cpu time:      17.23
-  Total system time:       1.01
- Total elapsed time:      21.96
+     Total cpu time:       8.26
+  Total system time:       0.40
+ Total elapsed time:      10.89

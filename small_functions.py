@@ -6,6 +6,7 @@ from scm.plams import *
 def score_paths(path, adf_results):
     """
     This function just gets full Score job paths and sorts them.
+    14 charactes :: conformers.rkf
     """
     paths = [
         path[0:len(path)-14] + str(element)
@@ -19,15 +20,17 @@ def score_paths(path, adf_results):
 
 def conversion(dic):
     """
-    Exporting the results to a JSON file
+    Exporting the results as needed by json.dumps
     """
-    if isinstance(dic, (list, np.ndarray)):
+    if isinstance(dic, dict):
+        new_dic = {str(key.tolist()) if isinstance(key, np.ndarray) else str(key): conversion(value) for key, value in dic.items()}
+        return new_dic
+    if isinstance(dic, list):
         return [conversion(item) for item in dic]
-    elif isinstance(dic, dict):
-        return {key: conversion(value) for key, value in dic.items()}
     elif isinstance(dic, np.ndarray):
         return dic.tolist()
-    return dic
+    else:
+        return dic
 
 def extract_number(string):
     number_extractor_re = re.compile(r'Score_(\d+)\.out')
@@ -37,14 +40,7 @@ def extract_number(string):
     else:
         return 0
 
-def verification_geom_converged(content):
-    return "Geometry optimization converged" in content
-
-def writer(line, file):
-    line = str(line)
-    print(line)
-    file.write(line + '\n')
-
 def to_lower_dict(d):
     """Converts dictionary keys to lowercase."""
     return {key.lower(): value for key, value in d.items()}
+

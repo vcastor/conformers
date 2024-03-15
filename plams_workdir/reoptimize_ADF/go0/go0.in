@@ -9,9 +9,9 @@ Task GeometryOptimization
 
 system
   Atoms
-              O      -0.0000394297       0.0631472451       0.0000000000 rdkit.charge=0 rdkit.origNoImplicit=False
-              H      -0.7720086142      -0.5016420185       0.0000000000 rdkit.charge=0 rdkit.isImplicit=1
-              H       0.7726344718      -0.5006775042       0.0000000000 rdkit.charge=0 rdkit.isImplicit=1
+              O      -0.0000394341       0.0631472498       0.0000000000 rdkit.charge=0 rdkit.origNoImplicit=False
+              H      -0.7720084508      -0.5016420473       0.0000000000 rdkit.charge=0 rdkit.isImplicit=1
+              H       0.7726343774      -0.5006775505       0.0000000000 rdkit.charge=0 rdkit.isImplicit=1
   End
   BondOrders
      1 2 1.0
@@ -33,8 +33,5 @@ Engine ADF
     surf Delley
   End
   symmetry NOSYM
-  xc
-    hybrid B3LYP
-  End
 EndEngine
 

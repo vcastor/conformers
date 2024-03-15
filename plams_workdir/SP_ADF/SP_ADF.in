@@ -1,4 +1,4 @@
-InputConformersSet /Users/vcastor/Documents/PhD_Rouen/filter/plams_workdir/reoptimize_ADF/conformers.rkf
+InputConformersSet /Users/vcastor/Documents/PhD_Rouen/plamsfilter/plams_workdir/reoptimize_ADF/conformers.rkf
 
 InputMaxEnergy 5.0
 
@@ -26,8 +26,5 @@ Engine ADF
     Surf Delley
   End
   Symmetry NOSYM
-  XC
-    HYBRID B3LYP
-  End
 EndEngine
 

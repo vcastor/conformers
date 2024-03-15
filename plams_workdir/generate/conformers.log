@@ -1,20 +1,20 @@
-[13.03|14:48:30] Conformers 2024.201,  Nodes: 1, Procs: 8
-[13.03|14:48:31] Molecule: H2O, 3 atoms, 0 rotatable bonds
-[13.03|14:48:31] Optimizing initial conformer...
-[13.03|14:48:33] Initial conformer optimized.
-[13.03|14:48:33] Generating 20 conformers with RDKit ...
-[13.03|14:48:33] RDKit conformer generation finished! Time taken: 0:00:00s
-[13.03|14:48:33] Running 20 geometry optimizations with 8 workers
-[13.03|14:48:33] All 20 geometry optimizations done! Time taken: 0:00:01s
-[13.03|14:48:34] 20 out of 20 geometry optimizations succeeded
-[13.03|14:48:34] Filtering 20 conformers
-[13.03|14:48:34] Conformer filtering complete! Time taken: 0:00:00s
-[13.03|14:48:34] 20 conformers filtered out as duplicates
-[13.03|14:48:34] 0 high energy conformers filtered out
-[13.03|14:48:34] Remaining number of conformers in set is 1
-[13.03|14:48:34] Final duplicate filtration
-[13.03|14:48:34] Filtering 1 conformers
-[13.03|14:48:34] Conformer filtering complete! Time taken: 0:00:00s
-[13.03|14:48:34] 0 conformers filtered out as duplicates
-[13.03|14:48:34] 0 high energy conformers filtered out
-[13.03|14:48:34] Found 1 unique conformers.
+[15.03|16:41:42] Conformers 2024.201,  Nodes: 1, Procs: 8
+[15.03|16:41:43] Molecule: H2O, 3 atoms, 0 rotatable bonds
+[15.03|16:41:43] Optimizing initial conformer...
+[15.03|16:41:46] Initial conformer optimized.
+[15.03|16:41:46] Generating 20 conformers with RDKit ...
+[15.03|16:41:46] RDKit conformer generation finished! Time taken: 0:00:00s
+[15.03|16:41:46] Running 20 geometry optimizations with 8 workers
+[15.03|16:41:47] All 20 geometry optimizations done! Time taken: 0:00:01s
+[15.03|16:41:47] 20 out of 20 geometry optimizations succeeded
+[15.03|16:41:47] Filtering 20 conformers
+[15.03|16:41:47] Conformer filtering complete! Time taken: 0:00:00s
+[15.03|16:41:47] 20 conformers filtered out as duplicates
+[15.03|16:41:47] 0 high energy conformers filtered out
+[15.03|16:41:47] Remaining number of conformers in set is 1
+[15.03|16:41:47] Final duplicate filtration
+[15.03|16:41:47] Filtering 1 conformers
+[15.03|16:41:47] Conformer filtering complete! Time taken: 0:00:00s
+[15.03|16:41:47] 0 conformers filtered out as duplicates
+[15.03|16:41:47] 0 high energy conformers filtered out
+[15.03|16:41:47] Found 1 unique conformers.

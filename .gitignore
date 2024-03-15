@@ -4,3 +4,10 @@
 *.json
 *.pyc
 plams-workdi*/*
+plams-workdir/
+*log
+*rkf
+*dill
+*swp
+*t21*
+*t15*

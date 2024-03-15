@@ -6,21 +6,16 @@ JSONified input:
   "Create": "C m=12.000000000000000 /Users/vcastor/amshome/atomicdata/ADF/DZP/C.1s",
   "relativity": {
     "level": "None"
-  },
-  "xc": {
-    "hybrid": "B3LYP"
   }
 }
 
 
 JSONified input traversal:
 ++++++++++++++++++++++++++
-2 3 , path = 
+2 2 , path = 
 7 0 Create, path = Create
 2 1 relativity, path = relativity
 7 0 level, path = relativity%level
-2 1 xc, path = xc
-7 0 hybrid, path = xc%hybrid
  Carbon (DZP, 1s frozen)
 
 
@@ -39,7 +34,8 @@ JSONified input traversal:
  ===============================
   
  DENSITY FUNCTIONAL POTENTIAL (scf)
-    Hybrid:                            B3LYP                                   == Not Default ==
+    LDA:                               VWN                                      
+    Gradient Corrections:              ---                                      
 
  SPIN  (restricted / unrestr.)
     Molecule:                          Restricted                               
@@ -111,29 +107,6 @@ JSONified input traversal:
  Frozen Core Shells
  ------------------
     S:  1
-
- Charge Fitting Sets (for the computation of the Coulomb Potential):  20
- -----------------------------------------------------------------------
-   1 S   10.800000
-   2 S   11.590000
-   2 S    7.590000
-   2 S    4.970000
-   3 S    4.790000
-   3 S    3.350000
-   3 S    2.340000
-   3 S    1.640000
-   2 P    8.340000
-   2 P    5.140000
-   3 P    4.670000
-   3 P    3.100000
-   3 P    2.060000
-   3 D    5.880000
-   3 D    3.840000
-   3 D    2.510000
-   3 D    1.640000
-   4 F    5.400000
-   4 F    3.550000
-   5 G    4.500000
 
 
  BAS: List of all Elementary Cartesian Basis Functions
@@ -328,21 +301,6 @@ JSONified input traversal:
 
 
 
- ======================
- RI Hartree-Fock Scheme
- ======================
-  
- Fit Set Quality     : NORMAL
- Threshold Quality   : NORMAL
- Integration Quality : NORMAL
- Fit Generation Method : AUTO
- Response Quality    : DEFAULT
- Is Range Separated  :  F
- 
- RIHartreeFock Dependency: number of modified vectors:           0
-
-
-
  =====
  S C F  ***  ScaSCF  ***
  =====
@@ -352,116 +310,106 @@ JSONified input traversal:
  SCF Error: norm([F,P])=      0.000000000000, max([F,P])=      0.000000000000
  orbitals (Q,E):
  ---------------
- S :1...2            ( 2.00    -2.6082)  ( 0.00    -0.9996)
- P :1...2            ( 2.00    -2.3607)  ( 0.00    -0.9607)
- D :1...1            ( 0.00    -0.6973)
+ S :1...2            ( 2.00    -2.5148)  ( 0.00    -0.9877)
+ P :1...2            ( 2.00    -2.2830)  ( 0.00    -0.9530)
+ D :1...1            ( 0.00    -0.6053)
 
  CYCLE    2
- SCF Error: norm([F,P])=      0.988804956465, max([F,P])=      0.871891759637
+ SCF Error: norm([F,P])=      0.961719955154, max([F,P])=      0.852513931246
  orbitals (Q,E):
  ---------------
- S :1...2            ( 2.00    -0.2226)  ( 0.00     0.8303)
- P :1...2            ( 2.00     0.0843)  ( 0.00     0.8922)
- D :1...1            ( 0.00     1.6304)
+ S :1...2            ( 2.00    -0.1779)  ( 0.00     0.8274)
+ P :1...2            ( 2.00     0.0803)  ( 0.00     0.8515)
+ D :1...1            ( 0.00     1.5679)
 
  CYCLE    3
-  SDIIS (wt  0.000):  0.3965  0.6035
- A-DIIS (wt  1.000):  0.1214  0.8786
-  DIIS coefficients:  0.1214  0.8786
- SCF Error: norm([F,P])=      0.649958533451, max([F,P])=      0.556348433082
+  SDIIS (wt  0.000):  0.4217  0.5783
+ A-DIIS (wt  1.000):  0.2128  0.7872
+  DIIS coefficients:  0.2128  0.7872
+ SCF Error: norm([F,P])=      0.701225068732, max([F,P])=      0.610675719838
  orbitals (Q,E):
  ---------------
- S :1...2            ( 2.00    -0.7239)  ( 0.00     0.3894)
- P :1...2            ( 2.00    -0.3528)  ( 0.00     0.3464)
- D :1...1            ( 0.00     1.1178)
+ S :1...2            ( 2.00    -0.6343)  ( 0.00     0.3810)
+ P :1...2            ( 2.00    -0.3276)  ( 0.00     0.3365)
+ D :1...1            ( 0.00     1.1076)
 
  CYCLE    4
-  SDIIS (wt  0.000):  0.2996  0.7004
- A-DIIS (wt  1.000):  0.0071  0.9929
-  DIIS coefficients:  0.0071  0.9929
- SCF Error: norm([F,P])=      0.278499367357, max([F,P])=      0.224563869096
+  SDIIS (wt  0.000):  0.2598  0.7402
+ A-DIIS (wt  1.000):  0.0000  1.0000
+  DIIS coefficients:  0.0000  1.0000
+ SCF Error: norm([F,P])=      0.246462962981, max([F,P])=      0.204838845090
  orbitals (Q,E):
  ---------------
- S :1...2            ( 2.00    -0.4646)  ( 0.00     0.5947)
- P :1...2            ( 2.00    -0.1075)  ( 0.00     0.5801)
- D :1...1            ( 0.00     1.3766)
+ S :1...2            ( 2.00    -0.4200)  ( 0.00     0.5464)
+ P :1...2            ( 2.00    -0.1254)  ( 0.00     0.5194)
+ D :1...1            ( 0.00     1.3120)
 
  CYCLE    5
-  SDIIS (wt  0.000):  0.4070  0.5930
- A-DIIS (wt  1.000):  0.2507  0.7493
-  DIIS coefficients:  0.2507  0.7493
- SCF Error: norm([F,P])=      0.191172937319, max([F,P])=      0.156870949559
+  SDIIS (wt  0.000):  0.4451  0.5549
+ A-DIIS (wt  1.000):  0.3616  0.6384
+  DIIS coefficients:  0.3616  0.6384
+ SCF Error: norm([F,P])=      0.197669833234, max([F,P])=      0.165829705824
  orbitals (Q,E):
  ---------------
- S :1...2            ( 2.00    -0.5873)  ( 0.00     0.4935)
- P :1...2            ( 2.00    -0.2182)  ( 0.00     0.4597)
- D :1...1            ( 0.00     1.2538)
+ S :1...2            ( 2.00    -0.5209)  ( 0.00     0.4595)
+ P :1...2            ( 2.00    -0.2182)  ( 0.00     0.4207)
+ D :1...1            ( 0.00     1.2142)
 
  CYCLE    6
-  SDIIS (wt  0.619):  0.2003  0.7997
- A-DIIS (wt  0.381):  0.0000  1.0000
-  DIIS coefficients:  0.1240  0.8760
- SCF Error: norm([F,P])=      0.047887484622, max([F,P])=      0.038689114594
+  SDIIS (wt  0.777):  0.1229  0.8771
+ A-DIIS (wt  0.223):  0.0000  1.0000
+  DIIS coefficients:  0.0956  0.9044
+ SCF Error: norm([F,P])=      0.027705147851, max([F,P])=      0.023033257444
  orbitals (Q,E):
  ---------------
- S :1...2            ( 2.00    -0.5548)  ( 0.00     0.5194)
- P :1...2            ( 2.00    -0.1879)  ( 0.00     0.4896)
- D :1...1            ( 0.00     1.2861)
+ S :1...2            ( 2.00    -0.5054)  ( 0.00     0.4716)
+ P :1...2            ( 2.00    -0.2037)  ( 0.00     0.4342)
+ D :1...1            ( 0.00     1.2290)
 
  CYCLE    7
-  SDIIS (wt  0.904):  0.2122  0.7878
- A-DIIS (wt  0.096):  0.0000  1.0000
-  DIIS coefficients:  0.1918  0.8082
- SCF Error: norm([F,P])=      0.012898784355, max([F,P])=      0.010503613159
+  SDIIS (wt  0.968):  0.1534  0.8466
+ A-DIIS (wt  0.032):  0.0000  1.0000
+  DIIS coefficients:  0.1485  0.8515
+ SCF Error: norm([F,P])=      0.005020854403, max([F,P])=      0.004188165535
  orbitals (Q,E):
  ---------------
- S :1...2            ( 2.00    -0.5619)  ( 0.00     0.5137)
- P :1...2            ( 2.00    -0.1945)  ( 0.00     0.4830)
- D :1...1            ( 0.00     1.2792)
+ S :1...2            ( 2.00    -0.5077)  ( 0.00     0.4697)
+ P :1...2            ( 2.00    -0.2059)  ( 0.00     0.4320)
+ D :1...1            ( 0.00     1.2268)
 
  CYCLE    8
-  SDIIS (wt  1.000):  0.0570  0.9430
-  DIIS coefficients:  0.0570  0.9430
- SCF Error: norm([F,P])=      0.000779022749, max([F,P])=      0.000628034354
+  SDIIS (wt  1.000): -0.0041  1.0041
+  DIIS coefficients: -0.0041  1.0041
+ SCF Error: norm([F,P])=      0.000113365801, max([F,P])=      0.000094362082
  orbitals (Q,E):
  ---------------
- S :1...2            ( 2.00    -0.5615)  ( 0.00     0.5141)
- P :1...2            ( 2.00    -0.1941)  ( 0.00     0.4834)
- D :1...1            ( 0.00     1.2796)
+ S :1...2            ( 2.00    -0.5077)  ( 0.00     0.4697)
+ P :1...2            ( 2.00    -0.2058)  ( 0.00     0.4321)
+ D :1...1            ( 0.00     1.2269)
 
  CYCLE    9
-  SDIIS (wt  1.000):  0.0078  0.9922
-  DIIS coefficients:  0.0078  0.9922
- SCF Error: norm([F,P])=      0.000006138894, max([F,P])=      0.000005347060
+  SDIIS (wt  1.000): -0.0014  1.0014
+  DIIS coefficients: -0.0014  1.0014
+ SCF Error: norm([F,P])=      0.000000156766, max([F,P])=      0.000000133293
  orbitals (Q,E):
  ---------------
- S :1...2            ( 2.00    -0.5615)  ( 0.00     0.5140)
- P :1...2            ( 2.00    -0.1941)  ( 0.00     0.4834)
- D :1...1            ( 0.00     1.2796)
+ S :1...2            ( 2.00    -0.5077)  ( 0.00     0.4697)
+ P :1...2            ( 2.00    -0.2058)  ( 0.00     0.4321)
+ D :1...1            ( 0.00     1.2269)
 
  CYCLE   10
-  SDIIS (wt  1.000): -0.0743  1.0743
-  DIIS coefficients: -0.0743  1.0743
- SCF Error: norm([F,P])=      0.000000424576, max([F,P])=      0.000000370194
+  SDIIS (wt  1.000): -0.0210  1.0210
+  DIIS coefficients: -0.0210  1.0210
+ SCF Error: norm([F,P])=      0.000000003222, max([F,P])=      0.000000002678
  orbitals (Q,E):
  ---------------
- S :1...2            ( 2.00    -0.5615)  ( 0.00     0.5140)
- P :1...2            ( 2.00    -0.1941)  ( 0.00     0.4834)
- D :1...1            ( 0.00     1.2796)
-
- CYCLE   11
-  SDIIS (wt  1.000): -0.0013  1.0013
-  DIIS coefficients: -0.0013  1.0013
- SCF Error: norm([F,P])=      0.000000000555, max([F,P])=      0.000000000480
- orbitals (Q,E):
- ---------------
- S :1...2            ( 2.00    -0.5615)  ( 0.00     0.5140)
- P :1...2            ( 2.00    -0.1941)  ( 0.00     0.4834)
- D :1...1            ( 0.00     1.2796)
+ S :1...2            ( 2.00    -0.5077)  ( 0.00     0.4697)
+ P :1...2            ( 2.00    -0.2058)  ( 0.00     0.4321)
+ D :1...1            ( 0.00     1.2269)
 
  SCF CONVERGED
 
- CYCLE   12
+ CYCLE   11
 1
  ***************************************************************************************************
 
@@ -471,32 +419,30 @@ JSONified input traversal:
                                                 *  R E S U L T S  *
                                                 *******************
   
-  
- Hartree-Fock exchange energy:  -0.98324914206020408     
  *** Using FIT density in Focky
-  SDIIS (wt  1.000):  0.0090  0.9910
-  DIIS coefficients:  0.0090  0.9910
- SCF Error: norm([F,P])=      0.000000000005, max([F,P])=      0.000000000004
+  SDIIS (wt  1.000):  0.0225  0.9775
+  DIIS coefficients:  0.0225  0.9775
+ SCF Error: norm([F,P])=      0.000000000074, max([F,P])=      0.000000000062
 
  Orbital Energies, per Irrep and Spin:
  ======================================
                         Occup              E (au)              E (eV)       Diff (eV) with prev. cycle
                         -----      --------------------        ------       --------------------------
  S
-               1        2.000     -0.56148944899652E+00       -15.279               6.95E-11
-               2        0.000      0.51404926161136E+00        13.988
+               1        2.000     -0.50766299902100E+00       -13.814              -9.76E-10
+               2        0.000      0.46973187265996E+00        12.782
  P
-               1        2.000     -0.19406471559607E+00        -5.281               5.87E-11
-               2        0.000      0.48342072779501E+00        13.155
+               1        2.000     -0.20581338371553E+00        -5.600              -9.27E-10
+               2        0.000      0.43205084062244E+00        11.757
  D
-               1        0.000      0.12796325736758E+01        34.821
+               1        0.000      0.12268650779389E+01        33.385
 
 
  Partially Occupied:
-               1 P                -0.19406471559607E+00
+               1 P                -0.20581338371553E+00
   
- HOMO :        1 S                -0.56148944899652E+00
- LUMO :        2 P                 0.48342072779501E+00
+ HOMO :        1 S                -0.50766299902100E+00
+ LUMO :        2 P                 0.43205084062244E+00
   
 
 
@@ -505,21 +451,20 @@ JSONified input traversal:
 
  Irrep        no.  (spin)   Occup              E (au)                E (eV)
  ---------------------------------------------------------------------------
- S             1             2.00       -0.56148944899652E+00       -15.2789
- P             1             2.00       -0.19406471559607E+00        -5.2808
- P             2             0.00        0.48342072779501E+00        13.1545
- S             2             0.00        0.51404926161136E+00        13.9880
- D             1             0.00        0.12796325736758E+01        34.8206
+ S             1             2.00       -0.50766299902100E+00       -13.8142
+ P             1             2.00       -0.20581338371553E+00        -5.6005
+ P             2             0.00        0.43205084062244E+00        11.7567
+ S             2             0.00        0.46973187265996E+00        12.7821
+ D             1             0.00        0.12268650779389E+01        33.3847
 
 
  Orbital Energies of the Core Orbitals:
  ======================================
- WARNING : The XC part is not included correctly in these core orbital energies!
  (Note that the atoms are grouped by atomtype, see the labels, and may hence NOT be in input order)
 
  AtomType  Orbital  Atom                   E (au)                        E (eV)
  --------  -------  ----           --------------------        ----------------
- C           1S        1          -0.78499203784099E+01                -213.607
+ C           1S        1          -0.99531877336699E+01                -270.840
 
 
 
@@ -534,17 +479,17 @@ JSONified input traversal:
 
  Atom              Charge    Spin density          S         P         D         F
  ----              ------    ------------       ------    ------    ------    ------
- 1 C              -0.0000                       2.0000    2.0000    0.0000    0.0000
+ 1 C               0.0000                       2.0000    2.0000    0.0000    0.0000
 
  Populations of individual BAS functions
  ----------------------------------------
- 1 C            0.0003  0.9022  1.0975  0.3791  0.3791  0.3791  0.2876  0.2876  0.2876  0.0000
+ 1 C            0.0003  0.9069  1.0928  0.3608  0.3608  0.3608  0.3058  0.3058  0.3058  0.0000
                 0.0000  0.0000  0.0000  0.0000  0.0000
 
  Gross Charges per Atom (Z minus electrons)
  ==========================================
-            -0.0000
- Net Total: -0.00000000
+             0.0000
+ Net Total:  0.00000000
 
 
 
@@ -554,7 +499,7 @@ JSONified input traversal:
   
          Atom                  Potential
          ----                  ---------
-     1)   C                  14.57827683
+     1)   C                  14.60983159
 
 
 JSONified input:
@@ -563,21 +508,16 @@ JSONified input:
   "Create": "H m=1.0078250000000000 /Users/vcastor/amshome/atomicdata/ADF/DZP/H",
   "relativity": {
     "level": "None"
-  },
-  "xc": {
-    "hybrid": "B3LYP"
   }
 }
 
 
 JSONified input traversal:
 ++++++++++++++++++++++++++
-2 3 , path = 
+2 2 , path = 
 7 0 Create, path = Create
 2 1 relativity, path = relativity
 7 0 level, path = relativity%level
-2 1 xc, path = xc
-7 0 hybrid, path = xc%hybrid
  Hydrogen (DZP)
 
 
@@ -596,7 +536,8 @@ JSONified input traversal:
  ===============================
   
  DENSITY FUNCTIONAL POTENTIAL (scf)
-    Hybrid:                            B3LYP                                   == Not Default ==
+    LDA:                               VWN                                      
+    Gradient Corrections:              ---                                      
 
  SPIN  (restricted / unrestr.)
     Molecule:                          Restricted                               
@@ -623,8 +564,6 @@ JSONified input traversal:
  P:x  P:y  P:z
  D:z2  D:x2-y2  D:xy  D:xz  D:yz
  F:z3  F:z  F:xyz  F:z2x  F:z2y  F:x  F:y
-
- Symmetry is NOT used when fitting density
 
 
  Configuration of Valence Electrons
@@ -663,20 +602,6 @@ JSONified input traversal:
    1 S    0.760000
    1 S    1.280000
    2 P    1.250000
-
- Charge Fitting Sets (for the computation of the Coulomb Potential):  11
- -----------------------------------------------------------------------
-   1 S    3.160000
-   1 S    2.090000
-   1 S    1.380000
-   2 S    1.500000
-   2 P    4.000000
-   2 P    2.650000
-   2 P    1.750000
-   3 D    4.000000
-   3 D    2.500000
-   4 F    3.000000
-   5 G    4.000000
 
 
  BAS: List of all Elementary Cartesian Basis Functions
@@ -850,21 +775,6 @@ JSONified input traversal:
 
 
 
- ======================
- RI Hartree-Fock Scheme
- ======================
-  
- Fit Set Quality     : NORMAL
- Threshold Quality   : NORMAL
- Integration Quality : NORMAL
- Fit Generation Method : AUTO
- Response Quality    : DEFAULT
- Is Range Separated  :  F
- 
- RIHartreeFock Dependency: number of modified vectors:           0
-
-
-
  =====
  S C F  ***  ScaSCF  ***
  =====
@@ -878,48 +788,49 @@ JSONified input traversal:
  P :1...1            ( 0.00     0.1562)
 
  CYCLE    2
- SCF Error: norm([F,P])=      0.043433571855, max([F,P])=      0.043433571855
+ SCF Error: norm([F,P])=      0.048210423939, max([F,P])=      0.048210423939
  orbitals (Q,E):
  ---------------
- S :1...2            ( 1.00    -0.2292)  ( 0.00     0.4326)
- P :1...1            ( 0.00     0.4487)
+ S :1...2            ( 1.00    -0.2168)  ( 0.00     0.4195)
+ P :1...1            ( 0.00     0.4168)
 
  CYCLE    3
-  SDIIS (wt  0.000):  0.1218  0.8782
+  SDIIS (wt  0.000):  0.1490  0.8510
  A-DIIS (wt  1.000):  0.0000  1.0000
   DIIS coefficients:  0.0000  1.0000
- SCF Error: norm([F,P])=      0.006025588434, max([F,P])=      0.006025588434
+ SCF Error: norm([F,P])=      0.008443956902, max([F,P])=      0.008443956902
  orbitals (Q,E):
  ---------------
- S :1...2            ( 1.00    -0.2459)  ( 0.00     0.4177)
- P :1...1            ( 0.00     0.4344)
+ S :1...2            ( 1.00    -0.2375)  ( 0.00     0.4001)
+ P :1...1            ( 0.00     0.3997)
 
  CYCLE    4
-  SDIIS (wt  1.000):  0.1170  0.8830
-  DIIS coefficients:  0.1170  0.8830
- SCF Error: norm([F,P])=      0.000798685900, max([F,P])=      0.000798685900
+  SDIIS (wt  0.996):  0.1442  0.8558
+ A-DIIS (wt  0.004):  0.0000  1.0000
+  DIIS coefficients:  0.1436  0.8564
+ SCF Error: norm([F,P])=      0.001423321792, max([F,P])=      0.001423321792
  orbitals (Q,E):
  ---------------
- S :1...2            ( 1.00    -0.2439)  ( 0.00     0.4195)
- P :1...1            ( 0.00     0.4361)
+ S :1...2            ( 1.00    -0.2344)  ( 0.00     0.4029)
+ P :1...1            ( 0.00     0.4022)
 
  CYCLE    5
-  SDIIS (wt  1.000):  0.0008  0.9992
-  DIIS coefficients:  0.0008  0.9992
- SCF Error: norm([F,P])=      0.000000610510, max([F,P])=      0.000000610510
+  SDIIS (wt  1.000):  0.0018  0.9982
+  DIIS coefficients:  0.0018  0.9982
+ SCF Error: norm([F,P])=      0.000002538735, max([F,P])=      0.000002538735
  orbitals (Q,E):
  ---------------
- S :1...2            ( 1.00    -0.2439)  ( 0.00     0.4195)
- P :1...1            ( 0.00     0.4361)
+ S :1...2            ( 1.00    -0.2344)  ( 0.00     0.4029)
+ P :1...1            ( 0.00     0.4022)
 
  CYCLE    6
-  SDIIS (wt  1.000): -0.0001  1.0001
-  DIIS coefficients: -0.0001  1.0001
- SCF Error: norm([F,P])=      0.000000000061, max([F,P])=      0.000000000061
+  SDIIS (wt  1.000): -0.0002  1.0002
+  DIIS coefficients: -0.0002  1.0002
+ SCF Error: norm([F,P])=      0.000000000445, max([F,P])=      0.000000000445
  orbitals (Q,E):
  ---------------
- S :1...2            ( 1.00    -0.2439)  ( 0.00     0.4195)
- P :1...1            ( 0.00     0.4361)
+ S :1...2            ( 1.00    -0.2344)  ( 0.00     0.4029)
+ P :1...1            ( 0.00     0.4022)
 
  SCF CONVERGED
 
@@ -933,8 +844,6 @@ JSONified input traversal:
                                                 *  R E S U L T S  *
                                                 *******************
   
-  
- Hartree-Fock exchange energy:  -0.14202064897311051     
  *** Using FIT density in Focky
   SDIIS (wt  1.000):  0.0000  1.0000
   DIIS coefficients:  0.0000  1.0000
@@ -945,16 +854,16 @@ JSONified input traversal:
                         Occup              E (au)              E (eV)       Diff (eV) with prev. cycle
                         -----      --------------------        ------       --------------------------
  S
-               1        1.000     -0.24391147113715E+00        -6.637              -2.19E-14
-               2        0.000      0.41948217108696E+00        11.415
+               1        1.000     -0.23441710465432E+00        -6.379              -4.46E-14
+               2        0.000      0.40291872172070E+00        10.964
  P
-               1        0.000      0.43611785708346E+00        11.867
+               1        0.000      0.40223463399148E+00        10.945
 
 
  Partially Occupied:
-               1 S                -0.24391147113715E+00
+               1 S                -0.23441710465432E+00
   
- LUMO :        2 S                 0.41948217108696E+00
+ LUMO :        1 P                 0.40223463399148E+00
   
 
 
@@ -963,9 +872,9 @@ JSONified input traversal:
 
  Irrep        no.  (spin)   Occup              E (au)                E (eV)
  ---------------------------------------------------------------------------
- S             1             1.00       -0.24391147113715E+00        -6.6372
- S             2             0.00        0.41948217108696E+00        11.4147
- P             1             0.00        0.43611785708346E+00        11.8674
+ S             1             1.00       -0.23441710465432E+00        -6.3788
+ P             1             0.00        0.40223463399148E+00        10.9454
+ S             2             0.00        0.40291872172070E+00        10.9640
 
 
  All Electron Calculation, thus no Orbital Energies of the Core Orbitals are calculated
@@ -983,16 +892,16 @@ JSONified input traversal:
 
  Atom              Charge    Spin density          S         P         D         F
  ----              ------    ------------       ------    ------    ------    ------
- 1 H              -0.0000                       1.0000    0.0000    0.0000    0.0000
+ 1 H               0.0000                       1.0000    0.0000    0.0000    0.0000
 
  Populations of individual BAS functions
  ----------------------------------------
- 1 H            0.6771  0.3229  0.0000  0.0000  0.0000
+ 1 H            0.6931  0.3069  0.0000  0.0000  0.0000
 
  Gross Charges per Atom (Z minus electrons)
  ==========================================
-            -0.0000
- Net Total: -0.00000000
+             0.0000
+ Net Total:  0.00000000
 
 
 
@@ -1002,4 +911,4 @@ JSONified input traversal:
   
          Atom                  Potential
          ----                  ---------
-     1)   H                   0.92788883
+     1)   H                   0.91958212

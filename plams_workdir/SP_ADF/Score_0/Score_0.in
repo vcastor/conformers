@@ -1,8 +1,8 @@
 system
   Atoms
-              O      -0.0000419123       0.0671230321       0.0000000000 rdkit.charge=0 rdkit.origNoImplicit=False
-              H      -0.7710066262      -0.5331947132       0.0000000000 rdkit.charge=0 rdkit.isImplicit=1
-              H       0.7716718886      -0.5322314257       0.0000000000 rdkit.charge=0 rdkit.isImplicit=1
+              O      -0.0000433479       0.0677077460       0.0000000000 rdkit.charge=0 rdkit.origNoImplicit=False
+              H      -0.7749643332      -0.5378353674       0.0000000000 rdkit.charge=0 rdkit.isImplicit=1
+              H       0.7756523833      -0.5368717804       0.0000000000 rdkit.charge=0 rdkit.isImplicit=1
   End
   BondOrders
      1 2 1.0
@@ -34,8 +34,5 @@ Engine ADF
     surf Delley
   End
   symmetry NOSYM
-  xc
-    hybrid B3LYP
-  End
 EndEngine
 

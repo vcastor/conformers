@@ -6,9 +6,8 @@ from small_functions import *
 def get_atoms(system):
     """ Number of atoms and atom types """
     molecule = from_smiles(system)
-    natoms = len(molecule)
     type_atoms = [atom.symbol for atom in molecule]
-    return natoms, type_atoms
+    return len(molecule), type_atoms
 
 def distance_matrix(natoms, content):
     """
