@@ -26,15 +26,15 @@ def solvent_settings(solvent):
     """
     ADF input needs some extra information, not only the name of the solvent.
     """
-    solvent_settings = Settings()
+    settings = Settings()
     # Constant, linear terms of Ecd
     # taken from ADF code $AMSHOME/src/lib/dft/solvation/SolventConfig.f90
     # (T. N. Truong, E. V. Stefanovich, Chem. Phys. Lett 240 , 253-260 (1995)
     cav0, cav1 = 0.0, 0.0067639
     solvent = solvent_name(solvent)
-    solvent_settings.input.ADF.Solvation.Solv = f'name={solvent} cav0={cav0} cav1={cav1}'
-    solvent_settings.input.ADF.Solvation.Charged = 'method=CONJ'
-    solvent_settings.input.ADF.Solvation.SCF = 'VAR ALL'
-    solvent_settings.input.ADF.Solvation.Surf = 'Delley'
-    return solvent_settings
+    settings.input.ADF.Solvation.Solv = f'name={solvent} cav0={cav0} cav1={cav1}'
+    settings.input.ADF.Solvation.Charged = 'method=CONJ'
+    settings.input.ADF.Solvation.SCF = 'VAR ALL'
+    settings.input.ADF.Solvation.Surf = 'Delley'
+    return settings
 

@@ -29,7 +29,7 @@ def plot_conformers(job:ConformersJob):
     - lowest: If True and indices is an int, plot the lowest N conformers. Otherwise, spread evenly.
     """
     temperature = gconfig['temperature']
-    n_system = gconfig['system_nth']
+    n_system = int_to_str_with_zeros(gconfig['system_nth'])
     plot_name = gconfig['input_file_name'].replace('.csv', '')
     molecules, energies, populations = get_main_results(job)
 

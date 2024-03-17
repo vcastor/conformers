@@ -3,8 +3,8 @@
 from scm.plams import Settings
 from scm.plams.recipes.adfcosmorscompound import *
 from .small_functions import *
-from .solvent_settings import *
-from .functional_settings import *
+from .settings_solvent import *
+from .settings_functional import *
 
 def task_settings(task, user_settings):
     s = Settings()

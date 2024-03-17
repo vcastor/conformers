@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*
 from scm.plams import *
 from .small_functions import *
-from .functionals import *
-from .model_dftb import *
+from .data_functionals import *
+from .data_model_dftb import *
 
 def model_dftb(model, settings):
     model = model.strip().lower()

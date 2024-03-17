@@ -55,3 +55,6 @@ def format_list(values, max_values_per_line=7):
         formatted_output += repr(value)
     return formatted_output.strip()
 
+def int_to_str_with_zeros(number, length=3):
+    return str(number).zfill(length)
+
