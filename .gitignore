@@ -1,6 +1,7 @@
 *.png
 *.txt
 *.csv
+*.out
 *.json
 *.pyc
 plams-workdi*/*
