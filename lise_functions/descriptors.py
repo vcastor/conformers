@@ -81,3 +81,65 @@ def orbital_energies(content):
 
     return np.array(E_ev, dtype=float)
 
+def conceptual_dft_mol(content):
+    """
+    Extract the chemical potential, hardness, and softness
+    """
+    marker = " GLOBAL DESCRIPTORS"
+    content = content.split('\n')
+    marker_index = content.index(marker) + 3
+    global_descriptors = np.zeros(7)
+    #Electronic chemical potential
+    global_descriptors[0] = float(content[marker_index].split()[5])
+    #Hardness
+    global_descriptors[1] = float(content[marker_index+4].split()[3])
+    #Electrophilicity index
+    global_descriptors[2] = float(content[marker_index+7].split()[4])
+    #nucleofuge
+    global_descriptors[3] = float(content[marker_index+8].split()[4])
+    #elctrofuge
+    global_descriptors[4] = float(content[marker_index+9].split()[4])
+    #Electrodonating
+    global_descriptors[5] = float(content[marker_index+10].split()[4])
+    #Electroaccepting
+    global_descriptors[6] = float(content[marker_index+11].split()[4])
+
+    return global_descriptors
+
+def conceptual_dft_atom(natoms, content):
+    """
+    Extract the f+, f-, f(2), S*f+, S*f-, S*f(2)
+    """
+    marker = " ATOMIC DESCRIPTORS: CANONICAL ENSEMBLE"
+    content = content.split('\n')
+    marker_index = content.index(marker) + 5
+
+    atomic_descriptors = np.zeros((natoms, 6))
+    for i in range(natoms):
+        aux = content[marker_index+i].split()
+        atomic_descriptors[i, :3] = aux[3:5] + [aux[6]]
+    
+    marker = " ATOMIC DESCRIPTORS: GRAND CANONICAL ENSEMBLE"
+    marker_index = content.index(marker) + 5
+    for i in range(natoms):
+        aux = content[marker_index+i].split()
+        atomic_descriptors[i, 3:] = aux[3:5] + [aux[6]]
+
+    return atomic_descriptors
+
+def condensed_local(natoms, content):
+    """
+    Extract CONDENSED LOCAL ELECTROPHILICITY AND NUCLEOPHILICITY
+    """
+    marker = " CONDENSED LOCAL ELECTROPHILICITY AND NUCLEOPHILICITY"
+    content = content.split('\n')
+    marker_index = content.index(marker) + 5
+
+    condensed_local = np.zeros((natoms, 2))
+    for i in range(natoms):
+        aux = content[marker_index+i].split()
+        condensed_local[i] = content[marker_index+i].split()[3:5]
+
+    return condensed_local
+
+
