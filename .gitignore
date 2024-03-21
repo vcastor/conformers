@@ -4,8 +4,7 @@
 *.out
 *.json
 *.pyc
-plams-workdi*/*
-plams-workdir/
+plams-workdi*/
 *log
 *rkf
 *dill

@@ -1,4 +1,0 @@
-#!/bin/sh
-
-AMS_JOBNAME="generate" AMS_RESULTSDIR=. $AMSBIN/conformers <"generate.in"
-
