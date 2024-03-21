@@ -1,0 +1,4 @@
+#!/bin/sh
+
+AMS_JOBNAME="reoptimize_ADF.002" AMS_RESULTSDIR=. $AMSBIN/conformers <"reoptimize_ADF.002.in"
+

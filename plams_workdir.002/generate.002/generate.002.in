@@ -1,0 +1,36 @@
+Equivalence
+  Crest
+    RMSDThreshold 2.5
+  End
+End
+
+Generator
+  Method RDKit
+  RDKit
+    InitialNConformers 20
+  End
+End
+
+Task Generate
+
+system
+  Atoms
+              C       0.0051187126      -0.0106204987       0.0060142815 rdkit.charge=0 rdkit.origNoImplicit=False
+              H       0.5496679596       0.7554384137      -0.5969811931 rdkit.charge=0 rdkit.isImplicit=1
+              H       0.7497641035      -0.5879438957       0.5852846291 rdkit.charge=0 rdkit.isImplicit=1
+              H      -0.5867525609      -0.6521358157      -0.6760916201 rdkit.charge=0 rdkit.isImplicit=1
+              H      -0.7177982148       0.4952617964       0.6817739026 rdkit.charge=0 rdkit.isImplicit=1
+  End
+  BondOrders
+     1 2 1.0
+     1 3 1.0
+     1 4 1.0
+     1 5 1.0
+  End
+  Charge 0
+End
+
+Engine DFTB
+  Model GFN1-xTB
+EndEngine
+

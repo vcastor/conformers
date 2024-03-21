@@ -33,16 +33,17 @@ def plot_conformers(job:ConformersJob):
     plot_name = gconfig['input_file_name'].replace('.csv', '')
     molecules, energies, populations = get_main_results(job)
 
-    indices = np.arange(min(3, len(energies)))
+    indices = np.arange(len(energies))
+    #indices = np.arange(min(3, len(energies)))
 
     # Ensure 'axes' is always a list for consistent indexing, even with a single subplot
-    fig, axes = plt.subplots(1, len(indices), figsize=(12, 3))
+    fig, axes = plt.subplots(1, len(indices), figsize=(14, 5))
     axes = np.atleast_1d(axes)  # Make sure axes is always an array for consistency
 
     for ax, idx in zip(axes, indices):
         mol = molecules[idx]
         E = energies[idx]
-        population = populations[idx]
+        population = 100*populations[idx]
 
         plot_molecule(mol, ax=ax)  # Assuming this is a predefined function
         ax.set_title(f"#{idx + 1}\nΔE = {E:.2f} kcal/mol\nPop.: {population:.3f}% (T = {temperature} K)")
@@ -64,8 +65,8 @@ def plain_text_output(output_file, system_results):
             for key, value in system.items():
                 if key != 'conformers':
                     if isinstance(value, list):
-                        formatted_value = format_list(value)# when key == atoms
-                        file.write(f'{key}: {formatted_value}\n')
+                        formatted_value = format_list(key, value, 12)# when key == atoms
+                        file.write(f'{formatted_value}\n')
                     else:
                         file.write(f'{key}: {value}\n')
                 else:
@@ -76,8 +77,8 @@ def plain_text_output(output_file, system_results):
                             if subkey == 'IDM':
                                 file.write(f'{subkey}: ommited for brevity\n')
                             else:
-                                formatted_subvalue = format_list(subvalue[j])
-                                file.write(f'{subkey:10}: {formatted_subvalue}\n')
+                                formatted_subvalue = format_list(subkey, subvalue[j])
+                                file.write(f'{formatted_subvalue}\n')
 
 def json_writer(outfile, system_results):
     import json
@@ -86,7 +87,14 @@ def json_writer(outfile, system_results):
 
 def output_writer(system_results):
     out_file = gconfig['input_file_name'].replace('.csv', '.out')
-    json_file = gconfig['input_file_name'].replace('.csv', '.json')
     plain_text_output(out_file, system_results)
-    json_writer(json_file, system_results)
+    json_file = gconfig['input_file_name'].replace('.csv', '.json')
+    jsonresults = {}
+    for _, molecule in system_results.items():
+        smiles_key = molecule['smiles']
+        json_aux = molecule.copy()
+        json_aux.pop('smiles')
+        json_aux.pop('solvent')
+        jsonresults[smiles_key] = json_aux
+    json_writer(json_file, jsonresults)
 

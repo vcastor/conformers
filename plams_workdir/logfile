@@ -1,0 +1,20 @@
+[21.03|18:50:18] Execution interrupted by the following exception:
+SyntaxError: invalid syntax (small_functions.py, line 62)
+File: output_writer.py
+Line 4: from .small_functions import *
+
+==============Full traceback========================
+File: plams
+Line 89: exec(compile(open(config.default_jobmanager.input, encoding='utf-8').read(), config.default_jobmanager.input, 'exec'), plams_namespace)
+----------------------------------------------------
+File: input
+Line 7: from lise_functions import * # local functions
+----------------------------------------------------
+File: __init__.py
+Line 2: from .output_writer import output_writer, plot_conformers
+----------------------------------------------------
+File: output_writer.py
+Line 4: from .small_functions import *
+----------------------------------------------------
+[21.03|18:50:18] PLAMS environment cleaned up successfully
+[21.03|18:50:18] PLAMS run finished. Goodbye
