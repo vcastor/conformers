@@ -18,7 +18,6 @@ def run_jobs(molecule, solvent):
     reoptimize_settings.input.ams.InputConformersSet = os.path.abspath(generate_job.results.rkfpath())
     reoptimize_ADF_job = ConformersJob(name='reoptimize_ADF', settings=reoptimize_settings)
     reoptimize_ADF_job.run()
-    plot_conformers(reoptimize_ADF_job)
     # ADF Single Point
     adf_SP_settings = settings_for_task('Score', user_settings, solvent)
     adf_SP_settings.input.ams.InputConformersSet = os.path.abspath(reoptimize_ADF_job.results.rkfpath())
@@ -44,6 +43,7 @@ for system in systems:
 
     adf_SP_job = run_jobs(from_smiles(system['smiles']), system['solvent'])
     adf_results = adf_SP_job.run()
+    plot_conformers(adf_SP_job)
 
     path = os.path.abspath(adf_SP_job.results.rkfpath())
     paths = score_paths(path, adf_results)
@@ -56,20 +56,31 @@ for system in systems:
                 'number_atoms': natoms,
                 'atoms': atoms,
                 'number_conformers': nconfs,
+                'average' : {},
                 'conformers': {'weights': [],
                                'IDM': [],
+                               'qtaimcharge': [],
                                'Hirshfeld': [],
                                's2': [],
-                               'OE': []}}
+                               'OE': [],
+                               'cdftm': [],
+                               'cdfta': [],
+                               'condensed': []}}
 
     for j, path in enumerate(paths):
         with open(path, 'r', encoding='unicode_escape') as file:
             conformer = file.read()
             molecule['conformers']['weights'].append(pops[j])
             molecule['conformers']['IDM'].append(distance_matrix(natoms, conformer))
+            molecule['conformers']['qtaimcharge'].append(qtaim_charges(natoms, conformer))
             molecule['conformers']['Hirshfeld'].append(hirshfeld(natoms, conformer))
             molecule['conformers']['s2'].append(s2(natoms, conformer))
             molecule['conformers']['OE'].append(orbital_energies(conformer))
+            molecule['conformers']['cdftm'].append(conceptual_dft_mol(conformer))
+            molecule['conformers']['cdfta'].append(conceptual_dft_atom(natoms, conformer))
+            molecule['conformers']['condensed'].append(condensed_local(natoms, conformer))
+
+    molecule['average'] = average_properties(molecule)
 
     system_results[(system['smiles'], system['solvent'])] = molecule
 

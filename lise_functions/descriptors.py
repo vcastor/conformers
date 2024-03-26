@@ -102,7 +102,7 @@ def conceptual_dft_mol(content):
     #Electrodonating
     global_descriptors[5] = float(content[marker_index+10].split()[4])
     #Electroaccepting
-    global_descriptors[6] = float(content[marker_index+11].split()[4])
+    global_descriptors[6] = float(content[marker_index+11].split()[3])
 
     return global_descriptors
 
@@ -142,4 +142,48 @@ def condensed_local(natoms, content):
 
     return condensed_local
 
+def qtaim_charges(natoms, content):
+    """
+    Extract QTAIM charges
+    """
+    marker = "   Atom         Population     Net charge    Spin density      Laplacian"
+    content = content.split('\n')
+    marker_index = content.index(marker) + 2
+
+    qtaim_charges = np.zeros(natoms)
+    for i in range(natoms):
+        qtaim_charges[i] = content[marker_index+i].split()[4]
+
+    return qtaim_charges
+
+def average_properties(molecule):
+    weights = molecule['conformers']['weights']
+    nconformers = len(weights)
+    qtaim_q_avg = np.zeros(molecule['number_atoms'])
+    hirshfeld_avg = np.zeros(molecule['number_atoms'])
+    s2_avg = np.zeros(molecule['number_atoms'])
+    oe_len = sum(len(sublist) for sublist in molecule['conformers']['OE']) // nconformers
+    oe_avg = np.zeros(oe_len)
+    cdftm_avg = np.zeros(7)
+    cdfta_avg = np.zeros((molecule['number_atoms'], 6))
+    condensed_avg = np.zeros((molecule['number_atoms'], 2))
+
+    for i, weight in enumerate(weights):
+        qtaim_q_avg += weight * np.array(molecule['conformers']['qtaimcharge'][i])
+        hirshfeld_avg += weight * np.array(molecule['conformers']['Hirshfeld'][i])
+        s2_avg += weight * np.array(molecule['conformers']['s2'][i])
+        oe_avg += weight * np.array(molecule['conformers']['OE'][i])
+        cdftm_avg += weight * np.array(molecule['conformers']['cdftm'][i])
+        cdfta_avg += weight * np.array(molecule['conformers']['cdfta'][i])
+        condensed_avg += weight * np.array(molecule['conformers']['condensed'][i])
+
+    return {
+        'qtaimcharge' : qtaim_q_avg,
+        'Hirshfeld': hirshfeld_avg,
+        's2': s2_avg,
+        'OE': oe_avg,
+        'cdftm': cdftm_avg,
+        'cdfta': cdfta_avg,
+        'condensed': condensed_avg
+    }
 

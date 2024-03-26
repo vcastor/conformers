@@ -114,8 +114,8 @@ def validate_settings(settings):
         except ValueError:
             raise ValueError(f"Invalid value for {key} setting")
 
-    if validated_settings['optimize E threshold'] > validated_settings['score E threshold']:
-        raise ValueError("Optimize E threshold must be less than score E threshold")
+    #if validated_settings['optimize E threshold'] < validated_settings['score E threshold']:
+    #    raise ValueError("Optimize E threshold must be less than score E threshold")
 
     # The rest of the settings are not validated (for now)
     for key, value in settings.items():

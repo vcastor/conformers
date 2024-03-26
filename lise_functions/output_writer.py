@@ -2,6 +2,7 @@
 from scm.plams import *
 from scm.conformers import ConformersJob
 from .small_functions import *
+from .writer_helper import table_formatter
 from .gvariables import gconfig
 import numpy as np
 import matplotlib.pyplot as plt
@@ -33,8 +34,7 @@ def plot_conformers(job:ConformersJob):
     plot_name = gconfig['input_file_name'].replace('.csv', '')
     molecules, energies, populations = get_main_results(job)
 
-    indices = np.arange(len(energies))
-    #indices = np.arange(min(3, len(energies)))
+    indices = np.arange(len(energies))#arange(min(3, len(energies)))
 
     # Ensure 'axes' is always a list for consistent indexing, even with a single subplot
     fig, axes = plt.subplots(1, len(indices), figsize=(14, 5))
@@ -63,22 +63,23 @@ def plain_text_output(output_file, system_results):
             file.write(f'{string_smile}\n')
             file.write(f'{string_solvent}\n')
             for key, value in system.items():
-                if key != 'conformers':
-                    if isinstance(value, list):
-                        formatted_value = format_list(key, value, 12)# when key == atoms
-                        file.write(f'{formatted_value}\n')
-                    else:
-                        file.write(f'{key}: {value}\n')
-                else:
+                if key == 'number_conformers' or key == 'number_atoms':
+                    file.write(f'{key}: {value}\n')
+                elif key == 'average' and system['number_conformers'] > 1:
+                    file.write('Average properties\n')
+                    formatted_average = table_formatter(system['atoms'], value)
+                    file.write(f'{formatted_average}\n')
+                elif key == 'conformers':
+                    systems_aux = []
+                    for i in range(system['number_conformers']):
+                        aux_data = {subkey: subvalue[i] if isinstance(subvalue, list) else subvalue for subkey, subvalue in value.items()}
+                        systems_aux.append(aux_data)
                     for j in range(system['number_conformers']):
                         string_conformer = '{:-^72}'.format(f' Conformer {j+1} ')
                         file.write(f'{string_conformer}\n')
-                        for subkey, subvalue in value.items():
-                            if subkey == 'IDM':
-                                file.write(f'{subkey}: ommited for brevity\n')
-                            else:
-                                formatted_subvalue = format_list(subkey, subvalue[j])
-                                file.write(f'{formatted_subvalue}\n')
+                        file.write(f"Weight: {value['weights'][j]}\n")
+                        formatted_conformer = table_formatter(system['atoms'], systems_aux[j])
+                        file.write(f'{formatted_conformer}\n')
 
 def json_writer(outfile, system_results):
     import json
@@ -90,11 +91,13 @@ def output_writer(system_results):
     plain_text_output(out_file, system_results)
     json_file = gconfig['input_file_name'].replace('.csv', '.json')
     jsonresults = {}
-    for _, molecule in system_results.items():
-        smiles_key = molecule['smiles']
+    for smileskey, molecule in system_results.items():
         json_aux = molecule.copy()
-        json_aux.pop('smiles')
-        json_aux.pop('solvent')
-        jsonresults[smiles_key] = json_aux
+        for key in ['smiles', 'solvent', 'average']:
+            json_aux.pop(key)
+        rmkey = ['cdftm', 'cdfta', 'condensed', 'qtaimcharge']
+        for key in rmkey:
+            json_aux['conformers'].pop(key)
+        jsonresults[smileskey] = json_aux
     json_writer(json_file, jsonresults)
 
