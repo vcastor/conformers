@@ -44,7 +44,7 @@ def to_lower_dict(d):
     """Converts dictionary keys to lowercase."""
     return {key.lower(): value for key, value in d.items()}
 
-def format_list(key, values, max_values_per_line=6):
+def format_list(key, values, max_values_per_line=5):
     if isinstance(values, (np.float, float, int)):
         values = [values]
 

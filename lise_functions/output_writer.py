@@ -66,7 +66,8 @@ def plain_text_output(output_file, system_results):
                 if key == 'number_conformers' or key == 'number_atoms':
                     file.write(f'{key}: {value}\n')
                 elif key == 'average' and system['number_conformers'] > 1:
-                    file.write('Average properties\n')
+                    string_average = '{:-^72}'.format(' Average ')
+                    file.write(f'{string_average}\n')
                     formatted_average = table_formatter(system['atoms'], value)
                     file.write(f'{formatted_average}\n')
                 elif key == 'conformers':
@@ -95,7 +96,7 @@ def output_writer(system_results):
         json_aux = molecule.copy()
         for key in ['smiles', 'solvent', 'average']:
             json_aux.pop(key)
-        rmkey = ['cdftm', 'cdfta', 'condensed', 'qtaimcharge']
+        rmkey = ['cdftm', 'cdfta', 'condensed', 'qtaimcharge', 'fukui']
         for key in rmkey:
             json_aux['conformers'].pop(key)
         jsonresults[smileskey] = json_aux

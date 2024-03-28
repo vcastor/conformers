@@ -65,6 +65,7 @@ for system in systems:
                                'OE': [],
                                'cdftm': [],
                                'cdfta': [],
+                               'fukui': [],
                                'condensed': []}}
 
     for j, path in enumerate(paths):
@@ -78,6 +79,7 @@ for system in systems:
             molecule['conformers']['OE'].append(orbital_energies(conformer))
             molecule['conformers']['cdftm'].append(conceptual_dft_mol(conformer))
             molecule['conformers']['cdfta'].append(conceptual_dft_atom(natoms, conformer))
+            molecule['conformers']['fukui'].append(fukui_functions(natoms, conformer))
             molecule['conformers']['condensed'].append(condensed_local(natoms, conformer))
 
     molecule['average'] = average_properties(molecule)

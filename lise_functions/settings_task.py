@@ -19,17 +19,19 @@ def task_settings(task, user_settings):
         s.input.ams.GeometryOptimization.ConvergenceQuality = 'Normal'
         s.input.ams.InputMaxEnergy = user_settings['optimize E threshold']
         s.input.ADF.Basis.Type = user_settings['basis set']
+        s.input.ADF.Basis.Core = user_settings['core']
         s.input.ADF.Symmetry = 'NOSYM'
         functional_settings(user_settings['functional'], user_settings['dispersion'], s)
-        s.input.ADF.Relativity.Level = 'None'
+        s.input.ADF.Relativity.Level = user_settings['relativity']
         s.input.ADF.Solvation.Surf = 'Delley'
     elif task == 'Score':
         s.input.ams.Task = 'Score'
         s.input.ams.InputMaxEnergy = user_settings['score E threshold']
         s.input.ADF.Basis.Type = user_settings['basis set']
+        s.input.ADF.Basis.Core = user_settings['core']
         s.input.ADF.Symmetry = 'NOSYM'
         functional_settings(user_settings['functional'], user_settings['dispersion'], s)
-        s.input.ADF.Relativity.Level = 'None'
+        s.input.ADF.Relativity.Level = user_settings['relativity']
         s.input.ADF.ConceptualDFT.Enabled = 'Yes'
         s.input.ADF.ConceptualDFT.AnalysisLevel = 'Full'
         s.input.ADF.QTAIM.Enabled = 'Yes'

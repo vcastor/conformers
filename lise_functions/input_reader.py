@@ -41,7 +41,9 @@ def input_reader(filepath):
         'optimize E threshold': ['optimize e', 'optimize energy', 'delta energy 2',
                                  'optimize energy threshold', 'optimize e threshold', 'energy threshold optimize'],
         'temperature' : ['temp', 't', 'temperature'],
-        'n conformers': ['n conformers', 'conformers', 'number of conformers']
+        'n conformers': ['n conformers', 'conformers', 'number of conformers'],
+        'relativity'  : ['relativity', 'relativistic', 'relativistic effects'],
+        'core' : ['core', 'basis core', 'core basis']
     }
 
     # On change la direction du dictionnaire, pour pouvoir faire la correspondance entre les variations et les clés
@@ -59,11 +61,16 @@ def input_reader(filepath):
 
     systems = process_systems(systems)
 
+    # Default settings (frozen core and no relativistic effects)
+    settings['relativity'] = settings.get('relativity', 'None')
+    settings['core'] = settings.get('core', 'None')
+
     # Validate all expected settings are present
     for setting_key in key_variations:
         if setting_key not in settings and setting_key != 'dispersion':
             raise ValueError(f"Missing setting '{setting_key}'")
 
+    # Default setting, no dispersion if not provided
     settings['dispersion'] = settings.get('dispersion', None)
 
     return systems, settings

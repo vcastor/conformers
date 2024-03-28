@@ -142,6 +142,21 @@ def condensed_local(natoms, content):
 
     return condensed_local
 
+def fukui_functions(natoms, content):
+    """
+    Extract Fukui mu-*f-
+    """
+    marker = " COMPOSITE FUKUI FUNCTIONS"
+    content = content.split('\n')
+    marker_index = content.index(marker) + 5
+
+    fukui_functions = np.zeros(natoms)
+    for i in range(natoms):
+        aux = content[marker_index+i].split()
+        fukui_functions[i] = aux[4]
+
+    return fukui_functions
+
 def qtaim_charges(natoms, content):
     """
     Extract QTAIM charges
@@ -166,6 +181,7 @@ def average_properties(molecule):
     oe_avg = np.zeros(oe_len)
     cdftm_avg = np.zeros(7)
     cdfta_avg = np.zeros((molecule['number_atoms'], 6))
+    fukui_avg = np.zeros(molecule['number_atoms'])
     condensed_avg = np.zeros((molecule['number_atoms'], 2))
 
     for i, weight in enumerate(weights):
@@ -175,8 +191,10 @@ def average_properties(molecule):
         oe_avg += weight * np.array(molecule['conformers']['OE'][i])
         cdftm_avg += weight * np.array(molecule['conformers']['cdftm'][i])
         cdfta_avg += weight * np.array(molecule['conformers']['cdfta'][i])
+        fukui_avg += weight * np.array(molecule['conformers']['fukui'][i])
         condensed_avg += weight * np.array(molecule['conformers']['condensed'][i])
 
+    oe_avg = np.round(oe_avg, 3)
     return {
         'qtaimcharge' : qtaim_q_avg,
         'Hirshfeld': hirshfeld_avg,
@@ -184,6 +202,7 @@ def average_properties(molecule):
         'OE': oe_avg,
         'cdftm': cdftm_avg,
         'cdfta': cdfta_avg,
+        'fukui': fukui_avg,
         'condensed': condensed_avg
     }
 
