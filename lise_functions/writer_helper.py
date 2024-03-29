@@ -18,13 +18,20 @@ def table_formatter(atoms, properties):
 
     # Conceptual DFT properties (atomic)
     cdfta_line = "Atomic descriptors, Conceptual DFT\n"
-    cdfta_line += "Canonical, Grand Canonical Ensemble and Fukui functions\n"
-    cdfta_line += " Atom   |     f+     |     f-     |     f(2)    |    S*f+    |    S*f-    |    S*f(2)  |   mu-*f-\n"
+    cdfta_line += "Canonical and Grand Canonical Ensemble\n"
+    cdfta_line += " Atom   |     f+     |     f-     |     f(2)    |    S*f+    |    S*f-    |    s(2)\n"
     for i, atom in enumerate(atoms):
         cdfta_line += f"   {atom}    | {properties['cdfta'][i][0]:^10.4f} |"
         cdfta_line += f" {properties['cdfta'][i][1]:^10.4f} |  {properties['cdfta'][i][2]:^10.4f} |"
         cdfta_line += f" {properties['cdfta'][i][3]:^10.4f} | {properties['cdfta'][i][4]:^10.4f} |"
-        cdfta_line += f" {properties['cdfta'][i][5]:^10.4f} | {properties['fukui'][i]:^10.4f}\n"
+        cdfta_line += f" {properties['cdfta'][i][5]:^10.4f}\n"
+
+    # Fukui and dual descriptor
+    fukui_line = "Fukui and dual descriptors\n"
+    fukui_line += " Atom   |   mu-*f-   |   w*f(2)   |   S*f(2)\n"
+    for i, atom in enumerate(atoms):
+        fukui_line += f"   {atom}    | {properties['fukui'][i]:^10.4f} |"
+        fukui_line += f" {properties['dual'][i][0]:^10.4f} | {properties['dual'][i][1]:^10.4f}\n"
 
     # Charges
     charges_line = "Charges\n"
@@ -38,6 +45,6 @@ def table_formatter(atoms, properties):
     for i, atom in enumerate(atoms):
         condensed_line += f"   {atom}    | {properties['condensed'][i][0]:^20.4f} | {properties['condensed'][i][1]:^20.4f}\n"
 
-    formatted_str = oe_line + cdftp_line + cdfta_line + charges_line + condensed_line
+    formatted_str = oe_line + cdftp_line + cdfta_line + fukui_line + charges_line + condensed_line
     return formatted_str
 

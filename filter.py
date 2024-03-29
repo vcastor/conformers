@@ -66,6 +66,7 @@ for system in systems:
                                'cdftm': [],
                                'cdfta': [],
                                'fukui': [],
+                               'dual': [],
                                'condensed': []}}
 
     for j, path in enumerate(paths):
@@ -80,6 +81,7 @@ for system in systems:
             molecule['conformers']['cdftm'].append(conceptual_dft_mol(conformer))
             molecule['conformers']['cdfta'].append(conceptual_dft_atom(natoms, conformer))
             molecule['conformers']['fukui'].append(fukui_functions(natoms, conformer))
+            molecule['conformers']['dual'].append(dual_descriptor(natoms, conformer))
             molecule['conformers']['condensed'].append(condensed_local(natoms, conformer))
 
     molecule['average'] = average_properties(molecule)

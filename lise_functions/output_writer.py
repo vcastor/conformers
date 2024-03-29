@@ -96,7 +96,7 @@ def output_writer(system_results):
         json_aux = molecule.copy()
         for key in ['smiles', 'solvent', 'average']:
             json_aux.pop(key)
-        rmkey = ['cdftm', 'cdfta', 'condensed', 'qtaimcharge', 'fukui']
+        rmkey = ['cdftm', 'cdfta', 'condensed', 'qtaimcharge', 'fukui', 'dual']
         for key in rmkey:
             json_aux['conformers'].pop(key)
         jsonresults[smileskey] = json_aux

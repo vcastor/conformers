@@ -45,11 +45,12 @@ def s2(natoms, content):
 
     return np.array(s2_values, dtype=float)
 
-def hirshfeld(natoms, content):
+def hirshfeld(natoms, path):
     """
     Extract Hirshfeld values.
     """
     marker = " H I R S H F E L D   C H A R G E   A N A L Y S I S"
+    inpatm = np.array(resultsnoE.readrkf('Geometry', 'atom order index', file='adf'))#interal order in TAPE 21
     content = content.split('\n')
     marker_index = content.index(marker) + 11
     
@@ -58,6 +59,20 @@ def hirshfeld(natoms, content):
         hirshfeld_values[i] = content[marker_index+i].split()[2]
     
     return hirshfeld_values
+
+def dual_descriptor(natoms, content):
+    """
+    Composite Dual Descriptor
+    """
+    marker = " COMPOSITE DUAL DESCRIPTORS"
+    content = content.split('\n')
+    marker_index = content.index(marker) + 5
+
+    dual_descriptor = np.zeros((natoms, 2))
+    for i in range(natoms):
+        dual_descriptor[i] = content[marker_index+i].split()[3:5]
+
+    return dual_descriptor
 
 def orbital_energies(content):
     """
@@ -182,6 +197,7 @@ def average_properties(molecule):
     cdftm_avg = np.zeros(7)
     cdfta_avg = np.zeros((molecule['number_atoms'], 6))
     fukui_avg = np.zeros(molecule['number_atoms'])
+    dual_avg = np.zeros((molecule['number_atoms'], 2))
     condensed_avg = np.zeros((molecule['number_atoms'], 2))
 
     for i, weight in enumerate(weights):
@@ -192,6 +208,7 @@ def average_properties(molecule):
         cdftm_avg += weight * np.array(molecule['conformers']['cdftm'][i])
         cdfta_avg += weight * np.array(molecule['conformers']['cdfta'][i])
         fukui_avg += weight * np.array(molecule['conformers']['fukui'][i])
+        dual_avg += weight * np.array(molecule['conformers']['dual'][i])
         condensed_avg += weight * np.array(molecule['conformers']['condensed'][i])
 
     oe_avg = np.round(oe_avg, 3)
@@ -203,6 +220,7 @@ def average_properties(molecule):
         'cdftm': cdftm_avg,
         'cdfta': cdfta_avg,
         'fukui': fukui_avg,
+        'dual': dual_avg,
         'condensed': condensed_avg
     }
 
