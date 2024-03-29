@@ -50,7 +50,7 @@ def hirshfeld(natoms, path):
     Extract Hirshfeld values.
     """
     marker = " H I R S H F E L D   C H A R G E   A N A L Y S I S"
-    inpatm = np.array(resultsnoE.readrkf('Geometry', 'atom order index', file='adf'))#interal order in TAPE 21
+    #inpatm = np.array(resultsnoE.readrkf('Geometry', 'atom order index', file='adf'))#interal order in TAPE 21
     content = content.split('\n')
     marker_index = content.index(marker) + 11
     
