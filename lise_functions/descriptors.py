@@ -45,7 +45,7 @@ def s2(natoms, content):
 
     return np.array(s2_values, dtype=float)
 
-def hirshfeld(natoms, path):
+def hirshfeld(natoms, content):
     """
     Extract Hirshfeld values.
     """
