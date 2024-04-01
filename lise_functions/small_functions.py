@@ -1,21 +1,21 @@
 # -*- coding: UTF-8 -*-
 import re
+import os
 import numpy as np
 from scm.plams import *
 
-def score_paths(path, adf_results):
+def rkf_paths(path):
     """
-    This function just gets full Score job paths and sorts them.
-    14 charactes :: conformers.rkf
+    This function gets rkf paths for all conformers.
     """
-    paths = [
-        path[0:len(path)-14] + str(element)
-        for element in adf_results.files
-        if 'Score' in element
-        and element.endswith('.out')
-        and 'CreateAtoms.out' not in element
-    ]
-    return sorted(paths, key=extract_number)
+    direcotry_path = os.path.dirname(path)
+    score_directories = []
+    # Walk through the directory and its subdirectories
+    for root, dirs, files in os.walk(direcotry_path):
+        # Filter directoires. Sanity check [just Score_*/ directories]
+        score_dirs = [os.path.join(root, d) for d in dirs if d.startswith('Score')]
+        score_directories.extend(score_dirs)
+    return score_directories
 
 
 def conversion(dic):
@@ -31,14 +31,6 @@ def conversion(dic):
         return dic.tolist()
     else:
         return dic
-
-def extract_number(string):
-    number_extractor_re = re.compile(r'Score_(\d+)\.out')
-    match = re.search(r'Score_(\d+)\.out', string)
-    if match:
-        return int(match.group(1))
-    else:
-        return 0
 
 def to_lower_dict(d):
     """Converts dictionary keys to lowercase."""

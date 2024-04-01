@@ -45,45 +45,29 @@ for system in systems:
     adf_results = adf_SP_job.run()
     plot_conformers(adf_SP_job)
 
-    path = os.path.abspath(adf_SP_job.results.rkfpath())
-    paths = score_paths(path, adf_results)
+    # directories with the plain text output and the TAPE21
+    score_dirs = rkf_paths(os.path.abspath(adf_SP_job.results.rkfpath()))
 
     pops = np.array(adf_SP_job.results.get_boltzmann_distribution(temperature))
     nconfs = len(pops)
 
+    # Molecule dictionary
     molecule = {'smiles': system['smiles'],
                 'solvent': system['solvent'],
                 'number_atoms': natoms,
                 'atoms': atoms,
                 'number_conformers': nconfs,
                 'average' : {},
-                'conformers': {'weights': [],
-                               'IDM': [],
-                               'qtaimcharge': [],
-                               'Hirshfeld': [],
-                               's2': [],
-                               'OE': [],
-                               'cdftm': [],
-                               'cdfta': [],
-                               'fukui': [],
-                               'dual': [],
-                               'condensed': []}}
+                'conformers': {}}
 
-    for j, path in enumerate(paths):
-        with open(path, 'r', encoding='unicode_escape') as file:
-            conformer = file.read()
-            molecule['conformers']['weights'].append(pops[j])
-            molecule['conformers']['IDM'].append(distance_matrix(natoms, conformer))
-            molecule['conformers']['qtaimcharge'].append(qtaim_charges(natoms, conformer))
-            molecule['conformers']['Hirshfeld'].append(hirshfeld(natoms, conformer))
-            molecule['conformers']['s2'].append(s2(natoms, conformer))
-            molecule['conformers']['OE'].append(orbital_energies(conformer))
-            molecule['conformers']['cdftm'].append(conceptual_dft_mol(conformer))
-            molecule['conformers']['cdfta'].append(conceptual_dft_atom(natoms, conformer))
-            molecule['conformers']['fukui'].append(fukui_functions(natoms, conformer))
-            molecule['conformers']['dual'].append(dual_descriptor(natoms, conformer))
-            molecule['conformers']['condensed'].append(condensed_local(natoms, conformer))
-
+    # Descriptors and average for each conformer
+    for j, score in enumerate(score_dirs):
+        conformer_data = descriptors(natoms, score, pops[j])
+        for key in conformer_data:
+            if key in molecule['conformers']:
+                molecule['conformers'][key].extend([conformer_data[key]])
+            else:
+                molecule['conformers'][key] = [conformer_data[key]]
     molecule['average'] = average_properties(molecule)
 
     system_results[(system['smiles'], system['solvent'])] = molecule
