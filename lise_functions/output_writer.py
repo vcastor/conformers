@@ -95,7 +95,7 @@ def output_writer(system_results):
     jsonresults = {}
     for smileskey, molecule in system_results.items():
         smiles = molecule['smiles']
-        s2 = [cdfta[5] for cdfta in molecule['conformers']['cdfta']]
+        s2 = np.concatenate([arr[:, 5] for arr in molecule['conformers']['cdfta']])
         auxmol = {'number_atoms': molecule['number_atoms'],
                   'atoms': molecule['atoms'],
                   'number_conformers': molecule['number_conformers'],

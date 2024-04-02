@@ -42,9 +42,6 @@ def descriptors(natoms, pathdir, pops):
     hirshfeld = np.array(amsresults.readrkf('Properties', 'FragmentCharge Hirshfeld', file='adf'))
     hirshfeld = hirshfeld[atom_order]
 
-    # Conceptual DFT descriptors
-    cdfta = canonical_grandcanonical(natoms, content)
-
     # should we read everything from the TAPE21?
     description = {
         'weights' : pops,
@@ -53,7 +50,7 @@ def descriptors(natoms, pathdir, pops):
         'hirshfeld': hirshfeld,
         'orbitalE': orbital_energies(content),
         'cdftm': conceptual_dft_mol(content),
-        'cdfta': cdfta,
+        'cdfta': canonical_grandcanonical(natoms, content),
         'fukui': fukui_functions(natoms, content),
         'dual': dual_descriptor(natoms, content),
         'condensed': condensed_local(natoms, content)
