@@ -90,15 +90,20 @@ def json_writer(outfile, system_results):
 def output_writer(system_results):
     out_file = gconfig['input_file_name'].replace('.csv', '.out')
     plain_text_output(out_file, system_results)
+    # JSON output [It is written for the ML, DO NOT CHANGE]
     json_file = gconfig['input_file_name'].replace('.csv', '.json')
     jsonresults = {}
     for smileskey, molecule in system_results.items():
-        json_aux = molecule.copy()
-        for key in ['smiles', 'solvent', 'average']:
-            json_aux.pop(key)
-        rmkey = ['cdftm', 'cdfta', 'condensed', 'qtaimcharge', 'fukui', 'dual']
-        for key in rmkey:
-            json_aux['conformers'].pop(key)
-        jsonresults[smileskey] = json_aux
+        smiles = molecule['smiles']
+        s2 = [cdfta[5] for cdfta in molecule['conformers']['cdfta']]
+        auxmol = {'number_atoms': molecule['number_atoms'],
+                  'atoms': molecule['atoms'],
+                  'number_conformers': molecule['number_conformers'],
+                  'conformers': {'weights': molecule['conformers']['weights'],
+                                 'IDM': molecule['conformers']['distances'],
+                                 'Hirshfeld': molecule['conformers']['hirshfeld'],
+                                 's2': s2,
+                                 'OE': molecule['conformers']['orbitalE']}}
+        jsonresults[smiles] = auxmol
     json_writer(json_file, jsonresults)
 

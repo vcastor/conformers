@@ -3,7 +3,7 @@ from .small_functions import format_list
 
 def table_formatter(atoms, properties):
     # Orbital energies in just one line (or more if needed)
-    oe_line = format_list('Orbital Energies', properties['OE'])
+    oe_line = format_list('Orbital Energies', properties['orbitalE'])
     oe_line += "\n"
 
     # Conceptual DFT properties (whole system)
@@ -37,7 +37,7 @@ def table_formatter(atoms, properties):
     charges_line = "Charges\n"
     charges_line += f" Atom   |    QTAIM    |   Hirshfeld\n"
     for i, atom in enumerate(atoms):
-        charges_line += f"   {atom}    |  {properties['qtaimcharge'][i]:^10.4f} |  {properties['Hirshfeld'][i]:^10.4f}\n"
+        charges_line += f"   {atom}    |  {properties['qtaimcharge'][i]:^10.4f} |  {properties['hirshfeld'][i]:^10.4f}\n"
 
     # Condensed Eletrophilicity and Nuclueophilicity
     condensed_line = "Condensed electrophilicity and nucleophilicity\n"

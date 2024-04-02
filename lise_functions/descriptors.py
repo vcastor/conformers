@@ -42,16 +42,18 @@ def descriptors(natoms, pathdir, pops):
     hirshfeld = np.array(amsresults.readrkf('Properties', 'FragmentCharge Hirshfeld', file='adf'))
     hirshfeld = hirshfeld[atom_order]
 
-    # FIXME: should we read everything from the TAPE21?
+    # Conceptual DFT descriptors
+    cdfta = canonical_grandcanonical(natoms, content)
+
+    # should we read everything from the TAPE21?
     description = {
         'weights' : pops,
-        'IDM': idm,
+        'distances': idm,
         'qtaimcharge': qtaim_charges,
-        'Hirshfeld': hirshfeld,
-        's2': s2(natoms, content),
-        'OE': orbital_energies(content),
+        'hirshfeld': hirshfeld,
+        'orbitalE': orbital_energies(content),
         'cdftm': conceptual_dft_mol(content),
-        'cdfta': conceptual_dft_atom(natoms, content),
+        'cdfta': cdfta,
         'fukui': fukui_functions(natoms, content),
         'dual': dual_descriptor(natoms, content),
         'condensed': condensed_local(natoms, content)
@@ -59,57 +61,11 @@ def descriptors(natoms, pathdir, pops):
 
     return description
 
-
-def distance_matrix(natoms, content):
-    """
-    Interatomic Distance Matrix
-    """
-    start_marker = " ATOMS"
-    marker_index = content.index(start_marker) + 4
-    coord_lines = content[marker_index:marker_index+natoms]
-
-    coords = np.zeros((natoms, 3))
-    for i in range(natoms):
-        coords[i] = coord_lines[i].split()[2:5]
-
-    # Calculate the interatomic distance matrix
-    distance_mat = np.zeros((natoms, natoms))
-    for i in range(natoms):
-        for j in range(i+1, natoms):
-            distance_mat[i, j] = np.linalg.norm(coords[i] - coords[j])
-            distance_mat[j, i] = distance_mat[i, j]
-    
-    return distance_mat
-
-def s2(natoms, content):
-    """
-    Grand Canonical Ensemble
-    """
-    marker = " ATOMIC DESCRIPTORS: GRAND CANONICAL ENSEMBLE"
-    marker_index = content.index(marker) + 5
-
-    s2_values = np.zeros(natoms)
-    for i in range(natoms):
-        s2_values[i] = content[marker_index+i].split()[-1]
-
-    return np.array(s2_values, dtype=float)
-
-def dual_descriptor(natoms, content):
-    """
-    Composite Dual Descriptor
-    """
-    marker = " COMPOSITE DUAL DESCRIPTORS"
-    marker_index = content.index(marker) + 5
-
-    dual_descriptor = np.zeros((natoms, 2))
-    for i in range(natoms):
-        dual_descriptor[i] = content[marker_index+i].split()[3:5]
-
-    return dual_descriptor
-
 def orbital_energies(content):
     """
     Orbital Energies (eV) [only the occupied orbitals]
+    It should never return an empty list, but just in case, something
+    goes wrong in ADF calculations.
     """
     marker = " Orbital Energies, per Irrep and Spin:" 
     E_ev = []
@@ -152,28 +108,9 @@ def conceptual_dft_mol(content):
 
     return global_descriptors
 
-def canonical_ensamble(natoms, amsresults):
+def canonical_grandcanonical(natoms, content):
     """
-    f+, f-, f(2)
-    """
-    atom_order = np.array(amsresults.readrkf('Geometry', 'atom order index', file='adf'))
-    fplus = np.array(amsresults.readrkf('Properties', 'Fukui Fplus', file='adf'))
-    fminus = np.array(amsresults.readrkf('Properties', 'Fukui Fminus', file='adf'))
-    f2 = np.array(amsresults.readrkf('Properties', 'Koopmans DD', file='adf'))
-    fplus = fplus[atom_order[natoms:]-1]# internal order -> input order
-    fminus = fminus[atom_order[natoms:]-1]
-    f2 = f2[atom_order[natoms:]-1]
-    return fplus, fminus, f2
-
-def grand_canonical(natoms, amsresults):
-    """
-    S*f+, S*f-, S*f(2)
-    """
-    atom_order = np.array(amsresults.readrkf('Geometry', 'atom order index', file='adf'))
-
-def conceptual_dft_atom(natoms, content):
-    """
-    Extract the f+, f-, f(2), S*f+, S*f-, S*f(2)
+    Extract the f+, f-, f(2), S*f+, S*f-, s(2)
     """
     marker = " ATOMIC DESCRIPTORS: CANONICAL ENSEMBLE"
     marker_index = content.index(marker) + 5
@@ -191,9 +128,35 @@ def conceptual_dft_atom(natoms, content):
 
     return atomic_descriptors
 
+def fukui_functions(natoms, content):
+    """
+    Extract Fukui mu-*f-
+    """
+    marker = " COMPOSITE FUKUI FUNCTIONS"
+    marker_index = content.index(marker) + 5
+
+    fukui_functions = np.zeros(natoms)
+    for i in range(natoms):
+        fukui_functions[i] = content[marker_index+i].split()[4]
+
+    return fukui_functions
+
+def dual_descriptor(natoms, content):
+    """
+    Composite Dual Descriptor
+    """
+    marker = " COMPOSITE DUAL DESCRIPTORS"
+    marker_index = content.index(marker) + 5
+
+    dual_descriptor = np.zeros((natoms, 2))
+    for i in range(natoms):
+        dual_descriptor[i] = content[marker_index+i].split()[3:5]
+
+    return dual_descriptor
+
 def condensed_local(natoms, content):
     """
-    Extract CONDENSED LOCAL ELECTROPHILICITY AND NUCLEOPHILICITY
+    Extract condensed local electrophilicity and nucleophilicity
     """
     marker = " CONDENSED LOCAL ELECTROPHILICITY AND NUCLEOPHILICITY"
     marker_index = content.index(marker) + 5
@@ -205,55 +168,29 @@ def condensed_local(natoms, content):
 
     return condensed_local
 
-def fukui_functions(natoms, content):
-    """
-    Extract Fukui mu-*f-
-    """
-    marker = " COMPOSITE FUKUI FUNCTIONS"
-    marker_index = content.index(marker) + 5
-
-    fukui_functions = np.zeros(natoms)
-    for i in range(natoms):
-        aux = content[marker_index+i].split()
-        fukui_functions[i] = aux[4]
-
-    return fukui_functions
-
 def average_properties(molecule):
     weights = molecule['conformers']['weights']
     nconformers = len(weights)
-    qtaim_q_avg = np.zeros(molecule['number_atoms'])
-    hirshfeld_avg = np.zeros(molecule['number_atoms'])
-    s2_avg = np.zeros(molecule['number_atoms'])
-    oe_len = sum(len(sublist) for sublist in molecule['conformers']['OE']) // nconformers
-    oe_avg = np.zeros(oe_len)
-    cdftm_avg = np.zeros(7)
-    cdfta_avg = np.zeros((molecule['number_atoms'], 6))
-    fukui_avg = np.zeros(molecule['number_atoms'])
-    dual_avg = np.zeros((molecule['number_atoms'], 2))
-    condensed_avg = np.zeros((molecule['number_atoms'], 2))
+    oe_len = sum(len(sublist) for sublist in molecule['conformers']['orbitalE']) // nconformers
 
-    for i, weight in enumerate(weights):
-        qtaim_q_avg += weight * np.array(molecule['conformers']['qtaimcharge'][i])
-        hirshfeld_avg += weight * np.array(molecule['conformers']['Hirshfeld'][i])
-        s2_avg += weight * np.array(molecule['conformers']['s2'][i])
-        oe_avg += weight * np.array(molecule['conformers']['OE'][i])
-        cdftm_avg += weight * np.array(molecule['conformers']['cdftm'][i])
-        cdfta_avg += weight * np.array(molecule['conformers']['cdfta'][i])
-        fukui_avg += weight * np.array(molecule['conformers']['fukui'][i])
-        dual_avg += weight * np.array(molecule['conformers']['dual'][i])
-        condensed_avg += weight * np.array(molecule['conformers']['condensed'][i])
-
-    oe_avg = np.round(oe_avg, 3)
-    return {
-        'qtaimcharge' : qtaim_q_avg,
-        'Hirshfeld': hirshfeld_avg,
-        's2': s2_avg,
-        'OE': oe_avg,
-        'cdftm': cdftm_avg,
-        'cdfta': cdfta_avg,
-        'fukui': fukui_avg,
-        'dual': dual_avg,
-        'condensed': condensed_avg
+    properties_avg = {
+        'qtaimcharge': np.zeros(molecule['number_atoms']),
+        'hirshfeld': np.zeros(molecule['number_atoms']),
+        'orbitalE': np.zeros(oe_len),
+        'cdftm': np.zeros(7),
+        'cdfta': np.zeros((molecule['number_atoms'], 6)),
+        'fukui': np.zeros(molecule['number_atoms']),
+        'dual': np.zeros((molecule['number_atoms'], 2)),
+        'condensed': np.zeros((molecule['number_atoms'], 2))
     }
+
+    # Loop through each conformer property to calculate weighted averages
+    for prop in properties_avg.keys():
+        for i, weight in enumerate(weights):
+            prop_array = np.array(molecule['conformers'][prop][i])
+            properties_avg[prop] += weight * prop_array
+
+    properties_avg['orbitalE'] = np.round(properties_avg['orbitalE'], 3)
+
+    return properties_avg
 
