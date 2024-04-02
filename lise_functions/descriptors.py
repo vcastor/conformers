@@ -15,6 +15,7 @@ def descriptors(natoms, pathdir, pops):
     the output plain text file and from the TAPE21.
     """
     import os
+    from scm.plams.tools.units import Units
     # Open the TAPE 21
     resultpath = os.path.join(pathdir, 'ams.rkf')
     amsrkf = AMSJob.load_external(resultpath)
@@ -32,7 +33,8 @@ def descriptors(natoms, pathdir, pops):
 
     # Interactomic distance matrix
     idm = np.array(amsresults.readrkf('Geometry', 'Atomic Distances', file='adf')).reshape(natoms+1, natoms+1)
-    idm = idm[1:, 1:]
+    idm = Units.conversion_ratio('bohr','angstrom')*idm[1:, 1:]
+    idm = idm[atom_order, :][:, atom_order]
 
     # Hirshfeld & QTAIM charges
     qtaim_charges = np.array(amsresults.readrkf('Properties', 'Bader atomic charges', file='adf'))

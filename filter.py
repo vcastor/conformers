@@ -45,11 +45,11 @@ for system in systems:
     adf_results = adf_SP_job.run()
     plot_conformers(adf_SP_job)
 
-    # directories with the plain text output and the TAPE21
-    score_dirs = rkf_paths(os.path.abspath(adf_SP_job.results.rkfpath()))
-
     pops = np.array(adf_SP_job.results.get_boltzmann_distribution(temperature))
     nconfs = len(pops)
+
+    # directories with the plain text output and the TAPE21
+    score_dirs = rkf_paths(os.path.abspath(adf_SP_job.results.rkfpath()))
 
     # Molecule dictionary
     molecule = {'smiles': system['smiles'],
@@ -64,10 +64,8 @@ for system in systems:
     for j, score in enumerate(score_dirs):
         conformer_data = descriptors(natoms, score, pops[j])
         for key in conformer_data:
-            if key in molecule['conformers']:
-                molecule['conformers'][key].extend([conformer_data[key]])
-            else:
-                molecule['conformers'][key] = [conformer_data[key]]
+            molecule['conformers'].setdefault(key, []).append(conformer_data[key])
+
     molecule['average'] = average_properties(molecule)
 
     system_results[(system['smiles'], system['solvent'])] = molecule
