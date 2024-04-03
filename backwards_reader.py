@@ -14,35 +14,30 @@ init()
 
 backwards_dir = backwards_path()
 
-sp_calculations, conf_calc = [], []
+conf_calc = []
 for entry in os.listdir(backwards_dir):
-    full_path = os.path.join(backwards_dir, entry)  # Construct the full path
-    # Check if the entry is a directory and contains "SP_ADF" in its name
+    full_path = os.path.join(backwards_dir, entry)
+    # Check if the entry is a directory and contains "SP_ADF"
     if os.path.isdir(full_path) and "SP_ADF" in entry:
         conf_calc.append(full_path)
-        # Now check for Score subdirectories
-        for sub_entry in os.listdir(full_path):
-            sub_full_path = os.path.join(full_path, sub_entry)
-            if os.path.isdir(sub_full_path) and sub_entry.startswith('Score'):
-                sp_calculations.append(sub_full_path)
 
 temperature = 298
 counter = 0
 system_results = {}
 # Main loop
-#for system in sp_calculations:
-for i in range(len(sp_calculations)):
-    adf_SP_job = AMSJob.load_external(sp_calculations[i])
-    mol = adf_SP_job.results.get_main_molecule()
-    natoms = len(mol)
-    type_atoms = [atom.symbol for atom in mol]
-
-    conf_job = ConformersJob.load_external(conf_calc[i])
+for conf in conf_calc:
+    conf_job = ConformersJob.load_external(conf)
     pops = np.array(conf_job.results.get_boltzmann_distribution(temperature))
     nconfs = len(pops)
 
     # As in the main filter,
     score_dirs = rkf_paths(os.path.abspath(conf_job.results.rkfpath()))
+
+    # Obtain the molecule from the first conformer
+    adf_SP_job = AMSJob.load_external(score_dirs[0])
+    mol = adf_SP_job.results.get_main_molecule()
+    natoms = len(mol)
+    type_atoms = [atom.symbol for atom in mol]
 
     # Molecule dictionary
     molecule = {'smiles': 'not known smile',
