@@ -12,62 +12,59 @@ from lise_functions import * # local functions
 
 init()
 
-backwards_dir = sys.argv[3]
-#outputname = sys.argv[2]
+backwards_dir = backwards_path()
 
-sp_calculations = []
-# Loop through each item in the specified directory
+sp_calculations, conf_calc = [], []
 for entry in os.listdir(backwards_dir):
     full_path = os.path.join(backwards_dir, entry)  # Construct the full path
     # Check if the entry is a directory and contains "SP_ADF" in its name
     if os.path.isdir(full_path) and "SP_ADF" in entry:
-        # Now check for a subdirectory with "Score" in its name within this directory
-        sp_calculations.append(full_path)  # Add the directory path to the list
-        #for sub_entry in os.listdir(full_path):
-        #    sub_full_path = os.path.join(full_path, sub_entry)  # Construct the full path for the subdirectory
-        #    # Check if the sub_entry is a directory and contains "Score" in its name
-        #    if os.path.isdir(sub_full_path) and "Score" in sub_entry:
-        #        sp_calculations.append(sub_full_path)  # Add the subdirectory path to the list
+        conf_calc.append(full_path)
+        # Now check for Score subdirectories
+        for sub_entry in os.listdir(full_path):
+            sub_full_path = os.path.join(full_path, sub_entry)
+            if os.path.isdir(sub_full_path) and sub_entry.startswith('Score'):
+                sp_calculations.append(sub_full_path)
 
 temperature = 298
+counter = 0
 system_results = {}
 # Main loop
-for system in sp_calculations:
-    adf_SP_job = ConformersJob.load_external(system)
+#for system in sp_calculations:
+for i in range(len(sp_calculations)):
+    adf_SP_job = AMSJob.load_external(sp_calculations[i])
+    mol = adf_SP_job.results.get_main_molecule()
+    natoms = len(mol)
+    type_atoms = [atom.symbol for atom in mol]
 
-    path = os.path.abspath(adf_SP_job.results.rkfpath())
-    paths = score_paths(path, adf_SP_job.results)
-
-    pops = np.array(adf_SP_job.results.get_boltzmann_distribution(temperature))
+    conf_job = ConformersJob.load_external(conf_calc[i])
+    pops = np.array(conf_job.results.get_boltzmann_distribution(temperature))
     nconfs = len(pops)
 
-    amsrkf = AMSJob.load_external(os.path.join(system, 'Score_0/ams.rkf'))
-    mol = amsrkf.results.get_input_molecule()
-    natoms = len(mol)
-    atoms = [mol.atoms[i]._getsymbol() for i in range(natoms)]
+    # As in the main filter,
+    score_dirs = rkf_paths(os.path.abspath(conf_job.results.rkfpath()))
 
-    molecule = {'number_atoms': natoms,
-                'atoms': atoms,
+    # Molecule dictionary
+    molecule = {'smiles': 'not known smile',
+                'solvent': 'not known solvent',
+                'number_atoms': natoms,
+                'atoms': type_atoms,
                 'number_conformers': nconfs,
-                'conformers': {'weights': [],
-                               'IDM': [],
-                               'Hirshfeld': [],
-                               's2': [],
-                               'OE': []}}
+                'average' : {},
+                'conformers': {}}
 
-    for j, path in enumerate(paths):
-        with open(path, 'r', encoding='unicode_escape') as file:
-            conformer = file.read()
-            molecule['conformers']['weights'].append(pops[j])
-            molecule['conformers']['IDM'].append(distance_matrix(natoms, conformer))
-            molecule['conformers']['Hirshfeld'].append(hirshfeld(natoms, conformer))
-            molecule['conformers']['s2'].append(s2(natoms, conformer))
-            molecule['conformers']['OE'].append(orbital_energies(conformer))
+    # Descriptors and average for each conformer
+    for j, score in enumerate(score_dirs):
+        conformer_data = descriptors(natoms, score, pops[j])
+        for key in conformer_data:
+            molecule['conformers'].setdefault(key, []).append(conformer_data[key])
 
-    system_results[system] = molecule
+    molecule['average'] = average_properties(molecule)
 
-print(system_results)
-quit()
+    key1, key2 = 'smiles'+str(counter), 'solvent'+str(counter)
+    system_results[(key1, key2)] = molecule
+    counter += 1
+
 #
 # Output
 output_writer(system_results)

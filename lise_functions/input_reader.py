@@ -133,3 +133,14 @@ def validate_settings(settings):
 
     return validated_settings
 
+def backwards_path():
+    """
+    It returns the path of a previous calculation, be careful, it only works.
+    """
+    backwards = next((os.path.abspath(arg) for arg in sys.argv[1:] if arg.endswith('/')), None)
+    if backwards:
+        gconfig['input_file_name'] = backwards + 'backwards.csv'
+        return backwards
+    else:
+        sys.exit("No backwards directory found")
+
