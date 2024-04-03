@@ -29,7 +29,7 @@ def descriptors(natoms, pathdir, pops):
     # In the TAPE 21 descriptors are written in the internal order
     atom_order = np.array(amsresults.readrkf('Geometry', 'atom order index', file='adf'))
     # internal order -> input order [FORTRAN counting]
-    atom_order = atom_order[natoms:] - 1
+    atom_order = atom_order[:natoms] - 1
 
     # Interactomic distance matrix
     idm = np.array(amsresults.readrkf('Geometry', 'Atomic Distances', file='adf')).reshape(natoms+1, natoms+1)
