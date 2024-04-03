@@ -30,7 +30,7 @@ def table_formatter(atoms, properties):
     fukui_line = "Fukui and dual descriptors\n"
     fukui_line += "  N |  Atom  |   mu-*f-   |   w*f(2)   |   S*f(2)\n"
     for i, atom in enumerate(atoms):
-        fukui_line += f" {i:>2} |    {atom}   | {properties['fukui'][i]:^10.4f} |"
+        fukui_line += f" {i+1:>2} |    {atom}   | {properties['fukui'][i]:^10.4f} |"
         fukui_line += f" {properties['dual'][i][0]:^10.4f} | {properties['dual'][i][1]:^10.4f}\n"
 
     # Charges
