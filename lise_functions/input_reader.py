@@ -138,7 +138,7 @@ def backwards_r(filename):
     It configure the global variable 'input_file_name' to the backwards file.
     """
     csvname = filename.replace('.txt', '_backwards.csv')
-    if backwards:
+    if os.path.exists(csvname):
         gconfig['input_file_name'] = csvname
         return filename
     else:
