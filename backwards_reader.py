@@ -12,20 +12,26 @@ from lise_functions import * # local functions
 
 init()
 
-backwards_dir = backwards_path()
-
-conf_calc = []
-for entry in os.listdir(backwards_dir):
-    full_path = os.path.join(backwards_dir, entry)
-    # Check if the entry is a directory and contains "SP_ADF"
-    if os.path.isdir(full_path) and "SP_ADF" in entry:
-        conf_calc.append(full_path)
+# From the plain text of all outputs generated until now
+systems = []
+db_plaintxt = backwards_r('lise_plaintextdata.txt')
+with open(db_plaintxt, 'r') as file:
+    for line in file:
+        if not line.startswith('#'):
+            line = line.split()
+            if len(line) == 0:
+                continue
+            smiles  = line[0]
+            solvent = line[-6]
+            plams_dir = line[-5]
+            sp_dir    = line[-4]
+            systems.append((smiles, solvent, os.path.join(plams_dir, sp_dir)))
 
 temperature = 298
-counter = 0
 system_results = {}
 # Main loop
-for conf in conf_calc:
+for system in systems:
+    smiles, solvent, conf = system
     conf_job = ConformersJob.load_external(conf)
     pops = np.array(conf_job.results.get_boltzmann_distribution(temperature))
     nconfs = len(pops)
@@ -40,8 +46,8 @@ for conf in conf_calc:
     type_atoms = [atom.symbol for atom in mol]
 
     # Molecule dictionary
-    molecule = {'smiles': 'not known smile',
-                'solvent': 'not known solvent',
+    molecule = {'smiles': smiles,
+                'solvent': solvent,
                 'number_atoms': natoms,
                 'atoms': type_atoms,
                 'number_conformers': nconfs,
@@ -56,9 +62,7 @@ for conf in conf_calc:
 
     molecule['average'] = average_properties(molecule)
 
-    key1, key2 = 'smiles'+str(counter), 'solvent'+str(counter)
-    system_results[(key1, key2)] = molecule
-    counter += 1
+    system_results[(smiles, solvent)] = molecule
 
 #
 # Output
