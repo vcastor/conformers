@@ -21,7 +21,7 @@ with open(db_plaintxt, 'r') as file:
             line = line.split()
             if len(line) == 0:
                 continue
-            smiles  = line[0]
+            smiles  = line[1]
             solvent = line[-6]
             plams_dir = line[-5]
             sp_dir    = line[-4]
