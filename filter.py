@@ -48,6 +48,10 @@ for system in systems:
     pops = np.array(adf_SP_job.results.get_boltzmann_distribution(temperature))
     nconfs = len(pops)
 
+    # for now we'll compute dynamics just if we have one conformer
+    if nconfs == 1:
+        dynamics = adf_SP_job.results.get_dynamics(temperature)
+
     # directories with the plain text output and the TAPE21
     score_dirs = rkf_paths(os.path.abspath(adf_SP_job.results.rkfpath()))
 

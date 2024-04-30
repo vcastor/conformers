@@ -43,7 +43,11 @@ def input_reader(filepath):
         'temperature' : ['temp', 't', 'temperature'],
         'n conformers': ['n conformers', 'conformers', 'number of conformers'],
         'relativity'  : ['relativity', 'relativistic', 'relativistic effects'],
-        'core' : ['core', 'basis core', 'core basis']
+        'core' : ['core', 'basis core', 'core basis'],
+        'nsteps' : ['nsteps', 'number of steps', 'steps'],
+        'timestep' : ['timestep', 'time step', 'time-step'],
+        'thermotype' : ['thermotype', 'thermostat type', 'thermostat-type'],
+        'tau' : ['tau', 'temperature coupling constant', 'thermostat tau']
     }
 
     # On change la direction du dictionnaire, pour pouvoir faire la correspondance entre les variations et les clés
@@ -108,6 +112,10 @@ def validate_settings(settings):
         'RMSD': float,
         'score E threshold': float,
         'optimize E threshold': float,
+        'nsteps' : int,
+        'timestep' : float,
+        'thermotype' : str,
+        'tau' : float
     }   
 
     validated_settings = {}

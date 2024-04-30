@@ -61,7 +61,7 @@ def descriptors(natoms, pathdir, pops):
 def orbital_energies(content):
     """
     Orbital Energies (eV) [only the occupied orbitals]
-    It should never return an empty list, but just in case, something
+    It should never return an empty list, but just in case, if something
     goes wrong in ADF calculations.
     """
     marker = " Orbital Energies, per Irrep and Spin:" 
