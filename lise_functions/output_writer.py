@@ -2,7 +2,7 @@
 from scm.plams import *
 from scm.conformers import ConformersJob
 from .small_functions import *
-from .writer_helper import table_formatter
+from .writer_helper import entropy_formatter
 from .gvariables import gconfig
 import numpy as np
 import matplotlib.pyplot as plt
@@ -68,7 +68,7 @@ def plain_text_output(output_file, system_results):
                 elif key == 'average' and system['number_conformers'] > 1:
                     string_average = '{:-^72}'.format(' Average ')
                     file.write(f'{string_average}\n')
-                    formatted_average = table_formatter(system['atoms'], value)
+                    formatted_average = entropy_formatter(value)
                     file.write(f'{formatted_average}\n')
                 elif key == 'conformers':
                     systems_aux = []
@@ -79,7 +79,7 @@ def plain_text_output(output_file, system_results):
                         string_conformer = '{:-^72}'.format(f' Conformer {j+1} ')
                         file.write(f'{string_conformer}\n')
                         file.write(f"Weight: {value['weights'][j]}\n")
-                        formatted_conformer = table_formatter(system['atoms'], systems_aux[j])
+                        formatted_conformer = entropy_formatter(systems_aux[j])
                         file.write(f'{formatted_conformer}\n')
 
 def json_writer(outfile, system_results):
@@ -90,20 +90,4 @@ def json_writer(outfile, system_results):
 def output_writer(system_results):
     out_file = gconfig['input_file_name'].replace('.csv', '.out')
     plain_text_output(out_file, system_results)
-    # JSON output [It is written for the ML, DO NOT CHANGE]
-    json_file = gconfig['input_file_name'].replace('.csv', '.json')
-    jsonresults = {}
-    for smileskey, molecule in system_results.items():
-        smiles = molecule['smiles']
-        s2 = np.concatenate([arr[:, 5] for arr in molecule['conformers']['cdfta']])
-        auxmol = {'number_atoms': molecule['number_atoms'],
-                  'atoms': molecule['atoms'],
-                  'number_conformers': molecule['number_conformers'],
-                  'conformers': {'weights': molecule['conformers']['weights'],
-                                 'IDM': molecule['conformers']['distances'],
-                                 'Hirshfeld': molecule['conformers']['hirshfeld'],
-                                 's2': s2,
-                                 'OE': molecule['conformers']['orbitalE']}}
-        jsonresults[smiles] = auxmol
-    json_writer(json_file, jsonresults)
 

@@ -4,6 +4,7 @@
 *.out
 *.json
 *.pyc
+*.db
 plams_workdi*/
 plams_workdir
 *log

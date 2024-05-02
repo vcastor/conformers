@@ -9,54 +9,33 @@ def get_atoms(system):
     type_atoms = [atom.symbol for atom in molecule]
     return len(molecule), type_atoms
 
-def descriptors(natoms, pathdir, pops):
+def entropy(natoms, pathdir, pops):
     """
     This function calls for the extraction of descriptors dynamically from
     the output plain text file and from the TAPE21.
     """
     import os
     from scm.plams.tools.units import Units
-    # Open the TAPE 21
-    resultpath = os.path.join(pathdir, 'ams.rkf')
-    amsrkf = AMSJob.load_external(resultpath)
-    amsresults = amsrkf.results
-    # Open the plain text output file
-    dirname = os.path.basename(pathdir)
-    outfile = os.path.join(pathdir, dirname + '.out')
-    with open(outfile, 'r', encoding="ISO-8859-1") as f:
-        content = f.read()
-    content = content.split('\n')
-    # In the TAPE 21 descriptors are written in the internal order
-    atom_order = np.array(amsresults.readrkf('Geometry', 'atom order index', file='adf'))
-    # internal order -> input order [FORTRAN counting]
-    atom_order = atom_order[:natoms] - 1
-
-    # Interactomic distance matrix
-    idm = np.array(amsresults.readrkf('Geometry', 'Atomic Distances', file='adf')).reshape(natoms+1, natoms+1)
-    idm = Units.conversion_ratio('bohr','angstrom')*idm[1:, 1:]
-    idm = idm[atom_order, :][:, atom_order]
-
-    # Hirshfeld & QTAIM charges
-    qtaim_charges = np.array(amsresults.readrkf('Properties', 'Bader atomic charges', file='adf'))
-    qtaim_charges = qtaim_charges[atom_order]
-    hirshfeld = np.array(amsresults.readrkf('Properties', 'FragmentCharge Hirshfeld', file='adf'))
-    hirshfeld = hirshfeld[atom_order]
+    outfile = os.path.join(os.path.dirname(pathdir), 'plamsjob.out')
+    cmd = 'grep "Entropy (cal/mol-K)" ' + outfile
+    line = os.popen(cmd).read().split()
+    # Vibrational, rotational and translational entropies
+    temp = float(line[0])
+    transS = float(line[3])
+    rotS = float(line[4])
+    vibS = float(line[5])
+    transS = Units.conversion_ratio('kcal/mol', 'kJ/mol')*transS*temp/1000
+    rotS = Units.conversion_ratio('kcal/mol', 'kJ/mol')*rotS*temp/1000
+    vibS = Units.conversion_ratio('kcal/mol', 'kJ/mol')*vibS*temp/1000
 
     # should we read everything from the TAPE21?
-    description = {
+    return {
         'weights' : pops,
-        'distances': idm,
-        'qtaimcharge': qtaim_charges,
-        'hirshfeld': hirshfeld,
-        'orbitalE': orbital_energies(content),
-        'cdftm': conceptual_dft_mol(content),
-        'cdfta': canonical_grandcanonical(natoms, content),
-        'fukui': fukui_functions(natoms, content),
-        'dual': dual_descriptor(natoms, content),
-        'condensed': condensed_local(natoms, content)
+        'translational' : transS,
+        'rotational' : rotS,
+        'vibrational' : vibS
     }
 
-    return description
 
 def orbital_energies(content):
     """
@@ -168,26 +147,17 @@ def condensed_local(natoms, content):
 def average_properties(molecule):
     weights = molecule['conformers']['weights']
     nconformers = len(weights)
-    oe_len = sum(len(sublist) for sublist in molecule['conformers']['orbitalE']) // nconformers
 
-    properties_avg = {
-        'qtaimcharge': np.zeros(molecule['number_atoms']),
-        'hirshfeld': np.zeros(molecule['number_atoms']),
-        'orbitalE': np.zeros(oe_len),
-        'cdftm': np.zeros(7),
-        'cdfta': np.zeros((molecule['number_atoms'], 6)),
-        'fukui': np.zeros(molecule['number_atoms']),
-        'dual': np.zeros((molecule['number_atoms'], 2)),
-        'condensed': np.zeros((molecule['number_atoms'], 2))
+    entrop_avg = {
+        'translational': 0,
+        'rotational': 0,
+        'vibrational': 0
     }
 
-    # Loop through each conformer property to calculate weighted averages
-    for prop in properties_avg.keys():
+    for entrop in entrop_avg:
         for i, weight in enumerate(weights):
-            prop_array = np.array(molecule['conformers'][prop][i])
-            properties_avg[prop] += weight * prop_array
-
-    properties_avg['orbitalE'] = np.round(properties_avg['orbitalE'], 3)
-
-    return properties_avg
+            val = molecule['conformers'][entrop][i]
+            entrop_avg[entrop] += weight * val
+        
+    return entrop_avg
 

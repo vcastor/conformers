@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 # Just settings for the solvent in ADF
+# We will use SM12 model for the solvent
 from scm.plams import Settings
 
 def solvent_name(solvent):

@@ -1,6 +1,13 @@
 # -*- coding: UTF-8 -*-
 from .small_functions import format_list
 
+def entropy_formatter(entropy):
+    formatted_str = "Entropy contributions\n"
+    formatted_str += f"translational: {entropy['translational']:9.4f}\n"
+    formatted_str += f"rotational   : {entropy['rotational']:9.4f}\n"
+    formatted_str += f"vibrational  : {entropy['vibrational']:9.4f}\n"
+    return formatted_str
+
 def table_formatter(atoms, properties):
     # Add spaces for atoms
     atoms = [element + ' ' if len(element) == 1 else element for element in atoms]
