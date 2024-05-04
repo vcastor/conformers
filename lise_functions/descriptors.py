@@ -16,7 +16,8 @@ def entropy(natoms, pathdir, pops):
     """
     import os
     from scm.plams.tools.units import Units
-    outfile = os.path.join(os.path.dirname(pathdir), 'plamsjob.out')
+    plamsdir = os.path.dirname(pathdir)
+    outfile = os.path.join(plamsdir, os.path.basename(plamsdir) + '.out')
     cmd = 'grep "Entropy (cal/mol-K)" ' + outfile
     line = os.popen(cmd).read().split()
     # Vibrational, rotational and translational entropies
@@ -24,9 +25,9 @@ def entropy(natoms, pathdir, pops):
     transS = float(line[3])
     rotS = float(line[4])
     vibS = float(line[5])
-    transS = Units.conversion_ratio('kcal/mol', 'kJ/mol')*transS*temp/1000
-    rotS = Units.conversion_ratio('kcal/mol', 'kJ/mol')*rotS*temp/1000
-    vibS = Units.conversion_ratio('kcal/mol', 'kJ/mol')*vibS*temp/1000
+    transS = Units.conversion_ratio('kcal/mol', 'kJ/mol')*transS
+    rotS = Units.conversion_ratio('kcal/mol', 'kJ/mol')*rotS
+    vibS = Units.conversion_ratio('kcal/mol', 'kJ/mol')*vibS
 
     # should we read everything from the TAPE21?
     return {

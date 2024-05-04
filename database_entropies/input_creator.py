@@ -20,24 +20,24 @@ molecules = cursor.fetchall()
 conn.commit()
 conn.close()
 
-with open('all_systems.csv', 'w') as f:
-    f.write('# Smile, solvent\n')
-    for smile, name in molecules:
+for smile, name in molecules:
+    filename = 'input_files/' + name + '.csv'
+    with open(filename, 'w') as f:
+        # Smile, solvent
         f.write(smile + ', ' + name + '\n')
-    f.write('#\n')
-    f.write('# Paramters\n')
-    f.write('# Filter\n')
-    f.write('Energy threshold Score, 5.0\n')
-    f.write('Energy threshold Optimize, 3.0\n')
-    f.write('RMSD, 2.5\n')
-    f.write('# DFT and DFTB\n')
-    f.write('Functional, B3LYP\n')
-    f.write('Basis set, DZP\n')
-    f.write('dispersion, GRIMME3 BJDAMP\n')
-    f.write('model, GFN1-xTB\n')
-    f.write('#\n')
-    f.write('Temperature, 298\n')
-    f.write('Number of conformers, 50\n')
+        # Paramters
+        # Filter
+        f.write('Energy threshold Score, 3.0\n')
+        f.write('Energy threshold Optimize, 5.0\n')
+        f.write('RMSD, 2.5\n')
+        # DFT and DFTB
+        f.write('Functional, PBE\n')
+        f.write('Basis set, TZP\n')
+        f.write('dispersion, GRIMME3 BJDAMP\n')
+        f.write('model, GFN1-xTB\n')
+        #
+        f.write('Temperature, 298\n')
+        f.write('Number of conformers, 20\n')
 
-print("Database created and data inserted successfully ✨")
+print("✨ Input files created successfully! 🚀✨")
 

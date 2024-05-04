@@ -26,7 +26,7 @@ def input_reader(filepath):
     - systems:  dictionary, each containing the SMILES and solvent
     - settings: a dictionary with the settings (for all systems)
     """
-    data = pd.read_csv(filepath, comment='#', header=None, skip_blank_lines=True)
+    data = pd.read_csv(filepath, header=None, skip_blank_lines=True)
 
     systems, settings = [], {}
 
@@ -44,10 +44,6 @@ def input_reader(filepath):
         'n conformers': ['n conformers', 'conformers', 'number of conformers'],
         'relativity'  : ['relativity', 'relativistic', 'relativistic effects'],
         'core' : ['core', 'basis core', 'core basis']
-        # 'nsteps' : ['nsteps', 'number of steps', 'steps'],
-        # 'timestep' : ['timestep', 'time step', 'time-step'],
-        # 'thermotype' : ['thermotype', 'thermostat type', 'thermostat-type'],
-        # 'tau' : ['tau', 'temperature coupling constant', 'thermostat tau']
     }
 
     # On change la direction du dictionnaire, pour pouvoir faire la correspondance entre les variations et les clés
@@ -112,10 +108,6 @@ def validate_settings(settings):
         'RMSD': float,
         'score E threshold': float,
         'optimize E threshold': float
-        # 'nsteps' : int,
-        # 'timestep' : float,
-        # 'thermotype' : str,
-        # 'tau' : float
     }   
 
     validated_settings = {}

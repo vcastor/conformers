@@ -4,7 +4,7 @@ from scm.plams import Settings
 from scm.plams.recipes.adfcosmorscompound import *
 from .gvariables import gconfig
 from .small_functions import *
-from .settings_solvent import *
+from .settings_solvent import solvent_settings
 from .settings_functional import *
 
 def task_settings(task, user_settings):
