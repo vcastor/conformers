@@ -14,3 +14,10 @@ plams_workdir
 *t21*
 *t15*
 *.pyc
+*.err
+*.in
+*.run
+*.sdf
+*.xyz
+*logfile
+*input
