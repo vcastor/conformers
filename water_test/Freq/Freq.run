@@ -1,0 +1,6 @@
+#!/bin/sh
+
+unset AMS_SWITCH_LOGFILE_AND_STDOUT
+unset SCM_LOGFILE
+AMS_JOBNAME="Freq" AMS_RESULTSDIR=. $AMSBIN/ams --input="Freq.in" < /dev/null
+

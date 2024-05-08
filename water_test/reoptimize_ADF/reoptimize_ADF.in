@@ -1,0 +1,32 @@
+GeometryOptimization
+  ConvergenceQuality Normal
+End
+
+InputConformersSet /Users/vcastor/Documents/PhD_Rouen/plamsfilter/water_test/generate/conformers.rkf
+
+InputMaxEnergy 5.0
+
+Task Optimize
+
+Engine ADF
+  Basis
+    Core None
+    Type DZP
+  End
+  Relativity
+    Level None
+  End
+  Solvation
+    C-Mat POT
+    CSMRSP
+    Charged method=CONJ
+    SCF VAR ALL
+    Solv epsilon=78.39 rad=1.93 cav0=0.0 cav1=0.0067639
+  End
+  Symmetry NOSYM
+  XC
+    DISPERSION GRIMME3 BJDAMP
+    GGA PBE
+  End
+EndEngine
+

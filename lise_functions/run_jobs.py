@@ -30,7 +30,7 @@ def freq_jobs(score_dirs, solvent, user_settings):
     for score in score_dirs:
         amsrkf = AMSJob.load_external(os.path.join(score, 'ams.rkf'))
         mol = amsrkf.results.get_main_molecule()
-        freq_job = AMSJob(molecule=mol, settings=freq_settings)
+        freq_job = AMSJob(name='Freq', molecule=mol, settings=freq_settings)
         freq_job.run()
         freq_dirs.append(os.path.abspath(freq_job.results.rkfpath()))
     return freq_dirs

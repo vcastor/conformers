@@ -1,0 +1,4 @@
+#!/bin/sh
+
+AMS_JOBNAME="SP_ADF" AMS_RESULTSDIR=. $AMSBIN/conformers <"SP_ADF.in"
+

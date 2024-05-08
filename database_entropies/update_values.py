@@ -12,7 +12,7 @@ conn = sqlite3.connect(db_file_path)
 cursor = conn.cursor()
 
 # Retrieve all molecule names from the database
-cursor.execute('SELECT molecule_name FROM molecules')
+cursor.execute('SELECT molecule_name, natoms FROM molecules')
 molecules = cursor.fetchall()
 
 def contribution_S(outfile):
@@ -30,10 +30,9 @@ def contribution_S(outfile):
         vib_S = data[8].split()[2]
     return natoms, nconformers, trans_S, rot_S, vib_S
 
-for molecule in molecules:
-    name = molecule[0]  # Assuming fetchall returns a list of tuples
-    outfile = os.path.join('output_files', f'{name}.out')
-    if os.path.exists(outfile):
+for molecule, atoms in molecules:
+    outfile = os.path.join('output_files', f'{molecule}.out')
+    if os.path.exists(outfile) and atoms is None:
         natoms, nconformers, trans_S, rot_S, vib_S = contribution_S(outfile)
         cursor.execute('''
         UPDATE molecules SET
@@ -43,7 +42,7 @@ for molecule in molecules:
         rot_S = ?,
         vib_S = ?
         WHERE molecule_name = ?
-        ''', (natoms, nconformers, trans_S, rot_S, vib_S, name))
+        ''', (natoms, nconformers, trans_S, rot_S, vib_S, molecule))
 
 # Commit the changes and close the connection
 conn.commit()

@@ -5,6 +5,8 @@ import sqlite3
 import subprocess
 # Try to use split or create your own function, the " re " library should be avoided
 # since it has troubles with @, # that are so common in the smile notation
+# the new command::
+# $AMSBIN/plams filter.py -f water_test -v database_entropies/water_test.csv 
 
 # Database file path
 db_file_path = 'database_entropies/entropiesCOSMO.db'

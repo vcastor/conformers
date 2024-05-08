@@ -1,0 +1,28 @@
+InputConformersSet /Users/vcastor/Documents/PhD_Rouen/plamsfilter/water_test/reoptimize_ADF/conformers.rkf
+
+InputMaxEnergy 3.0
+
+Task Score
+
+Engine ADF
+  Basis
+    Core None
+    Type DZP
+  End
+  Relativity
+    Level None
+  End
+  Solvation
+    C-Mat POT
+    CSMRSP
+    Charged method=CONJ
+    SCF VAR ALL
+    Solv epsilon=78.39 rad=1.93 cav0=0.0 cav1=0.0067639
+  End
+  Symmetry NOSYM
+  XC
+    DISPERSION GRIMME3 BJDAMP
+    GGA PBE
+  End
+EndEngine
+

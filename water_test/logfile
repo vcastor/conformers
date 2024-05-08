@@ -1,0 +1,42 @@
+[08.05|17:11:54] JOB generate STARTED
+[08.05|17:11:54] Starting generate.prerun()
+[08.05|17:11:54] generate.prerun() finished
+[08.05|17:11:54] JOB generate RUNNING
+[08.05|17:11:54] Executing generate.run
+[08.05|17:11:58] Execution of generate.run finished with returncode 0
+[08.05|17:11:58] JOB generate FINISHED
+[08.05|17:11:58] Starting generate.postrun()
+[08.05|17:11:58] generate.postrun() finished
+[08.05|17:11:58] JOB generate SUCCESSFUL
+[08.05|17:11:58] JOB reoptimize_ADF STARTED
+[08.05|17:11:58] Starting reoptimize_ADF.prerun()
+[08.05|17:11:58] reoptimize_ADF.prerun() finished
+[08.05|17:11:58] JOB reoptimize_ADF RUNNING
+[08.05|17:11:58] Executing reoptimize_ADF.run
+[08.05|17:12:08] Execution of reoptimize_ADF.run finished with returncode 0
+[08.05|17:12:08] JOB reoptimize_ADF FINISHED
+[08.05|17:12:08] Starting reoptimize_ADF.postrun()
+[08.05|17:12:08] reoptimize_ADF.postrun() finished
+[08.05|17:12:08] JOB reoptimize_ADF SUCCESSFUL
+[08.05|17:12:08] JOB SP_ADF STARTED
+[08.05|17:12:08] Starting SP_ADF.prerun()
+[08.05|17:12:08] SP_ADF.prerun() finished
+[08.05|17:12:08] JOB SP_ADF RUNNING
+[08.05|17:12:08] Executing SP_ADF.run
+[08.05|17:12:14] Execution of SP_ADF.run finished with returncode 0
+[08.05|17:12:14] JOB SP_ADF FINISHED
+[08.05|17:12:14] Starting SP_ADF.postrun()
+[08.05|17:12:14] SP_ADF.postrun() finished
+[08.05|17:12:14] JOB SP_ADF SUCCESSFUL
+[08.05|17:12:14] JOB Freq STARTED
+[08.05|17:12:14] Starting Freq.prerun()
+[08.05|17:12:14] Freq.prerun() finished
+[08.05|17:12:14] JOB Freq RUNNING
+[08.05|17:12:14] Executing Freq.run
+[08.05|17:12:18] Execution of Freq.run finished with returncode 0
+[08.05|17:12:18] JOB Freq FINISHED
+[08.05|17:12:19] Starting Freq.postrun()
+[08.05|17:12:19] Freq.postrun() finished
+[08.05|17:12:19] JOB Freq SUCCESSFUL
+[08.05|17:12:19] PLAMS environment cleaned up successfully
+[08.05|17:12:19] PLAMS run finished. Goodbye

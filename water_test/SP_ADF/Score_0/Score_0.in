@@ -1,0 +1,36 @@
+system
+  Atoms
+              O      -0.0000444934       0.0681805992       0.0000000000 rdkit.charge=0 rdkit.origNoImplicit=False
+              H      -0.7664035811      -0.5415809157       0.0000000000 rdkit.charge=0 rdkit.isImplicit=1
+              H       0.7671098126      -0.5406317067       0.0000000000 rdkit.charge=0 rdkit.isImplicit=1
+  End
+  BondOrders
+     1 2 1.0
+     1 3 1.0
+  End
+End
+
+task SinglePoint
+
+Engine ADF
+  basis
+    core None
+    type DZP
+  End
+  relativity
+    level None
+  End
+  solvation
+    c-mat POT
+    charged method=CONJ
+    csmrsp True
+    scf VAR ALL
+    solv epsilon=78.39 rad=1.93 cav0=0.0 cav1=0.0067639
+  End
+  symmetry NOSYM
+  xc
+    dispersion GRIMME3 BJDAMP
+    gga PBE
+  End
+EndEngine
+
