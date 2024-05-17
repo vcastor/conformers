@@ -21,3 +21,4 @@ plams_workdir
 *.xyz
 *logfile
 *input
+*bkup
