@@ -3,10 +3,7 @@
 ########################################################################
 #   This python script was written con el poder de las plantitas 🌱    #
 #                                                                      #
-#        Trinidad's work, just rewriten by                             #
 #                                       ✨ Victoria Castor, 2023 ✨    #
-#                                                                      #
-#                        Grupo de investigación Julia Contreras-García #
 ########################################################################
 import csv
 import pysr
@@ -113,20 +110,25 @@ def setup_and_plot(ax, y_predicted, y_data, model, ymin, ymax, plot_label, extra
 db_file_path = 'entropiesCOSMO.db'
 conn = sqlite3.connect(db_file_path)
 cursor = conn.cursor()
-cursor.execute('SELECT trans_S, rot_S, vib_S, experimental_S FROM molecules')
-valdata = cursor.fetchall()
+cursor.execute('SELECT trans_S, rot_S, vib_S, epsilon, experimental_S FROM molecules')
+data = cursor.fetchall()
 # Commit the changes and close the connection
 conn.commit()
 conn.close()
 
 #
 # Not compleated data!
-filtered_valdata = [val for val in valdata if None not in val]
+filtered_data = [val for val in data if None not in val]
 
 # Data for linear regression
-s_exp = np.array([val[3] for val in filtered_valdata])
-X = np.array([[val[0], val[1], val[2]] for val in filtered_valdata])
-strans, srot, svib = X[:,0], X[:,1], X[:,2] # Editable variables
+s_exp = np.array([val[4] for val in filtered_data])
+X = np.array([[val[0], val[1], val[2]] for val in filtered_data])
+# X = np.array([[val[0], val[1], val[2], val[3]] for val in filtered_data])
+# strans, srot, svib, eps = X[:,0], X[:,1], X[:,2], X[:,3] # Editable variables
+
+
+#new transformation
+# yexp = s_exp/(np.exp(-eps))
 
 #-----------------------------------------------------------------------
 #   Create the models for all predictions

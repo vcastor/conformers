@@ -26,6 +26,8 @@ def task_settings(task, user_settings):
     elif task == 'SinglePoint':
         s.input.ams.Task = 'SinglePoint'
         s.input.ams.Properties.NormalModes = 'Yes'
+        s.input.ADF.ConceptualDFT.Enabled = 'Yes'
+        s.input.ADF.ConceptualDFT.AnalysisLevel = 'Full'
     return s
 
 def common_settings(user_settings):

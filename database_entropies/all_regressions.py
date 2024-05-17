@@ -12,20 +12,28 @@ from sklearn.metrics import mean_absolute_error
 # Load the data
 def fetch_data(db_file_path):
     with sqlite3.connect(db_file_path) as conn:
-        return pd.read_sql('SELECT trans_S, rot_S, vib_S, experimental_S FROM molecules', conn)
+        return pd.read_sql('SELECT trans_S, rot_S, vib_S, epsilon, experimental_S FROM molecules', conn)
 
 def prepare_data(data):
     data.dropna(inplace=True)
     return data
 
 def define_models(X):
+    gas_model = X['trans_S'] + X['rot_S'] + X['vib_S']
+    model_23  = (2/3)*X['rot_S'] + (2/3)*X['trans_S'] + X['vib_S']
+    model_1   = [X['rot_S'] + X['trans_S'], X['vib_S']]
+    model_2   = [X['rot_S'], X['trans_S'], X['vib_S']]
+    model_3   = [X['rot_S'] + X['trans_S'], X['vib_S'], X['rot_S']*X['vib_S']/gas_model + X['trans_S']*X['vib_S']/gas_model]
+    model_4   = [X['rot_S'], X['trans_S'], X['vib_S'], X['rot_S']*X['vib_S']/gas_model, X['trans_S']*X['vib_S']/gas_model]
+    prexp     = np.exp(X['epsilon'])
+    model_5   = [X['trans_S'], X['rot_S'], X['vib_S'], X['trans_S']*X['vib_S']/gas_model, X['rot_S']*X['vib_S']/gas_model]
     return {
-        'gas_model': X.sum(axis=1),
-        'model_23': (2/3 * X['trans_S'] + 2/3 * X['rot_S']) + X['vib_S'],
-        'model_1': (X['trans_S'] + X['rot_S'], X['vib_S']),
-        'model_2': (X['trans_S'],  X['rot_S'], X['vib_S']),
-        'model_3': (X['trans_S'] + X['rot_S'], X['vib_S'], X['trans_S'] * X['vib_S']/X.sum(axis=1) + X['rot_S'] * X['vib_S']/X.sum(axis=1)),
-        'model_4': (X['trans_S'],  X['rot_S'], X['vib_S'], X['trans_S'] * X['vib_S']/X.sum(axis=1),  X['rot_S'] * X['vib_S']/X.sum(axis=1))
+        'gas_model': gas_model,
+        'model_23': model_23,
+        'model_1': model_1,
+        'model_2': model_2,
+        'model_3': model_3,
+        'model_4': model_4
     }
 
 def objective(coeffs, *args):
@@ -49,7 +57,7 @@ def optimize_model(X, y, num_params):
 def main():
     data = fetch_data('entropiesCOSMO.db')
     data = prepare_data(data)
-    X = data[['trans_S', 'rot_S', 'vib_S']]
+    X = data[['rot_S', 'trans_S', 'vib_S', 'epsilon']]
     y = data['experimental_S']
     models = define_models(X)
     for name, predictors in models.items():
@@ -60,13 +68,13 @@ def main():
             print(f'Optimization coefficients: {coeffs}')
             print(f'MAE: {mae:.4f}')
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+    # main()
 
-quit()
+# quit()
 
 
-quit()
+# quit()
 
 #
 # Objective function: sum of squared residuals
@@ -92,15 +100,21 @@ def objective_mod4(coeffs):
 
 #
 # Not compleated data!
-filtered_valdata = [val for val in valdata if None not in val]
+data = fetch_data('entropiesCOSMO.db')
+data = prepare_data(data)
+# filtered_valdata = [val for val in valdata if None not in val]
+strans, srot, svib = data['trans_S'], data['rot_S'], data['vib_S']
+eps = data['epsilon']
 
-# Data for linear regression
-s_exp = np.array([val[3] for val in filtered_valdata])
-X = np.array([[val[0], val[1], val[2]] for val in filtered_valdata])
-strans, srot, svib = X[:,0], X[:,1], X[:,2] # Editable variables
+s_exp = data['experimental_S']
+
+# # Data for linear regression
+# s_exp = np.array([val[3] for val in filtered_valdata])
+# X = np.array([[val[0], val[1], val[2]] for val in filtered_valdata])
+# strans, srot, svib = X[:,0], X[:,1], X[:,2] # Editable variables
 
 # Just the addition (gas phase)
-s_gas = np.sum(X, axis=1)
+s_gas = strans + srot + svib
 mae_gas = np.mean(np.abs(s_exp - s_gas))
 print(f'MAE for gas phase: {mae_gas:.4f}')
 
@@ -144,6 +158,26 @@ if best_result is not None:
     predictions = alpha * strans + beta * srot + gamma * svib
     mae_mod2 = np.mean(np.abs(s_exp - predictions))
     print(f'MAE for model 2: {mae_mod2:.4f}')
+    print(alpha, beta, gamma)
+
+# pa lambda
+iwant = 0.5972811403825273
+iwant = [iwant] * len(strans)
+bounds = [(-np.inf,0)]
+def lambda_obj(coeffs):
+    lambd = coeffs
+    predictions = np.exp(lambd * eps)
+    return np.sum((iwant - predictions) ** 2)
+for _ in range(20):
+    initial_guess = np.random.rand()
+    result = minimize(lambda_obj, initial_guess, bounds=bounds, method='SLSQP')
+    if result.success and result.fun < best_score:
+        best_score = result.fun
+        best_result = result
+lambd = best_result.x
+print(lambd)
+print(np.mean(np.abs(iwant - lambd)))
+
 
 # Add cross terms
 sums = strans + srot + svib
@@ -186,6 +220,30 @@ if best_result is not None:
     predictions = alpha * strans + beta * srot + gamma * svib + delta * stransvib + epsilon * srotvib
     mae_mod4 = np.mean(np.abs(s_exp - predictions))
     print(f'MAE for model 4: {mae_mod4:.4f}')
+
+#
+# Model with eps
+#
+def obj_mod5(coeffs):
+    alpha, beta, lamd1, lambd2 = coeffs
+    predictions = alpha*np.exp(-lamd1*eps)*strans + beta*np.exp(-lambd2*eps)*srot + svib
+    return np.sum((s_exp - predictions) ** 2)
+bounds = [(0,1), (0,1), (-9999,9999), (-9999,9999)]
+# bounds = [(0,1), (0,1), (-np.inf,0), (-np.inf,0)]
+best_score, best_result = np.inf, None
+for _ in range(20):
+    initial_guess = np.random.rand(4)
+    result = minimize(obj_mod5, initial_guess, bounds=bounds, method='SLSQP')
+    if result.success and result.fun < best_score:
+        best_score = result.fun
+        best_result = result
+if best_result is not None:
+    alpha, beta, lamd1, lambd2 = best_result.x
+    predictions = alpha*np.exp(-lamd1*eps)*strans + beta*np.exp(-lambd2*eps)*srot + svib
+    mae_mod5 = np.mean(np.abs(s_exp - predictions))
+    print(alpha, beta, lamd1, lambd2)
+    print(f'MAE for model 5: {mae_mod5:.4f}')
+
 
 quit()
 

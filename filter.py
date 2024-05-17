@@ -9,7 +9,7 @@ import numpy as np
 #
 # Main run of the script 🚀
 
-init(path='.', folder='lise_output/')
+init()
 
 input_file = get_input_file()
 
