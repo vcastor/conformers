@@ -9,7 +9,7 @@ def get_atoms(system):
     type_atoms = [atom.symbol for atom in molecule]
     return len(molecule), type_atoms
 
-def entropy(natoms, pathdir, pops):
+def entropy_cdft(natoms, pathdir, pops):
     """
     This function calls for the extraction of descriptors dynamically from
     the output plain text file and from the TAPE21.
@@ -28,13 +28,17 @@ def entropy(natoms, pathdir, pops):
     transS = Units.conversion_ratio('kcal/mol', 'kJ/mol')*transS
     rotS = Units.conversion_ratio('kcal/mol', 'kJ/mol')*rotS
     vibS = Units.conversion_ratio('kcal/mol', 'kJ/mol')*vibS
+    with open(outfile, 'r', encoding="ISO-8859-1") as f:
+        content = f.read()
+    content = content.split('\n')
 
     # should we read everything from the TAPE21?
     return {
         'weights' : pops,
         'translational' : transS,
         'rotational' : rotS,
-        'vibrational' : vibS
+        'vibrational' : vibS,
+        'cdftm': conceptual_dft_mol(content)
     }
 
 
@@ -147,18 +151,18 @@ def condensed_local(natoms, content):
 
 def average_properties(molecule):
     weights = molecule['conformers']['weights']
-    nconformers = len(weights)
 
-    entrop_avg = {
+    avg = {
         'translational': 0,
         'rotational': 0,
-        'vibrational': 0
+        'vibrational': 0,
+        'cdftm': np.zeros(7)
     }
 
-    for entrop in entrop_avg:
+    for prop in avg.keys():
         for i, weight in enumerate(weights):
-            val = molecule['conformers'][entrop][i]
-            entrop_avg[entrop] += weight * val
+            val = np.array(molecule['conformers'][prop][i])
+            avg[prop] += weight * val
         
-    return entrop_avg
+    return avg
 

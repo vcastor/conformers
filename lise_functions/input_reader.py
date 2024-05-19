@@ -34,8 +34,8 @@ def input_reader(filepath):
         'functional': ['xc', 'exchange-correlation', 'exchange correlation', 'functional', 'xc functional'],
         'basis set' : ['basis', 'basis set', 'basisset'],
         'dispersion': ['dispersion', 'dispersion correction', 'dispersion method'],
-        'RMSDgen' : ['root mean square deviation generate', 'root mean square deviation of atomic positions generate', 'rmsdgen', 'rmsd gen'],
         'RMSDopt' : ['root mean square deviation optimization', 'root mean square deviation of atomic positions optimization', 'rmsdopt', 'rmsd opt'],
+        'RMSDscore' : ['root mean square deviation score', 'root mean square deviation of atomic positions score', 'rmsdscore', 'rmsd score'],
         'model'   : ['model', 'dftb', 'dftmodel', 'dftb model', 'dftb method', 'dft-b'],
         'score E threshold': ['score e', 'score energy', 'delta energy 1', 'score energy threshold',
                               'score e threshold', 'energy threshold score'],
@@ -106,7 +106,8 @@ def validate_settings(settings):
     expected_settings = { 
         'temperature': float,
         'n conformers': int,
-        'RMSD': float,
+        'RMSDopt': float,
+        'RMSDscore': float,
         'score E threshold': float,
         'optimize E threshold': float
     }   

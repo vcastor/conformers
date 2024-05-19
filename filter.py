@@ -44,7 +44,7 @@ for system in systems:
 
     # Entropy of every conformer
     for j, freq in enumerate(freq_dirs):
-        conformer_data = entropy(natoms, freq, pops[j])
+        conformer_data = entropy_cdft(natoms, freq, pops[j])
         for key in conformer_data:
             molecule['conformers'].setdefault(key, []).append(conformer_data[key])
 
