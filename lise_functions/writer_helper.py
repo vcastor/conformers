@@ -10,11 +10,12 @@ def entropy_formatter(data):
     formatted_str += "Global descriptors, Conceptual DFT\n"
     formatted_str += f"Electronic chemical potential: {data['cdftm'][0]:9.4f}\n"
     formatted_str += f"Hardness                     : {data['cdftm'][1]:9.4f}\n"
-    formatted_str += f"Electrophilicity index       : {data['cdftm'][2]:9.4f}\n"
-    formatted_str += f"Nucleofuge                   : {data['cdftm'][3]:9.4f}\n"
-    formatted_str += f"Electrofuge                  : {data['cdftm'][4]:9.4f}\n"
-    formatted_str += f"Electrodonating              : {data['cdftm'][5]:9.4f}\n"
-    formatted_str += f"Electroaccepting             : {data['cdftm'][6]:9.4f}\n"
+    formatted_str += f"Hyperhardness                : {data['cdftm'][2]:9.4f}\n"
+    formatted_str += f"Electrophilicity index       : {data['cdftm'][3]:9.4f}\n"
+    formatted_str += f"Nucleofuge                   : {data['cdftm'][4]:9.4f}\n"
+    formatted_str += f"Electrofuge                  : {data['cdftm'][5]:9.4f}\n"
+    formatted_str += f"Electrodonating              : {data['cdftm'][6]:9.4f}\n"
+    formatted_str += f"Electroaccepting             : {data['cdftm'][7]:9.4f}\n"
     return formatted_str
 
 def table_formatter(atoms, properties):

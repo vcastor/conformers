@@ -12,17 +12,19 @@ def task_settings(task, user_settings):
     if task == 'Generate':
         s.input.ams.Task = 'Generate'
         s.input.ams.Generator.Method = 'RDKit'
-        s.input.ams.Generator.RDKit.InitialNConformers = user_settings['n conformers']
-        s.input.ams.Equivalence.Crest.RMSDThreshold = user_settings['RMSDopt']
+        s.input.ams.Generator.RDKit.MaxConfs = user_settings['n conformers']
+        s.input.ams.Equivalence.Method = 'AMS'
         model_dftb(user_settings['model'], s)
     elif task == 'Optimize':
         s.input.ams.Task = 'Optimize'
         s.input.ams.GeometryOptimization.ConvergenceQuality = 'Normal'
         s.input.ams.InputMaxEnergy = user_settings['optimize E threshold']
+        s.input.ams.Equivalence.RMSD.RMSDThreshold = user_settings['RMSDopt']
+        s.input.ams.Equivalence.CREST.RMSDThreshold = '0.05'
     elif task == 'Score':
         s.input.ams.Task = 'Score'
         s.input.ams.InputMaxEnergy = user_settings['score E threshold']
-        s.input.ams.Equivalence.Crest.RMSDThreshold = user_settings['RMSDscore']
+        s.input.ams.Equivalence.CREST.RMSDThreshold = user_settings['RMSDscore']
     elif task == 'SinglePoint':
         s.input.ams.Task = 'SinglePoint'
         s.input.ams.Properties.NormalModes = 'Yes'

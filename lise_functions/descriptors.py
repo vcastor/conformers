@@ -71,21 +71,23 @@ def conceptual_dft_mol(content):
     """
     marker = " GLOBAL DESCRIPTORS"
     marker_index = content.index(marker) + 3
-    global_descriptors = np.zeros(7)
+    global_descriptors = np.zeros(8)
     #Electronic chemical potential
     global_descriptors[0] = float(content[marker_index].split()[5])
     #Hardness
     global_descriptors[1] = float(content[marker_index+4].split()[3])
+    #Hyperhardness
+    global_descriptors[2] = float(content[marker_index+6].split()[3])
     #Electrophilicity index
-    global_descriptors[2] = float(content[marker_index+7].split()[4])
+    global_descriptors[3] = float(content[marker_index+7].split()[4])
     #nucleofuge
-    global_descriptors[3] = float(content[marker_index+8].split()[4])
+    global_descriptors[4] = float(content[marker_index+8].split()[4])
     #elctrofuge
-    global_descriptors[4] = float(content[marker_index+9].split()[4])
+    global_descriptors[5] = float(content[marker_index+9].split()[4])
     #Electrodonating
-    global_descriptors[5] = float(content[marker_index+10].split()[4])
+    global_descriptors[6] = float(content[marker_index+10].split()[4])
     #Electroaccepting
-    global_descriptors[6] = float(content[marker_index+11].split()[3])
+    global_descriptors[7] = float(content[marker_index+11].split()[3])
 
     return global_descriptors
 
@@ -156,7 +158,7 @@ def average_properties(molecule):
         'translational': 0,
         'rotational': 0,
         'vibrational': 0,
-        'cdftm': np.zeros(7)
+        'cdftm': np.zeros(8)
     }
 
     for prop in avg.keys():

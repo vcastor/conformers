@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 from scm.plams import *
-from scm.conformers import ConformersJob, ConformersResults
+from scm.conformers import ConformersJob, ConformersResults, UniqueConformersAMS, RDKitGenerator
 from .settings_task import settings_for_task
 import os
 
