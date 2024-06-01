@@ -28,6 +28,7 @@ def task_settings(task, user_settings):
     elif task == 'SinglePoint':
         s.input.ams.Task = 'SinglePoint'
         s.input.ams.Properties.NormalModes = 'Yes'
+        s.input.ams.Thermo.Temperatures = user_settings['temperature']
         s.input.ADF.ConceptualDFT.Enabled = 'Yes'
         s.input.ADF.ConceptualDFT.AnalysisLevel = 'Full'
     return s
