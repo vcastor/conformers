@@ -8,7 +8,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import Ridge
 # from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error
-from scipy.optimize import curve_fit
 
 # Load the data
 def fetch_data(db_file_path):
@@ -19,43 +18,44 @@ def prepare_data(data):
     data.dropna(inplace=True)
     return data
 
+def define_models(X):
+    gas_model = X['trans_S'] + X['rot_S'] + X['vib_S']
+    model_23  = (2/3)*X['rot_S'] + (2/3)*X['trans_S'] + X['vib_S']
+    model_1   = [X['rot_S'] + X['trans_S'], X['vib_S']]
+    model_2   = [X['rot_S'], X['trans_S'], X['vib_S']]
+    model_3   = [X['rot_S'] + X['trans_S'], X['vib_S'], X['rot_S']*X['vib_S']/gas_model + X['trans_S']*X['vib_S']/gas_model]
+    model_4   = [X['rot_S'], X['trans_S'], X['vib_S'], X['rot_S']*X['vib_S']/gas_model, X['trans_S']*X['vib_S']/gas_model]
+    prexp     = np.exp(X['epsilon'])
+    model_5   = [X['trans_S'], X['rot_S'], X['vib_S'], X['trans_S']*X['vib_S']/gas_model, X['rot_S']*X['vib_S']/gas_model]
+    return {
+        'gas_model': gas_model,
+        'model_23': model_23,
+        'model_1': model_1,
+        'model_2': model_2,
+        'model_3': model_3,
+        'model_4': model_4
+    }
 
-# Assume data is loaded into a DataFrame 'data' with columns 'epsilon', 'rot_S', 'trans_S', 'vib_S', 'exp_S'
-# Example data fetching and preparation steps are commented since setup is presumed done
-data = fetch_data('entropiesCOSMO.db')
-data = prepare_data(data)
-epsilon = data['epsilon']
+def objective(coeffs, *args):
+    X, y = args
+    predictions = np.dot(X, coeffs)
+    return np.sum((y - predictions) ** 2)
 
-# Define the model function where alpha, beta, gamma are fixed at 1
-def model_fixed(epsilon, lambda1, lambda2, lambda3):
-    return (np.exp(-lambda1 * epsilon) * data['rot_S'] +
-            np.exp(-lambda2 * epsilon) * data['trans_S'] +
-            np.exp(-lambda3 * epsilon) * data['vib_S'])
-
-# Initial guess for the lambda parameters
-initial_guess_lambda = [0.1, 0.1, 0.1]
-
-# Fit the model focusing only on lambda values
-popt, pcov = curve_fit(lambda epsilon, lambda1, lambda2, lambda3:
-                       model_fixed(epsilon, lambda1, lambda2, lambda3),
-                       epsilon, data['experimental_S'], p0=initial_guess_lambda)
-
-# Use the optimized lambda parameters to compute the predicted values
-predicted_S = model_fixed(epsilon, *popt)
-
-# Calculate MAE
-mae = mean_absolute_error(data['experimental_S'], predicted_S)
-print(f"Mean Absolute Error: {mae}")
-
-# Print the optimized lambda parameters
-print(f"Optimized Lambda Parameters: Lambda1: {popt[0]}, Lambda2: {popt[1]}, Lambda3: {popt[2]}")
-
-quit()
-
-
+def optimize_model(X, y, num_params):
+    bounds = [(0, 1)] * num_params
+    best_score, best_result = np.inf, None
+    for _ in range(20):
+        initial_guess = np.random.rand(num_params)
+        result = minimize(objective, initial_guess, args=(X, y), bounds=bounds, method='SLSQP')
+        if result.success and result.fun < best_score:
+            best_score = result.fun
+            best_result = result
+    if result.success:
+        return result.x, np.mean(np.abs(y - np.dot(X, result.x)))
+    return None, None
 
 def main():
-    data = fetch_data('entropiesCOSMO.db')
+    data = fetch_data('../entropiesCOSMO.db')
     data = prepare_data(data)
     X = data[['rot_S', 'trans_S', 'vib_S', 'epsilon']]
     y = data['experimental_S']
@@ -100,7 +100,7 @@ def objective_mod4(coeffs):
 
 #
 # Not compleated data!
-data = fetch_data('entropiesCOSMO.db')
+data = fetch_data('../entropiesCOSMO.db')
 data = prepare_data(data)
 # filtered_valdata = [val for val in valdata if None not in val]
 strans, srot, svib = data['trans_S'], data['rot_S'], data['vib_S']

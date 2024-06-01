@@ -29,7 +29,7 @@ def entropy_cdft(natoms, pathdir, pops):
     lines = os.popen(cmd).read().split('\n')
     ts = float(lines[0].split()[1])
     cts = float(lines[1].split()[2])
-    correction = (cts - ts)*Units.conversion_ratio('hartree', 'kJ/mol')*1000
+    correction = -(cts - ts)*Units.conversion_ratio('hartree', 'kJ/mol')*1000/temp
     # Conceptual DFT
     with open(outfile, 'r', encoding="ISO-8859-1") as f:
         content = f.read()

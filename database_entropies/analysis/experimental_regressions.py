@@ -18,22 +18,24 @@ def prepare_data(data):
     data.dropna(inplace=True)
     return data
 
+def fixed_models(X):
+    return {
+        'gas_model': [X['rot_S'] + X['trans_S'] + X['vib_S']],
+        'model_23' : [(2/3)*X['rot_S'] + (2/3)*X['trans_S'] + X['vib_S']]
+    }
+
 def define_models(X):
-    gas_model = X['trans_S'] + X['rot_S'] + X['vib_S']
-    model_23  = (2/3)*X['rot_S'] + (2/3)*X['trans_S'] + X['vib_S']
-    model_1   = [X['rot_S'] + X['trans_S'], X['vib_S']]
-    model_2   = [X['rot_S'], X['trans_S'], X['vib_S']]
+    gas_model = [X['rot_S'] + X['trans_S'] + X['vib_S']]
     model_3   = [X['rot_S'] + X['trans_S'], X['vib_S'], X['rot_S']*X['vib_S']/gas_model + X['trans_S']*X['vib_S']/gas_model]
     model_4   = [X['rot_S'], X['trans_S'], X['vib_S'], X['rot_S']*X['vib_S']/gas_model, X['trans_S']*X['vib_S']/gas_model]
     prexp     = np.exp(X['epsilon'])
-    model_5   = [X['trans_S'], X['rot_S'], X['vib_S'], X['trans_S']*X['vib_S']/gas_model, X['rot_S']*X['vib_S']/gas_model]
+    model_5   = [prexp*X['rot_S'], prexp*X['trans_S'], X['vib_S'], X['rot_S']*X['vib_S']/gas_model, X['trans_S']*X['vib_S']/gas_model]
     return {
-        'gas_model': gas_model,
-        'model_23': model_23,
-        'model_1': model_1,
-        'model_2': model_2,
+        'model_1': [X['rot_S'] + X['trans_S'], X['vib_S']],
+        'model_2': [X['rot_S'], X['trans_S'], X['vib_S']],
         'model_3': model_3,
-        'model_4': model_4
+        'model_4': model_4,
+        'model_5': model_5
     }
 
 def objective(coeffs, *args):
@@ -41,8 +43,10 @@ def objective(coeffs, *args):
     predictions = np.dot(X, coeffs)
     return np.sum((y - predictions) ** 2)
 
-def optimize_model(X, y, num_params):
+def optimize_model(X, y, num_params, model_exp=0):
     bounds = [(0, 1)] * num_params
+    if model_exp:
+        bounds.append((-np.inf, 0)*model_exp)
     best_score, best_result = np.inf, None
     for _ in range(20):
         initial_guess = np.random.rand(num_params)
@@ -55,7 +59,7 @@ def optimize_model(X, y, num_params):
     return None, None
 
 def main():
-    data = fetch_data('entropiesCOSMO.db')
+    data = fetch_data('../entropiesCOSMO.db')
     data = prepare_data(data)
     X = data[['rot_S', 'trans_S', 'vib_S', 'epsilon']]
     y = data['experimental_S']
@@ -68,10 +72,10 @@ def main():
             print(f'Optimization coefficients: {coeffs}')
             print(f'MAE: {mae:.4f}')
 
-# if __name__ == '__main__':
-    # main()
+if __name__ == '__main__':
+    main()
 
-# quit()
+quit()
 
 
 # quit()

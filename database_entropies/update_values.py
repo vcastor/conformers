@@ -12,7 +12,7 @@ conn = sqlite3.connect(db_file_path)
 cursor = conn.cursor()
 
 # Retrieve all molecule names from the database
-cursor.execute('SELECT molecule_name, natoms FROM molecules')
+cursor.execute('SELECT molecule_name, natoms FROM pbe0')
 molecules = cursor.fetchall()
 
 def contribution_S(outfile):
@@ -20,38 +20,37 @@ def contribution_S(outfile):
         data = file.readlines()
     natoms = data[2].split()[1]
     nconformers = int(data[3].split()[1])
-    if nconformers == 1:
-        trans_S = data[7].split()[1]
-        rot_S = data[8].split()[2]
-        vib_S = data[9].split()[2]
-        mu = data[10].split()[1]
-        eta = data[11].split()[2] #hardness
-        # gamma = data[12].split()[2] #Hyperhardness
-    else:
-        trans_S = data[6].split()[1]
-        rot_S = data[7].split()[2]
-        vib_S = data[8].split()[2]
-        mu = data[9].split()[1]
-        eta = data[10].split()[2]
-    return natoms, nconformers, trans_S, rot_S, vib_S, mu, eta
+    # skip the line of weights
+    base_index = 7 if nconformers == 1 else 6
+    trans_S = data[base_index].split()[1]
+    rot_S = data[base_index + 1].split()[2]
+    vib_S = data[base_index + 2].split()[2]
+    correction = data[base_index + 3].split()[2]
+    mu  = data[base_index + 5].split()[3]
+    eta = data[base_index + 6].split()[2]
+    gamma = data[base_index + 7].split()[2]
+    return natoms, nconformers, trans_S, rot_S, vib_S, correction, mu, eta, gamma
 
 for molecule, atoms in molecules:
-    outfile = os.path.join('output_files', f'{molecule}.out')
+    outfile = os.path.join('pbe0', 'output_files', f'{molecule}.out')
     if os.path.exists(outfile) and atoms is None:
-        natoms, nconformers, trans_S, rot_S, vib_S, mu, eta = contribution_S(outfile)
+        natoms, nconformers, trans_S, rot_S, vib_S, correction, mu, eta, gamma = contribution_S(outfile)
         cursor.execute('''
-        UPDATE molecules SET
+        UPDATE pbe0 SET
         natoms = ?,
         nconformers = ?,
         trans_S = ?,
         rot_S = ?,
         vib_S = ?,
+        correctionS = ?,
         mu = ?,
-        eta = ?
+        eta = ?,
+        gamma = ?
         WHERE molecule_name = ?
-        ''', (natoms, nconformers, trans_S, rot_S, vib_S, mu, eta, molecule))
+        ''', (natoms, nconformers, trans_S, rot_S, vib_S, correction, mu, eta, gamma, molecule))
 
 # Commit the changes and close the connection
 conn.commit()
 conn.close()
 
+print('All values updated successfully ✨')

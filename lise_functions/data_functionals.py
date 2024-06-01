@@ -104,7 +104,7 @@ hybrid_functionals = {
     "PBE0-MBD@rsSC" : ("PBE0", "MBD"),
     "S12h-D3" : ("S12h", "Grimme3")
 }
-model_functionals = to_lower_dict(model_functionals)
+hybrid_functionals = to_lower_dict(hybrid_functionals)
 
 metahybrid_functionals = {
     "M06" : "M06",
@@ -146,4 +146,3 @@ dispersion_models = {
     "UFF"     : "UFF"
 }
 dispersion_models = to_lower_dict(dispersion_models)
-

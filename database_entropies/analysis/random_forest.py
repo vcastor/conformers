@@ -18,7 +18,7 @@ def prepare_data(data):
     return data
 
 # Path to your SQLite database
-db_file_path = 'entropiesCOSMO.db'
+db_file_path = '../entropiesCOSMO.db'
 
 # Fetch and prepare the data
 data = fetch_data(db_file_path)

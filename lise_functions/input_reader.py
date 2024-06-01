@@ -2,7 +2,6 @@
 import os
 import sys
 from .gvariables import gconfig
-import pandas as pd
 
 def get_input_file():
     """
@@ -26,8 +25,6 @@ def input_reader(filepath):
     - systems:  dictionary, each containing the SMILES and solvent
     - settings: a dictionary with the settings (for all systems)
     """
-    data = pd.read_csv(filepath, header=None, skip_blank_lines=True)
-
     systems, settings = [], {}
 
     key_variations = {
@@ -50,15 +47,20 @@ def input_reader(filepath):
     # On change la direction du dictionnaire, pour pouvoir faire la correspondance entre les variations et les clés
     reverse_map = {variation.lower(): key for key, variations in key_variations.items() for variation in variations}
 
-    # Extract the systems and settings
-    for _, row in data.iterrows():
-        first_element = row[0].strip()
-        if first_element.lower() in reverse_map:
-            key = reverse_map[first_element.lower()]
-            settings[key] = str(row[1]).strip() if pd.notna(row[1]) else None
-        else:
-            solvent = row[1].strip() if pd.notna(row[1]) else None
-            systems.append({'smiles': first_element, 'solvent': solvent})
+    # Read the data from the file
+    with open(filepath, 'r') as file:
+        for line in file:
+            line = line.strip()
+            if line.startswith('#') or not line:
+                continue
+            parts = line.split(',', 1)
+            first_element = parts[0].strip()
+            second_element = parts[1].strip() if len(parts) > 1 else None
+            if first_element.lower() in reverse_map:
+                key = reverse_map[first_element.lower()]
+                settings[key] = second_element
+            else:
+                systems.append({'smiles': first_element, 'solvent': second_element})
 
     systems = process_systems(systems)
 

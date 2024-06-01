@@ -13,25 +13,32 @@ def solvent_name(solvent):
     query = 'SELECT epsilon, rad FROM molecules WHERE molecule_name = ?'
     cursor.execute(query, (solvent,))
     result = cursor.fetchone()
-    conn.close()
     if result and result[0] is not None and result[1] is not None:
+        conn.close()
         return f'epsilon={result[0]} rad={result[1]}'
     else:
-        solvent_mapping = {
-            'thf' : 'Tetrahydrofuran',
-            'mecn': 'Acetonitrile',
-            'dimethyl sulfoxide': 'DMSO',
-            'dimethylsulfoxide' : 'DMSO',
-            'dmf' : 'DMFA',
-            'dimethylformamide' : 'DMFA',
-            'et2o': 'DiethylEther',
-            'diethyl ether': 'DiethylEther'
-        }
-        normalized_solvent = solvent.lower()
-        # Update the solvent name if it is the dictionary
-        if normalized_solvent in solvent_mapping:
-            solvent = solvent_mapping.get(normalized_solvent)
-        return f'name={solvent}'
+        query = 'SELECT epsilon, rad FROM test_molecules WHERE molecule_name = ?'
+        cursor.execute(query, (solvent,))
+        result = cursor.fetchone()
+        if result and result[0] is not None and result[1] is not None:
+            conn.close()
+            return f'epsilon={result[0]} rad={result[1]}'
+        else:
+            solvent_mapping = {
+                'thf' : 'Tetrahydrofuran',
+                'mecn': 'Acetonitrile',
+                'dimethyl sulfoxide': 'DMSO',
+                'dimethylsulfoxide' : 'DMSO',
+                'dmf' : 'DMFA',
+                'dimethylformamide' : 'DMFA',
+                'et2o': 'DiethylEther',
+                'diethyl ether': 'DiethylEther'
+            }
+            normalized_solvent = solvent.lower()
+            # Update the solvent name if it is the dictionary
+            if normalized_solvent in solvent_mapping:
+                solvent = solvent_mapping.get(normalized_solvent)
+            return f'name={solvent}'
 
 def solvent_settings(solvent):
     """

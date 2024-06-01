@@ -7,11 +7,17 @@ from scipy.optimize import minimize
 # Load the data
 def fetch_data(db_file_path):
     with sqlite3.connect(db_file_path) as conn:
-        return pd.read_sql('SELECT trans_S, rot_S, vib_S, epsilon, experimental_S FROM molecules', conn)
+        return pd.read_sql('SELECT trans_S, rot_S, vib_S, epsilon, experimental_S, correctionS FROM molecules', conn)
 
 def prepare_data(data):
     data.dropna(inplace=True)
+    # data = data[data['correctionS'] > 0]
     return data
+
+def print_coeffs(coeffs):
+    greek_letters = ['α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', 'ν', 'ξ', 'ο', 'π', 'ρ', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω']
+    formatted_coeffs = ', '.join([f'{greek_letters[i]}: {coef:.4f}' for i, coef in enumerate(coeffs)])
+    print(f'          | {formatted_coeffs}')
 
 # Objective functions
 def obj_model(coeffs, srot, strans, svib, s_exp, model):
@@ -86,8 +92,9 @@ def evaluate_models(data):
                                coeffs[4]*(strans*svib)/(strans + srot + svib) + coeffs[5]*(srot*svib)/(strans + srot + svib) + 
                                coeffs[6]*(srot*strans)/(strans + srot + svib))
             mae = np.mean(np.abs(s_exp - predictions))
-            print(f'\nModel: S = {model_info["formula"]}')
-            print(f'MAE for {model_name}: {mae:.4f}')
+            print()
+            print(f'  {mae:.4f} | S = {model_info["formula"]}')
+            print_coeffs(coeffs)
 
 def obj_model_exp(coeffs, srot, strans, svib):
     predictions = coeffs[0]*srot + coeffs[1]*strans + coeffs[2]*svib
@@ -128,9 +135,11 @@ def exponential_optimization(data):
         predictions = coeffs[0]*srot + coeffs[1]*strans + coeffs[2]*svib
         y = s_exp / np.exp(-lambd * eps)
         mae = np.mean(np.abs(y - predictions))
-        print(f'\nModel: S = e^(-λ*ε) [α*S_r + β*S_t + γ*S_v]')
-        print(f'MAE for exponential model 1: {mae:.4f}')
-        print(f'λ: {lambd:.4f}')
+        print()
+        print(f'  {mae:.4f} | S = e^(-λ*ε) [α*S_r + β*S_t + γ*S_v]')
+        print(f'          | λ: {lambd:.4f}')
+        # print(f"            Coefficients: {', '.join([f'{coef:.4f}' for coef in coeffs])}")
+        print_coeffs(coeffs)
 
     # Second exponential model
     result, lambd = optimize_model_exp(srot, strans, svib, s_exp, eps, bounds, 'exp2')
@@ -140,9 +149,10 @@ def exponential_optimization(data):
                        coeffs[2]*(strans*svib + srot*svib)/(strans + srot + svib))
         y = s_exp/np.exp(-lambd*eps)
         mae = np.mean(np.abs(y - predictions))
-        print(f'\nModel: S = e^(-λ*ε) [α*(S_t + S_r) + β*S_v + γ*(S_tv + S_rv)/(S_t + S_r + S_v)]')
-        print(f'MAE for exponential model 2: {mae:.4f}')
-        print(f'λ: {lambd:.4f}')
+        print()
+        print(f'  {mae:.4f} | S = e^(-λ*ε) [α*(S_t + S_r) + β*S_v + γ*(S_tv + S_rv)/(S_t + S_r + S_v)]')
+        print(f'          | λ: {lambd:.4f}')
+        print_coeffs(coeffs)
 
 def obj_model_splited1(coeffs, srot, strans):
     predictions = coeffs[0]*(srot + strans)
@@ -182,9 +192,10 @@ def splited_S(data):
         predictions = coeffs[0]*(srot + strans)
         y = (s_exp - svib)/np.exp(-lambd*eps)
         mae = np.mean(np.abs(y - predictions))
-        print(f'\nModel: S = e^(-λ*ε) [α*(S_r + S_t)] + S_v')
-        print(f'MAE for splited model 1: {mae:.4f}')
-        print(f'λ: {lambd:.4f}')
+        print()
+        print(f'  {mae:.4f} | S = e^(-λ*ε) [α*(S_r + S_t)] + S_v')
+        print(f'          | λ: {lambd:.4f}')
+        print_coeffs(coeffs)
     # Second splited model
     bounds = [(0, 1), (0, 1)]
     result, lambd = optimize_model_splited(srot, strans, svib, s_exp, eps, bounds, 'splited2')
@@ -193,20 +204,20 @@ def splited_S(data):
         predictions = coeffs[0]*srot + coeffs[1]*strans
         y = (s_exp - svib)/np.exp(-lambd*eps)
         mae = np.mean(np.abs(y - predictions))
-        print(f'\nModel: S = e^(-λ*ε) [α*S_r + β*S_t] + S_v')
-        print(f'MAE for splited model 2: {mae:.4f}')
-        print(f'λ: {lambd:.4f}')
+        print()
+        print(f'  {mae:.4f} | S = e^(-λ*ε) [α*S_r + β*S_t] + S_v')
+        print(f'          | λ: {lambd:.4f}')
+        print_coeffs(coeffs)
 
 def main():
-    data = fetch_data('entropiesCOSMO.db')
+    data = fetch_data('../entropiesCOSMO.db')
     data = prepare_data(data)
     # reference values [not optimized]
     gas_phase = data['rot_S'] + data['trans_S'] + data['vib_S']
-    print('gas phase')
-    print('MAE', np.mean(np.abs(data['experimental_S'] - gas_phase)))
+    print('   MAE    |    Model')
+    print(f"  {np.mean(np.abs(data['experimental_S'] - gas_phase)):.2f}  |    Gas phase")
     twothirds = 2/3*data['rot_S'] + 2/3*data['trans_S'] + data['vib_S']
-    print('2/3')
-    print('MAE', np.mean(np.abs(data['experimental_S'] - twothirds)))
+    print(f"  {np.mean(np.abs(data['experimental_S'] - twothirds)):.3f}  |    2/3*(S_r + S_t) + S_v")
     # linear optmization
     evaluate_models(data)
     # exponential optimization

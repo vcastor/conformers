@@ -107,7 +107,7 @@ def setup_and_plot(ax, y_predicted, y_data, model, ymin, ymax, plot_label, extra
 
 #-----------------------------------------------------------------------
 #   the data
-db_file_path = 'entropiesCOSMO.db'
+db_file_path = '../entropiesCOSMO.db'
 conn = sqlite3.connect(db_file_path)
 cursor = conn.cursor()
 cursor.execute('SELECT trans_S, rot_S, vib_S, epsilon, experimental_S FROM molecules')
