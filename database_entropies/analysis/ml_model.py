@@ -1,5 +1,5 @@
-# -*- coding: UTF-8 -*-
 #!/opt/homebrew/bin/python3.9
+# -*- coding: UTF-8 -*-
 ########################################################################
 #   This python script was written con el poder de las plantitas 🌱    #
 #                                                                      #
@@ -110,7 +110,7 @@ def setup_and_plot(ax, y_predicted, y_data, model, ymin, ymax, plot_label, extra
 db_file_path = '../entropiesCOSMO.db'
 conn = sqlite3.connect(db_file_path)
 cursor = conn.cursor()
-cursor.execute('SELECT trans_S, rot_S, vib_S, epsilon, experimental_S FROM molecules')
+cursor.execute('SELECT mu, eta, gamma, epsilon, experimental_S FROM molecules')
 data = cursor.fetchall()
 # Commit the changes and close the connection
 conn.commit()
