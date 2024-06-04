@@ -30,7 +30,7 @@ for system in systems:
     pops = np.array(adf_SP_job.results.get_boltzmann_distribution(temperature))
     nconfs = len(pops)
 
-    score_dirs = rkf_paths(os.path.abspath(adf_SP_job.results.rkfpath()))
+    score_dirs = rkf_paths(os.path.abspath(adf_SP_job.results.rkfpath()))[:nconfs]
     freq_dirs = freq_jobs(score_dirs, system['solvent'], user_settings)
 
     # Molecule dictionary
