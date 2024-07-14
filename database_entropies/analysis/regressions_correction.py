@@ -7,7 +7,7 @@ from scipy.optimize import minimize
 # Load the data
 def fetch_data(db_file_path):
     with sqlite3.connect(db_file_path) as conn:
-        return pd.read_sql('SELECT trans_S, rot_S, vib_S, epsilon, experimental_S, correctionS FROM molecules', conn)
+        return pd.read_sql('SELECT trans_S, rot_S, vib_S, epsilon, experimental_S, correctionS FROM all_molecules', conn)
 
 def prepare_data(data):
     data.dropna(inplace=True)

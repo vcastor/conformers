@@ -9,7 +9,7 @@ from scipy.optimize import minimize
 # Load the data
 def fetch_data(db_file_path):
     with sqlite3.connect(db_file_path) as conn:
-        return pd.read_sql('SELECT trans_S, rot_S, vib_S, epsilon, experimental_S, correctionS FROM molecules', conn)
+        return pd.read_sql('SELECT trans_S, rot_S, vib_S, epsilon, experimental_S, correctionS FROM all_molecules', conn)
 
 def prepare_data(data):
     data.dropna(inplace=True)
@@ -27,7 +27,7 @@ def obj_linear_model(coeffs, srot, strans, svib, scorr, s_exp, model_name):
     gas = srot + strans + svib
     gascor = srot + strans + svib + scorr
     if model_name == 'model0':
-        predictions = coeffs[0]*srot + coeffs[1]*strans + svib
+        predictions = coeffs[0]*(srot + strans) + coeffs[1]*svib
     elif model_name == 'model1':
         predictions = coeffs[0]*srot + coeffs[1]*strans + svib + coeffs[2]*svib*(srot + strans)/gas
     elif model_name == 'model2':
@@ -126,7 +126,7 @@ def linear_models(data):
     scorr, s_exp = data['correctionS'], data['experimental_S']
     models = {
         'model0': {'num_coeffs': 2,
-                   'formula': 'α*S_r + β*S_t + S_v'},
+                   'formula': 'α*(S_r + S_t) + β*S_v'},
         'model1': {'num_coeffs': 3,
                    'formula': 'α*S_r + β*S_t + S_v + γ*S_v(S_r + S_t)/S_gas'},
         'model2': {'num_coeffs': 4,
@@ -145,7 +145,7 @@ def linear_models(data):
             gas = srot + strans + svib
             gascor = srot + strans + svib + scorr
             if model_name == 'model0':
-                predictions = coeffs[0]*srot + coeffs[1]*strans + svib
+                predictions = coeffs[0]*(srot + strans) + coeffs[1]*svib
             elif model_name == 'model1':
                 predictions = coeffs[0]*srot + coeffs[1]*strans + svib + coeffs[2]*svib*(srot + strans)/gas
             elif model_name == 'model2':
@@ -311,8 +311,8 @@ def main():
     # Run it, for the cases
     print('    MAE   |  Model')
     print('----------+--------------------------')
-    no_opt_models(data)
-    # process_data_and_optimise(data)
+    # no_opt_models(data)
+    process_data_and_optimise(data)
     # print('          |')
     # print('----------+ ΔS_corr = 0 if ΔS_corr > 0')
     # process_data_and_optimise(data, 'new variable')

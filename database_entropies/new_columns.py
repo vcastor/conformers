@@ -20,8 +20,10 @@ cursor = conn.cursor()
 # Create the new table test_molecules with the same columns as the molecules table
 # cursor.execute(f"CREATE TABLE IF NOT EXISTS test_molecules ({column_defs})")
 
+# New columns for the test_molecules table
+
 # cursor.execute('''
-#     CREATE TABLE pbe0 AS
+#     CREATE TABLE new_molecules AS
 #     SELECT
 #         molecules.smile AS smile,
 #         molecules.molecule_name AS molecule_name,
@@ -41,15 +43,50 @@ cursor = conn.cursor()
 #         test_molecules
 # ''')
 
-cursor.execute('ALTER TABLE pbe0 ADD COLUMN natoms INTEGER;')
-cursor.execute('ALTER TABLE pbe0 ADD COLUMN nconformers INTEGER;')
-cursor.execute('ALTER TABLE pbe0 ADD COLUMN trans_S REAL;')
-cursor.execute('ALTER TABLE pbe0 ADD COLUMN rot_S REAL;')
-cursor.execute('ALTER TABLE pbe0 ADD COLUMN vib_S REAL;')
-cursor.execute('ALTER TABLE pbe0 ADD COLUMN correctionS REAL;')
-cursor.execute('ALTER TABLE pbe0 ADD COLUMN mu REAL;')
-cursor.execute('ALTER TABLE pbe0 ADD COLUMN eta REAL;')
-cursor.execute('ALTER TABLE pbe0 ADD COLUMN gamma REAL;')
+# Create a new table
+
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS all_molecules (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    smile TEXT,
+    molecule_name TEXT,
+    epsilon REAL,
+    rad REAL,
+    natoms INTEGER,
+    nconformers INTEGER,
+    trans_S REAL,
+    rot_S REAL,
+    vib_S REAL,
+    correctionS REAL,
+    mu REAL,
+    eta REAL,
+    gamma REAL,
+    experimental_S REAL
+)
+''')
+
+# Add the new columns to the pbe0 table
+
+# cursor.execute('ALTER TABLE pbe0 ADD COLUMN natoms INTEGER;')
+# cursor.execute('ALTER TABLE pbe0 ADD COLUMN nconformers INTEGER;')
+# cursor.execute('ALTER TABLE pbe0 ADD COLUMN trans_S REAL;')
+# cursor.execute('ALTER TABLE pbe0 ADD COLUMN rot_S REAL;')
+# cursor.execute('ALTER TABLE pbe0 ADD COLUMN vib_S REAL;')
+# cursor.execute('ALTER TABLE pbe0 ADD COLUMN correctionS REAL;')
+# cursor.execute('ALTER TABLE pbe0 ADD COLUMN mu REAL;')
+# cursor.execute('ALTER TABLE pbe0 ADD COLUMN eta REAL;')
+# cursor.execute('ALTER TABLE pbe0 ADD COLUMN gamma REAL;')
+
+# Merge the molecules in [molecules, test_molecules, new_molecules] into all_molecules
+
+cursor.execute('''
+INSERT INTO all_molecules (smile, molecule_name, epsilon, rad, natoms, nconformers, trans_S, rot_S, vib_S, correctionS, mu, eta, gamma, experimental_S)
+SELECT smile, molecule_name, epsilon, rad, natoms, nconformers, trans_S, rot_S, vib_S, correctionS, mu, eta, gamma, experimental_S FROM molecules
+UNION
+SELECT smile, molecule_name, epsilon, rad, natoms, nconformers, trans_S, rot_S, vib_S, correctionS, mu, eta, gamma, experimental_S FROM test_molecules
+UNION
+SELECT smile, molecule_name, epsilon, rad, natoms, nconformers, trans_S, rot_S, vib_S, correctionS, mu, eta, gamma, experimental_S FROM new_molecules
+''')
 
 conn.commit()
 conn.close()

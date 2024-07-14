@@ -11,7 +11,7 @@ conn = sqlite3.connect(db_file_path)
 cursor = conn.cursor()
 
 cursor.execute('''
-SELECT smile, molecule_name FROM molecules
+SELECT smile, molecule_name FROM pbe0
 ''')
 
 molecules = cursor.fetchall()
@@ -27,17 +27,19 @@ for smile, name in molecules:
         f.write(smile + ', ' + name + '\n')
         # Paramters
         # Filter
-        f.write('Energy threshold Score, 3.0\n')
         f.write('Energy threshold Optimize, 5.0\n')
-        f.write('RMSD, 2.5\n')
+        f.write('Energy threshold Score, 2.5\n')
+        f.write('RMSD opt, 3.0\n')
+        f.write('RMSD score, 1.5\n')
         # DFT and DFTB
         f.write('Functional, PBE\n')
         f.write('Basis set, TZP\n')
         f.write('dispersion, GRIMME3 BJDAMP\n')
         f.write('model, GFN1-xTB\n')
         #
-        f.write('Temperature, 298\n')
+        f.write('Temperature, 298.15\n')
         f.write('Number of conformers, 20\n')
+
 
 print("✨ Input files created successfully! 🚀✨")
 

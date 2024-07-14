@@ -28,19 +28,22 @@ def get_mae_values(interaction_type):
 
 def create_pysr_model():
     """
-    This function returns the PySRRegressor model.
+    This function returns the PySRRegressor model with complex equations.
     """
     # Operations allowed (same for all predictions)
-    binaryOp  = ["plus", "mult", "-", "/"]
-    unitaryOp = ["square" , "inv(x) = 1/x", "exp", "log"]
+    binaryOp  = ["plus", "mult", "-", "/", "pow"]
+    # unitaryOp = ["square", "inv(x)=1/x", "exp", "log", "sqrt", "sin", "cos", "tan", "abs"]#, "asin", "acos", "atan", "sinh", "cosh", "tanh"]
+    # unitaryOp = ["square", "inv(x)=1/x", "exp", "log", "sqrt", "sin", "cos", "tan", "abs", "asin", "acos", "atan", "sinh", "cosh", "tanh"]
+    unitaryOp = ["square", "inv(x)=1/x", "exp", "log", "sqrt", "abs", "cube", "sinh", "cosh", "tanh"]
+    # unitaryOp = ["square", "exp", "log", "asin", "acos", "atan"]#, "sin", "cos", "tan"]
     # Let the values for the regressor
     default_pysr_params = dict(
-        populations = 30,
-        model_selection = 'best',
+        populations=70,
+        model_selection='best',
     )
     return PySRRegressor(
-        niterations=100,
-        maxdepth=5,
+        niterations=300,
+        maxdepth=9,
         binary_operators=binaryOp,
         unary_operators=unitaryOp,
         extra_sympy_mappings={"inv": lambda x: 1/x},
@@ -77,40 +80,12 @@ def print_and_return_mae(model, X, y, mae_indices, interaction_type):
 
     return y_predict0, y_predict1, y_predict2
 
-def setup_and_plot(ax, y_predicted, y_data, model, ymin, ymax, plot_label, extra_preds=None, markers=None):
-    """
-    Just DRY for readability about plots.
-    """
-    # Plot's limit
-    data_range = ymax - ymin
-    extra_space = data_range * 0.01
-    ymin_plot = ymin - extra_space
-    ymax_plot = ymax + extra_space
-    ax.plot([ymin_plot, ymax_plot], [ymin_plot, ymax_plot], 'k-')
-
-    marker_cycle = itertools.cycle(markers) if markers else itertools.cycle(['o'])
-
-    # Scatter plot for the best prediction
-    ax.scatter(y_predicted, y_data, label=f"Best: ${model.latex(0)}$", marker=next(marker_cycle), facecolor="None", edgecolor="darkcyan")
-
-    # Extra predictions [Optional]
-    if extra_preds:
-        #for value, label, colour in extra_preds:
-        for value, colour in extra_preds:
-            if value > 0:
-                ax.scatter(y_predicted, y_data, label=f"Alternative: ${model.latex(value)}$", marker=next(marker_cycle), facecolor="None", edgecolor=colour)
-
-    # Labels and legend
-    ax.set_xlabel(plot_label[0])
-    ax.set_ylabel(plot_label[1])
-    ax.legend()
-
 #-----------------------------------------------------------------------
 #   the data
 db_file_path = '../entropiesCOSMO.db'
 conn = sqlite3.connect(db_file_path)
 cursor = conn.cursor()
-cursor.execute('SELECT mu, eta, gamma, epsilon, experimental_S FROM molecules')
+cursor.execute('SELECT trans_S, rot_S, vib_S, mu, eta, gamma, epsilon, experimental_S FROM molecules')
 data = cursor.fetchall()
 # Commit the changes and close the connection
 conn.commit()
@@ -121,20 +96,35 @@ conn.close()
 filtered_data = [val for val in data if None not in val]
 
 # Data for linear regression
-s_exp = np.array([val[4] for val in filtered_data])
-X = np.array([[val[0], val[1], val[2]] for val in filtered_data])
-# X = np.array([[val[0], val[1], val[2], val[3]] for val in filtered_data])
+s_exp = np.array([val[7] for val in filtered_data])
+
+# Best model for entropy without CDFT
+# 12.7529 | S = e^(-λ*ε)[α*S_r + β*S_t + S_vr/S_gas + γ*S_vt/S_gas] + S_v
+#         | λ: 0.0022
+#         | α: 0.4632, β: 0.5902, γ: 0.2493
+eps = np.array([val[6] for val in filtered_data])
+srot = np.array([val[0] for val in filtered_data])
+strans = np.array([val[1] for val in filtered_data])
+svib = np.array([val[2] for val in filtered_data])
+gas = srot + strans + svib
+s_vr = svib*srot/gas
+s_vt = svib*strans/gas
+pred = np.exp(-0.0022*eps)*(0.4632*srot + 0.5902*strans + s_vr + 0.2493*s_vt) + svib
+
+# X = np.array([[val[3], val[4], val[5], val[6]] for val in filtered_data])
+# missing = s_exp - pred
+
+# X = np.array([[val[0], val[1], val[2]] for val in filtered_data])
 # strans, srot, svib, eps = X[:,0], X[:,1], X[:,2], X[:,3] # Editable variables
 
-
-#new transformation
-# yexp = s_exp/(np.exp(-eps))
+X = np.array([[val[0], val[1], val[2], val[3], val[4], val[5], val[6]] for val in filtered_data])
 
 #-----------------------------------------------------------------------
 #   Create the models for all predictions
 model = create_pysr_model()
 
 # She run, run, run [Radiohead - Creep]
+# model.fit(X, missing)
 model.fit(X, s_exp)
 
 #-----------------------------------------------------------------------
@@ -143,50 +133,8 @@ print('Best model:\n')
 print(model.sympy())
 quit()
 
-# Other models
-print('Other models:\n')
-print_other_model_equations(model_cou, 'Coulomb interaction')
-print_other_model_equations(model_xc, 'Exchange-Correlation interaction')
-print_other_model_equations(model_th, 'Kinetic Energy (Hydrogen)')
 
-#-----------------------------------------------------------------------
-#   Ask to the user which other equations are wanted for the plots
-print('Select another two equations for the plot,\nif you don\'t want them just type zeros \
-       or negative values to use the second and 3rd better options')
-mae_cou1, mae_cou2 = get_mae_values('Coulomb interaction')
-mae_xc1, mae_xc2 = get_mae_values('Exchange-Correlation interaction')
-mae_th1, mae_th2 = get_mae_values('Kinetic Energy (Hydrogen)')
 
-#-----------------------------------------------------------------------
-#   Printing values predicted
-print('Difference between prediction(s) and data\n')
-yp0_cou, yp1_cou, yp2_cou = print_and_return_mae(model_cou, X, ycou, [mae_cou1, mae_cou2], 'Coulomb Interaction')
-yp0_xc, yp1_xc, yp2_xc = print_and_return_mae(model_xc, X, yxc, [mae_xc1, mae_xc2], 'Exchange-Correlation Interaction')
-yp0_th, yp1_th, yp2_th = print_and_return_mae(model_th, X, yth, [mae_th1, mae_th2], 'Kinetic Energy (Hydrogen)')
 
-#-----------------------------------------------------------------------
-#   Plots
-fig_cou, ax_cou = plt.subplots()
-fig_xc, ax_xc = plt.subplots()
-fig_th, ax_th = plt.subplots()
-# Plot's limit and markers
-ycoumin, ycoumax = np.amin(ycou), np.amax(ycou)
-yxcmin, yxcmax = np.amin(yxc), np.amax(yxc)
-ythmin, ythmax = np.amin(yth), np.amax(yth)
-markers = ['^', 'v']
-# Call for the plots
-setup_and_plot(ax_cou, yp0_cou, ycou, model_cou, ycoumin, ycoumax,
-               ["Predicted $E^{int}_{Coul}$", "Reference $E^{int}_{Coul}$"], 
-               [(mae_cou1, "orange"), (mae_cou2, "darkmagenta")], markers=markers)
-setup_and_plot(ax_xc, yp0_xc, yxc, model_xc, yxcmin, yxcmax,
-               ["Predicted $E^{int}_{XC}$", "Reference $E^{int}_{XC}$"], 
-               [(mae_xc1, "orange"), (mae_xc2, "darkmagenta")], markers=markers)
-setup_and_plot(ax_th, yp0_th, yth, model_th, ythmin, ythmax,
-               ["Predicted $T^H$", "Reference $T^H$"], 
-               [(mae_th1, "orange"), (mae_th2, "darkmagenta")], markers=markers)
 
-plt.figure(fig_cou.number)
-plt.figure(fig_xc.number)
-plt.figure(fig_th.number)
-plt.show()
 

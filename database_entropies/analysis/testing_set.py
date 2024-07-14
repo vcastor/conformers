@@ -200,8 +200,8 @@ def plotting():
     plt.legend()
     plt.grid(True)
     # Show the plot
-    plt.savefig('testing_set.pdf')
-    # plt.show()
+    # plt.savefig('testing_set.pdf')
+    plt.show()
 
 def main():
     data = fetch_data('../entropiesCOSMO.db')
