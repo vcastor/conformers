@@ -56,7 +56,7 @@ def format_list(key, values, max_values_per_line=5):
         item_in_line += 1
         if item_in_line == max_values_per_line or i == len(values) - 1:
             formatted_lines.append(line)
-            line = " " * (len(key) + 2)
+            line = " "*(len(key) + 2)
             item_in_line = 0
 
     formatted_output = "\n".join(formatted_lines)

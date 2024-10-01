@@ -13,7 +13,7 @@ from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 db_file_path = '../entropiesCOSMO.db'
 conn = sqlite3.connect(db_file_path)
 cursor = conn.cursor()
-cursor.execute('SELECT mu, eta, gamma, epsilon, experimental_S FROM molecules')
+cursor.execute('SELECT trans_S, rot_S, vib_S, epsilon, rad, correctionS, mu, eta, gamma, omega, experimental_S FROM PBE0 WHERE nconformers = 1')
 data = cursor.fetchall()
 conn.close()
 
@@ -21,8 +21,8 @@ conn.close()
 filtered_data = [val for val in data if None not in val]
 
 # Prepare data for regression
-s_exp = np.array([val[4] for val in filtered_data])
-X = np.array([[val[0], val[1], val[2]] for val in filtered_data])
+s_exp = np.array([val[-1] for val in filtered_data])
+X = np.array([[val[0], val[1], val[2], val[3], val[4], val[5], val[6], val[7], val[8], val[9]] for val in filtered_data])
 
 # Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, s_exp, test_size=0.2, random_state=42)

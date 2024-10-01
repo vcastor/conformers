@@ -11,7 +11,7 @@ conn = sqlite3.connect(db_file_path)
 cursor = conn.cursor()
 
 cursor.execute('''
-SELECT smile, molecule_name FROM pbe0
+SELECT smile, molecule_name FROM PBE0 WHERE natoms IS NULL
 ''')
 
 molecules = cursor.fetchall()
@@ -21,7 +21,8 @@ conn.commit()
 conn.close()
 
 for smile, name in molecules:
-    filename = 'input_files/' + name + '.csv'
+    # filename = 'input_files/' + name + '.csv'
+    filename = 'pbe0/input_files/' + name + '.csv'
     with open(filename, 'w') as f:
         # Smile, solvent
         f.write(smile + ', ' + name + '\n')
@@ -32,7 +33,7 @@ for smile, name in molecules:
         f.write('RMSD opt, 3.0\n')
         f.write('RMSD score, 1.5\n')
         # DFT and DFTB
-        f.write('Functional, PBE\n')
+        f.write('Functional, PBE0\n')
         f.write('Basis set, TZP\n')
         f.write('dispersion, GRIMME3 BJDAMP\n')
         f.write('model, GFN1-xTB\n')

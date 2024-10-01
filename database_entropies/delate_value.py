@@ -12,7 +12,11 @@ db_file_path = 'entropiesCOSMO.db'
 conn = sqlite3.connect(db_file_path)
 cursor = conn.cursor()
 
-cursor.execute("DELETE FROM PBE0 WHERE smile = 'CCCCCBr'")
+cursor.execute("DELETE FROM PBE0 WHERE molecule_name = 'METHYLENECHLORIDE'")
+cursor.execute("DELETE FROM PBE WHERE molecule_name = 'METHYLENECHLORIDE'")
+# cursor.execute("DELETE FROM PBE0 WHERE smile = 'C[Si]1(O[Si](O[Si](O[Si](O1)(C)C)(C)C)(C)C)C'")
+# cursor.execute("DELETE FROM PBE WHERE smile = 'C[Si]1(O[Si](O[Si](O[Si](O1)(C)C)(C)C)(C)C)C'")
+# cursor.execute("DELETE FROM PBE0 WHERE smile = 'CCCCCBr'")
 # cursor.execute("DROP TABLE pbe0")
 
 # # Step 1: Create a temporary table to store unique rows

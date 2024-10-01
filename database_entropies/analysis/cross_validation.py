@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-# -*- coding: utf-8 -*-
 import sqlite3
 import numpy as np
 import pandas as pd
@@ -7,10 +6,9 @@ from scipy.optimize import minimize
 from sklearn.model_selection import KFold
 from sklearn.metrics import mean_absolute_error
 
-# Load the data
 def fetch_data(db_file_path, table_name='all_molecules'):
     with sqlite3.connect(db_file_path) as conn:
-        return pd.read_sql(f'SELECT trans_S, rot_S, vib_S, epsilon, experimental_S, correctionS FROM {table_name}', conn)
+        return pd.read_sql(f'SELECT trans_S, rot_S, vib_S, epsilon, experimental_S, correctionS FROM {table_name} WHERE nconformers = 1', conn)
 
 def prepare_data(data):
     data.dropna(inplace=True)
@@ -49,7 +47,7 @@ def opt_model(srot, strans, svib, s_exp, epsilon, model_name, nlin_coeffs, nexp_
     bounds = [(0, 1)]*nlin_coeffs + [(0, 0.05)]*nexp_coeffs
     best_score, best_result = np.inf, None
     for _ in range(40):
-        initial_guess = np.concatenate([np.random.uniform(0, 1, nlin_coeffs), np.random.uniform(0, 0.005, nexp_coeffs)])
+        initial_guess = np.concatenate([np.random.uniform(0, 1, nlin_coeffs), np.random.uniform(0, 0.05, nexp_coeffs)])
         result = minimize(obj_model, initial_guess, args=(srot, strans, svib, s_exp, epsilon, model_name), bounds=bounds, method='SLSQP')
         if result.success and result.fun < best_score:
             best_score = result.fun

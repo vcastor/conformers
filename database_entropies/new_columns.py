@@ -45,25 +45,25 @@ cursor = conn.cursor()
 
 # Create a new table
 
-cursor.execute('''
-CREATE TABLE IF NOT EXISTS all_molecules (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    smile TEXT,
-    molecule_name TEXT,
-    epsilon REAL,
-    rad REAL,
-    natoms INTEGER,
-    nconformers INTEGER,
-    trans_S REAL,
-    rot_S REAL,
-    vib_S REAL,
-    correctionS REAL,
-    mu REAL,
-    eta REAL,
-    gamma REAL,
-    experimental_S REAL
-)
-''')
+# cursor.execute('''
+# CREATE TABLE IF NOT EXISTS all_molecules (
+#     id INTEGER PRIMARY KEY AUTOINCREMENT,
+#     smile TEXT,
+#     molecule_name TEXT,
+#     epsilon REAL,
+#     rad REAL,
+#     natoms INTEGER,
+#     nconformers INTEGER,
+#     trans_S REAL,
+#     rot_S REAL,
+#     vib_S REAL,
+#     correctionS REAL,
+#     mu REAL,
+#     eta REAL,
+#     gamma REAL,
+#     experimental_S REAL
+# )
+# ''')
 
 # Add the new columns to the pbe0 table
 
@@ -76,17 +76,19 @@ CREATE TABLE IF NOT EXISTS all_molecules (
 # cursor.execute('ALTER TABLE pbe0 ADD COLUMN mu REAL;')
 # cursor.execute('ALTER TABLE pbe0 ADD COLUMN eta REAL;')
 # cursor.execute('ALTER TABLE pbe0 ADD COLUMN gamma REAL;')
+cursor.execute('ALTER TABLE PBE0 ADD COLUMN omega REAL;')
+cursor.execute('ALTER TABLE PBE ADD COLUMN omega REAL;')
 
 # Merge the molecules in [molecules, test_molecules, new_molecules] into all_molecules
 
-cursor.execute('''
-INSERT INTO all_molecules (smile, molecule_name, epsilon, rad, natoms, nconformers, trans_S, rot_S, vib_S, correctionS, mu, eta, gamma, experimental_S)
-SELECT smile, molecule_name, epsilon, rad, natoms, nconformers, trans_S, rot_S, vib_S, correctionS, mu, eta, gamma, experimental_S FROM molecules
-UNION
-SELECT smile, molecule_name, epsilon, rad, natoms, nconformers, trans_S, rot_S, vib_S, correctionS, mu, eta, gamma, experimental_S FROM test_molecules
-UNION
-SELECT smile, molecule_name, epsilon, rad, natoms, nconformers, trans_S, rot_S, vib_S, correctionS, mu, eta, gamma, experimental_S FROM new_molecules
-''')
+# cursor.execute('''
+# INSERT INTO all_molecules (smile, molecule_name, epsilon, rad, natoms, nconformers, trans_S, rot_S, vib_S, correctionS, mu, eta, gamma, experimental_S)
+# SELECT smile, molecule_name, epsilon, rad, natoms, nconformers, trans_S, rot_S, vib_S, correctionS, mu, eta, gamma, experimental_S FROM molecules
+# UNION
+# SELECT smile, molecule_name, epsilon, rad, natoms, nconformers, trans_S, rot_S, vib_S, correctionS, mu, eta, gamma, experimental_S FROM test_molecules
+# UNION
+# SELECT smile, molecule_name, epsilon, rad, natoms, nconformers, trans_S, rot_S, vib_S, correctionS, mu, eta, gamma, experimental_S FROM new_molecules
+# ''')
 
 conn.commit()
 conn.close()

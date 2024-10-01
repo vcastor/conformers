@@ -21,9 +21,9 @@ def worst_case_predictions(pred, exp):
     ps, es = pred.values[s_idx], exp.values[s_idx]
     ph, eh = pred.values[h_idx], exp.values[h_idx]
     dw, ds, dh = pw - ew, ps - es, ph - eh
-    print(f'{pw:17.2f} | {ew:20.2f} | {dw:16.2f} | Worst Case')
-    print(f'{ps:17.2f} | {es:20.2f} | {ds:16.2f} | Smallest Entropy')
-    print(f'{ph:17.2f} | {eh:20.2f} | {dh:16.2f} | Highest Entropy')
+    print(f'{pw:17.2f} & {ew:20.2f} & {dw:16.2f} & Worst Case')
+    print(f'{ps:17.2f} & {es:20.2f} & {ds:16.2f} & Smallest Entropy')
+    print(f'{ph:17.2f} & {eh:20.2f} & {dh:16.2f} & Highest Entropy')
     print(f'                  |                      |')
 
 
@@ -32,11 +32,11 @@ def models(data, functional):
     s_exp, epsilon = data['experimental_S'], data['epsilon']
     sgas = srot + strans + svib
     model_dic = {
-            'linear': {'PBE': [1.0000, 0.4016, 1.0000], 'PBE0': [0.9900, 0.4171, 1.0000]},
-            'cross_terms': {'PBE': [0.5216, 1.0000, 0.6257], 'PBE0': [0.5229, 1.0000, 0.6852]},
-            'exp_agrouped': {'PBE': [0.5568, 1.0000, 0.5301, 0.0025], 'PBE0': [0.5467, 0.7938, 0.9843, 0.0027]},
-            'exp_separated': {'PBE': [0.0000, 0.9383, 1.0000, 1.0000, 0.3616, 0.0041], 'PBE0': [0.3440, 0.7091, 1.0000, 1.0000, 0.3454, 0.0034]},
-            'splited': {'PBE': [0.8683, 0.3499, 0.6249, 0.5311, 0.9380, 0.0027], 'PBE0': [0.3044, 0.7366, 1.0000, 0.3157, 1.0000, 0.0038]}
+            'linear': {'PBE': [0.7009, 0.5327, 1.0000], 'PBE0': [1.0000, 0.3286, 0.9993]},
+            'cross_terms': {'PBE': [0.5590, 0.3972, 1.0000], 'PBE0': [0.5666, 0.3880, 1.0000]},
+            'exp_agrouped': {'PBE': [0.5974, 0.3085, 1.0000, 0.0025], 'PBE0': [0.6043, 0.3004, 1.0000, 0.0027]},
+            'exp_separated': {'PBE': [0.8999, 0.4318, 0.5242, 0.0000, 1.0000, 0.0024], 'PBE0': [1.0000, 0.3690, 0.5271, 0.0000, 1.0000, 0.0020]},
+            'splited': {'PBE': [0.4068, 0.7256, 0.0000, 1.0000, 0.6190, 0.0023], 'PBE0': [0.8178, 0.4699, 0.4721, 1.0000, 0.3978, 0.0016]}
             }
     for model, info in model_dic.items():
         if model == 'linear':

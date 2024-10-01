@@ -32,9 +32,9 @@ def create_pysr_model():
     """
     # Operations allowed (same for all predictions)
     binaryOp  = ["plus", "mult", "-", "/", "pow"]
-    # unitaryOp = ["square", "inv(x)=1/x", "exp", "log", "sqrt", "sin", "cos", "tan", "abs"]#, "asin", "acos", "atan", "sinh", "cosh", "tanh"]
+    unitaryOp = ["square", "inv(x)=1/x", "exp", "log", "sqrt", "sin", "cos", "tan", "abs"]#, "asin", "acos", "atan", "sinh", "cosh", "tanh"]
     # unitaryOp = ["square", "inv(x)=1/x", "exp", "log", "sqrt", "sin", "cos", "tan", "abs", "asin", "acos", "atan", "sinh", "cosh", "tanh"]
-    unitaryOp = ["square", "inv(x)=1/x", "exp", "log", "sqrt", "abs", "cube", "sinh", "cosh", "tanh"]
+    # unitaryOp = ["square", "inv(x)=1/x", "exp", "log", "sqrt", "abs", "cube", "sinh", "cosh", "tanh"]
     # unitaryOp = ["square", "exp", "log", "asin", "acos", "atan"]#, "sin", "cos", "tan"]
     # Let the values for the regressor
     default_pysr_params = dict(
@@ -85,7 +85,7 @@ def print_and_return_mae(model, X, y, mae_indices, interaction_type):
 db_file_path = '../entropiesCOSMO.db'
 conn = sqlite3.connect(db_file_path)
 cursor = conn.cursor()
-cursor.execute('SELECT trans_S, rot_S, vib_S, mu, eta, gamma, epsilon, experimental_S FROM molecules')
+cursor.execute('SELECT trans_S, rot_S, vib_S, epsilon, rad, correctionS, mu, eta, gamma, omega, experimental_S FROM PBE WHERE nconformers = 1')
 data = cursor.fetchall()
 # Commit the changes and close the connection
 conn.commit()
@@ -96,7 +96,7 @@ conn.close()
 filtered_data = [val for val in data if None not in val]
 
 # Data for linear regression
-s_exp = np.array([val[7] for val in filtered_data])
+s_exp = np.array([val[-1] for val in filtered_data])
 
 # Best model for entropy without CDFT
 # 12.7529 | S = e^(-λ*ε)[α*S_r + β*S_t + S_vr/S_gas + γ*S_vt/S_gas] + S_v
@@ -117,10 +117,11 @@ pred = np.exp(-0.0022*eps)*(0.4632*srot + 0.5902*strans + s_vr + 0.2493*s_vt) + 
 # X = np.array([[val[0], val[1], val[2]] for val in filtered_data])
 # strans, srot, svib, eps = X[:,0], X[:,1], X[:,2], X[:,3] # Editable variables
 
-X = np.array([[val[0], val[1], val[2], val[3], val[4], val[5], val[6]] for val in filtered_data])
+# X = np.array([[val[0], val[1], val[2], val[3], val[4], val[5], val[6]] for val in filtered_data])
 
 #-----------------------------------------------------------------------
 #   Create the models for all predictions
+X = np.array([[val[0], val[1], val[2], val[3], val[4], val[5], val[6], val[7], val[8], val[9]] for val in filtered_data])
 model = create_pysr_model()
 
 # She run, run, run [Radiohead - Creep]
@@ -131,9 +132,13 @@ model.fit(X, s_exp)
 # Best models
 print('Best model:\n')
 print(model.sympy())
-quit()
 
+# The curent best model
+# x2**1.0574647 - x3 + 166.88306
 
+pred = model.predict(X)
+mae = np.absolute(pred - s_exp).mean()
+print(f'MAE: {mae}\n')
 
 
 

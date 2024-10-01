@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+from .entropy_model import entropy_model
 from .small_functions import format_list
 
 def entropy_formatter(data):
@@ -7,6 +8,8 @@ def entropy_formatter(data):
     formatted_str += f"rotational   : {data['rotational']:9.4f}\n"
     formatted_str += f"vibrational  : {data['vibrational']:9.4f}\n"
     formatted_str += f"correction   : {data['correction']:9.4f}\n"
+    # Model entropy
+    formatted_str += f"TJC model    : {entropy_model(data):9.4f}\n"
     # Conceptual DFT properties (whole system)
     formatted_str += "Global descriptors, Conceptual DFT\n"
     formatted_str += f"Electronic chemical potential: {data['cdftm'][0]:9.4f}\n"

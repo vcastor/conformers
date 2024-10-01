@@ -40,13 +40,21 @@ def plot_conformers(job:ConformersJob):
     fig, axes = plt.subplots(1, len(indices), figsize=(14, 5))
     axes = np.atleast_1d(axes)  # Make sure axes is always an array for consistency
 
+    # TEMPORAL FOR PAPER PLOT
+    rot = [107.66, 107.66, 107.38]
+    trans = [162.09, 162.09, 162.09]
+    vib = [59.85, 58.02, 61.75]
+
     for ax, idx in zip(axes, indices):
         mol = molecules[idx]
         E = energies[idx]
         population = 100*populations[idx]
 
         plot_molecule(mol, ax=ax)  # Assuming this is a predefined function
-        ax.set_title(f"#{idx + 1}\nΔE = {E:.2f} kcal/mol\nPop.: {population:.3f}% (T = {temperature} K)")
+        # ax.set_title(f"#{idx + 1}\nΔE = {E:.2f} kcal/mol\nPop.: {population:.3f}% (T = {temperature} K)")
+        title = f"#{idx + 1}\nΔE = {E:.2f} kcal/mol\nPop.: {population:.3f}% (T = {temperature} K)"
+        subtitle=rf"$\mathrm{{S_r}}$={rot[idx]:.2f} $\mathrm{{S_t}}$={trans[idx]:.2f} $\mathrm{{S_v}}$={vib[idx]:.2f} $\mathrm{{JK^{{-1}}mol^{{-1}}}}$"
+        ax.set_title(f"{title}\n{subtitle}")
 
     plt.tight_layout()
     plt.savefig(f'{plot_name}_system_{n_system}.png')
