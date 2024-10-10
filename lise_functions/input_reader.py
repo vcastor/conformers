@@ -2,7 +2,6 @@
 import os
 import sys
 from .gvariables import gconfig
-import pandas as pd
 
 def get_input_file():
     """
@@ -26,15 +25,14 @@ def input_reader(filepath):
     - systems:  dictionary, each containing the SMILES and solvent
     - settings: a dictionary with the settings (for all systems)
     """
-    data = pd.read_csv(filepath, comment='#', header=None, skip_blank_lines=True)
-
     systems, settings = [], {}
 
     key_variations = {
         'functional': ['xc', 'exchange-correlation', 'exchange correlation', 'functional', 'xc functional'],
         'basis set' : ['basis', 'basis set', 'basisset'],
         'dispersion': ['dispersion', 'dispersion correction', 'dispersion method'],
-        'RMSD'  : ['root mean square deviation', 'root mean square deviation of atomic positions', 'rmsd'],
+        'RMSDopt' : ['root mean square deviation optimization', 'root mean square deviation of atomic positions optimization', 'rmsdopt', 'rmsd opt'],
+        'RMSDscore' : ['root mean square deviation score', 'root mean square deviation of atomic positions score', 'rmsdscore', 'rmsd score'],
         'model' : ['model', 'dftb', 'dftmodel', 'dftb model', 'dftb method', 'dft-b'],
         'score E threshold': ['score e', 'score energy', 'delta energy 1', 'score energy threshold',
                               'score e threshold', 'energy threshold score'],
@@ -43,25 +41,29 @@ def input_reader(filepath):
         'temperature' : ['temp', 't', 'temperature'],
         'n conformers': ['n conformers', 'conformers', 'number of conformers'],
         'relativity'  : ['relativity', 'relativistic', 'relativistic effects'],
-        'core' : ['core', 'basis core', 'core basis'],
-        'nsteps' : ['nsteps', 'number of steps', 'steps'],
-        'timestep' : ['timestep', 'time step', 'time-step'],
-        'thermotype' : ['thermotype', 'thermostat type', 'thermostat-type'],
-        'tau' : ['tau', 'temperature coupling constant', 'thermostat tau']
+        'core' : ['core', 'basis core', 'core basis']
+        # 'nsteps' : ['nsteps', 'number of steps', 'steps'],
+        # 'timestep' : ['timestep', 'time step', 'time-step'],
+        # 'thermotype' : ['thermotype', 'thermostat type', 'thermostat-type'],
+        # 'tau' : ['tau', 'temperature coupling constant', 'thermostat tau']
     }
 
     # On change la direction du dictionnaire, pour pouvoir faire la correspondance entre les variations et les clés
     reverse_map = {variation.lower(): key for key, variations in key_variations.items() for variation in variations}
 
-    # Extract the systems and settings
-    for _, row in data.iterrows():
-        first_element = row[0].strip()
-        if first_element.lower() in reverse_map:
-            key = reverse_map[first_element.lower()]
-            settings[key] = str(row[1]).strip() if pd.notna(row[1]) else None
-        else:
-            solvent = row[1].strip() if pd.notna(row[1]) else None
-            systems.append({'smiles': first_element, 'solvent': solvent})
+    # Read the data from the file
+    with open(filepath, 'r') as file:
+        for line in file:
+            if line.strip().startswith('#'):
+                continue
+            parts = line.split(',', 1) # Smiles can contain commas
+            first_element = parts[0].strip()
+            second_element = parts[1].strip() if len(parts) > 1 else None
+            if first_element.lower() in reverse_map:
+                key = reverse_map[first_element.lower()]
+                settings[key] = second_element
+            else:
+                systems.append({'smiles': first_element, 'solvent': second_element})
 
     systems = process_systems(systems)
 
@@ -88,6 +90,8 @@ def process_systems(systems):
     seen = set()
     unique = []
     for system in systems:
+        if system['smiles'] == '' or system['solvent'] is None:
+            continue
         identifier = (system['smiles'], system['solvent'])
         if identifier not in seen:
             seen.add(identifier)
@@ -109,13 +113,14 @@ def validate_settings(settings):
     expected_settings = { 
         'temperature': float,
         'n conformers': int,
-        'RMSD': float,
+        'RMSDopt': float,
+        'RMSDscore': float,
         'score E threshold': float,
-        'optimize E threshold': float,
-        'nsteps' : int,
-        'timestep' : float,
-        'thermotype' : str,
-        'tau' : float
+        'optimize E threshold': float
+        # 'nsteps' : int,
+        # 'timestep' : float,
+        # 'thermotype' : str,
+        # 'tau' : float
     }   
 
     validated_settings = {}

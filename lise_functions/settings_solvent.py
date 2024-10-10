@@ -11,6 +11,7 @@ def solvent_name(solvent):
         'mecn': 'Acetonitrile',
         'dimethyl sulfoxide': 'DMSO',
         'dimethylsulfoxide' : 'DMSO',
+        'dcm' : 'Dichloromethane',
         'dmf' : 'DMFA',
         'dimethylformamide' : 'DMFA',
         'et2o': 'DiethylEther',

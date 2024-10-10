@@ -12,28 +12,33 @@ def table_formatter(atoms, properties):
     cdftp_line = "Global descriptors, Conceptual DFT\n"
     cdftp_line += f"Electronic chemical potential: {properties['cdftm'][0]:9.4f}\n"
     cdftp_line += f"Hardness                     : {properties['cdftm'][1]:9.4f}\n"
-    cdftp_line += f"Electrophilicity index       : {properties['cdftm'][2]:9.4f}\n"
-    cdftp_line += f"Nucleofuge                   : {properties['cdftm'][3]:9.4f}\n"
-    cdftp_line += f"Electrofuge                  : {properties['cdftm'][4]:9.4f}\n"
-    cdftp_line += f"Electrodonating              : {properties['cdftm'][5]:9.4f}\n"
-    cdftp_line += f"Electroaccepting             : {properties['cdftm'][6]:9.4f}\n"
+    cdftp_line += f"Softness                     : {properties['cdftm'][2]:9.4f}\n"
+    cdftp_line += f"Hyperhardness                : {properties['cdftm'][3]:9.4f}\n"
+    cdftp_line += f"Electrophilicity index       : {properties['cdftm'][4]:9.4f}\n"
+    cdftp_line += f"Nucleofuge                   : {properties['cdftm'][5]:9.4f}\n"
+    cdftp_line += f"Electrofuge                  : {properties['cdftm'][6]:9.4f}\n"
+    cdftp_line += f"Electrodonating              : {properties['cdftm'][7]:9.4f}\n"
+    cdftp_line += f"Electroaccepting             : {properties['cdftm'][8]:9.4f}\n"
 
     # Conceptual DFT properties (atomic)
     cdfta_line = "Atomic descriptors, Conceptual DFT\n"
     cdfta_line += "Canonical and Grand Canonical Ensemble\n"
-    cdfta_line += "  N |  Atom  |     f+     |     f-     |     f(2)    |    S*f+    |    S*f-    |    s(2)\n"
+    cdfta_line += "  N |  Atom  |     f+     |     f-     |     f0      |    f(2)    |    S*f+    |    S*f-    |    S*f0    |    s(2)\n"
     for i, atom in enumerate(atoms):
         cdfta_line += f" {i+1:>2} |   {atom}   | {properties['cdfta'][i][0]:^10.4f} |"
         cdfta_line += f" {properties['cdfta'][i][1]:^10.4f} |  {properties['cdfta'][i][2]:^10.4f} |"
         cdfta_line += f" {properties['cdfta'][i][3]:^10.4f} | {properties['cdfta'][i][4]:^10.4f} |"
-        cdfta_line += f" {properties['cdfta'][i][5]:^10.4f}\n"
+        cdfta_line += f" {properties['cdfta'][i][5]:^10.4f} | {properties['cdfta'][i][6]:^10.4f} |"
+        cdfta_line += f" {properties['cdfta'][i][7]:^10.4f}\n"
 
     # Fukui and dual descriptor
     fukui_line = "Fukui and dual descriptors\n"
-    fukui_line += "  N |  Atom  |   mu-*f-   |   w*f(2)   |   S*f(2)\n"
+    fukui_line += "  N |  Atom  |   mu+*f+   |   mu-*f-   |    w*f+    |   w*f(2)   |   S*f(2)   |   S^2*f(2)\n"
     for i, atom in enumerate(atoms):
-        fukui_line += f" {i+1:>2} |   {atom}   | {properties['fukui'][i]:^10.4f} |"
-        fukui_line += f" {properties['dual'][i][0]:^10.4f} | {properties['dual'][i][1]:^10.4f}\n"
+        fukui_line += f" {i+1:>2} |   {atom}   | {properties['fukui'][i][0]:^10.4f} |"
+        fukui_line += f" {properties['fukui'][i][1]:^10.4f} | {properties['fukui'][i][2]:^10.4f} |"
+        fukui_line += f" {properties['dual'][i][0]:^10.4f} | {properties['dual'][i][1]:^10.4f} |"
+        fukui_line += f" {properties['dual'][i][2]:^10.4f}\n"
 
     # Charges
     charges_line = "Charges\n"

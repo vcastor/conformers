@@ -87,54 +87,58 @@ def conceptual_dft_mol(content):
     """
     marker = " GLOBAL DESCRIPTORS"
     marker_index = content.index(marker) + 3
-    global_descriptors = np.zeros(7)
-    #Electronic chemical potential
+    global_descriptors = np.zeros(9)
+    #Electronic chemical potential (mu)
     global_descriptors[0] = float(content[marker_index].split()[5])
-    #Hardness
+    #Hardness (eta)
     global_descriptors[1] = float(content[marker_index+4].split()[3])
-    #Electrophilicity index
-    global_descriptors[2] = float(content[marker_index+7].split()[4])
+    #Softness (S)
+    global_descriptors[2] = float(content[marker_index+5].split()[3])
+    #Hyperhardness (gamma)
+    global_descriptors[3] = float(content[marker_index+6].split()[3])
+    #Electrophilicity index (w=omega)
+    global_descriptors[4] = float(content[marker_index+7].split()[4])
     #nucleofuge
-    global_descriptors[3] = float(content[marker_index+8].split()[4])
+    global_descriptors[5] = float(content[marker_index+8].split()[4])
     #elctrofuge
-    global_descriptors[4] = float(content[marker_index+9].split()[4])
+    global_descriptors[6] = float(content[marker_index+9].split()[4])
     #Electrodonating
-    global_descriptors[5] = float(content[marker_index+10].split()[4])
+    global_descriptors[7] = float(content[marker_index+10].split()[4])
     #Electroaccepting
-    global_descriptors[6] = float(content[marker_index+11].split()[3])
+    global_descriptors[8] = float(content[marker_index+11].split()[3])
 
     return global_descriptors
 
 def canonical_grandcanonical(natoms, content):
     """
-    Extract the f+, f-, f(2), S*f+, S*f-, s(2)
+    Extract the f+, f-, f0, f(2), S*f+, S*f-, S*f0, s(2)
     """
     marker = " ATOMIC DESCRIPTORS: CANONICAL ENSEMBLE"
     marker_index = content.index(marker) + 5
 
-    atomic_descriptors = np.zeros((natoms, 6))
+    atomic_descriptors = np.zeros((natoms, 8))
     for i in range(natoms):
         aux = content[marker_index+i].split()
-        atomic_descriptors[i, :3] = aux[3:5] + [aux[6]]
+        atomic_descriptors[i, :4] = aux[3:7]
     
     marker = " ATOMIC DESCRIPTORS: GRAND CANONICAL ENSEMBLE"
     marker_index = content.index(marker) + 5
     for i in range(natoms):
         aux = content[marker_index+i].split()
-        atomic_descriptors[i, 3:] = aux[3:5] + [aux[6]]
+        atomic_descriptors[i, 4:] = aux[3:7]
 
     return atomic_descriptors
 
 def fukui_functions(natoms, content):
     """
-    Extract Fukui mu-*f-
+    Extract Fukui mu+*f+, mu-*f-, w*f+
     """
     marker = " COMPOSITE FUKUI FUNCTIONS"
     marker_index = content.index(marker) + 5
 
-    fukui_functions = np.zeros(natoms)
+    fukui_functions = np.zeros((natoms,3))
     for i in range(natoms):
-        fukui_functions[i] = content[marker_index+i].split()[4]
+        fukui_functions[i] = content[marker_index+i].split()[3:6]
 
     return fukui_functions
 
@@ -145,9 +149,9 @@ def dual_descriptor(natoms, content):
     marker = " COMPOSITE DUAL DESCRIPTORS"
     marker_index = content.index(marker) + 5
 
-    dual_descriptor = np.zeros((natoms, 2))
+    dual_descriptor = np.zeros((natoms, 3))
     for i in range(natoms):
-        dual_descriptor[i] = content[marker_index+i].split()[3:5]
+        dual_descriptor[i] = content[marker_index+i].split()[3:6]
 
     return dual_descriptor
 
@@ -174,10 +178,10 @@ def average_properties(molecule):
         'qtaimcharge': np.zeros(molecule['number_atoms']),
         'hirshfeld': np.zeros(molecule['number_atoms']),
         'orbitalE': np.zeros(oe_len),
-        'cdftm': np.zeros(7),
-        'cdfta': np.zeros((molecule['number_atoms'], 6)),
-        'fukui': np.zeros(molecule['number_atoms']),
-        'dual': np.zeros((molecule['number_atoms'], 2)),
+        'cdftm': np.zeros(9),
+        'cdfta': np.zeros((molecule['number_atoms'], 8)),
+        'fukui': np.zeros((molecule['number_atoms'], 3)),
+        'dual': np.zeros((molecule['number_atoms'], 3)),
         'condensed': np.zeros((molecule['number_atoms'], 2))
     }
 
@@ -185,7 +189,7 @@ def average_properties(molecule):
     for prop in properties_avg.keys():
         for i, weight in enumerate(weights):
             prop_array = np.array(molecule['conformers'][prop][i])
-            properties_avg[prop] += weight * prop_array
+            properties_avg[prop] += weight*prop_array
 
     properties_avg['orbitalE'] = np.round(properties_avg['orbitalE'], 3)
 

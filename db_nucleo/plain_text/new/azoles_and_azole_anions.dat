@@ -1,0 +1,20 @@
+# Smiles; solvent; N parameter; Sn parameter; molecule name; n stars; comment
+
+C1=CN=CN1; MeCN; 11.47; 0.79; imidazole; 3; N=
+C1=CN=CN1; DMSO; 11.58; 0.79; imidazole; 3; N=
+C1=CN=CN1; water; 9.63; 0.57; imidazole; 3; N=
+Cn1ccnc1; MeCN; 11.90; 0.73; 1-methyl-imidazole; 3; N=
+Cn1ccnc1; water; 9.91; 0.55; 1-methyl-imidazole; 3; N=
+C1=CC=C(C=C1)N2C=CN=C2; MeCN; 11.31; 0.67; 1-phenyl-imidazole; 3; N=
+CC1=NC=CN1; MeCN; 11.74; 0.76; 2-methyl-imidazole; 3; N=
+CC1=NC=CN1; water; 9.45; 0.54; 2-methyl-imidazole; 3; N=
+CC1=CN=CN1; MeCN; 11.79; 0.77; 4-methyl-imidazole; 3; N=
+CC1=CN=C(N1)C; MeCN; 11.51; 0.84; 2,4-dimethyl-imidazole; 3; N=
+C[Si](C)(C)N1C=CN=C1; MeCN; 11.43; 0.79; 1-(trimethylsilyl)-imidazole; 3; N=
+C1=CC=C2C(=C1)NC=N2; DMSO; 10.50; 0.79; benzimidazole; 3; N=
+CN1C=NC2=CC=CC=C21; MeCN; 10.37; 0.82; 1-methyl-benzimidazole; 3; N=
+CC1=NC2=CC=CC=C2N1; DMSO; 10.02; 0.85; 2-methyl-benzimidazole; 3; N=
+CC1=CC2=C(C=C1)N=CN2; DMSO; 10.69; 0.79; 5-methyl-benzimidazole; 3; N=
+CC1=CC2=C(C=C1)N=C(N2)C; DMSO; 10.21; 0.85; 2,5-dimethyl-benzimidazole; 3; N=
+CC1=CC2=C(C=C1C)N=CN2; DMSO; 11.08; 0.71; 5,6-dimethyl-benzimidazole; 3; N=
+

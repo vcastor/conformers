@@ -13,26 +13,18 @@ def task_settings(task, user_settings):
         s.input.ams.Task = 'Generate'
         s.input.ams.Generator.Method = 'RDKit'
         s.input.ams.Generator.RDKit.InitialNConformers = user_settings['n conformers']
-        s.input.ams.Equivalence.Crest.RMSDThreshold = user_settings['RMSD']
+        s.input.ams.Equivalence.Method = 'AMS'
         model_dftb(user_settings['model'], s)
     elif task == 'Optimize':
         s.input.ams.Task = 'Optimize'
         s.input.ams.GeometryOptimization.ConvergenceQuality = 'Normal'
         s.input.ams.InputMaxEnergy = user_settings['optimize E threshold']
-        s.input.ADF.Basis.Type = user_settings['basis set']
-        s.input.ADF.Basis.Core = user_settings['core']
-        s.input.ADF.Symmetry = 'NOSYM'
-        functional_settings(user_settings['functional'], user_settings['dispersion'], s)
-        s.input.ADF.Relativity.Level = user_settings['relativity']
-        s.input.ADF.Solvation.Surf = 'Delley'
+        s.input.ams.Equivalence.RMSD.RMSDThreshold = user_settings['RMSDopt']
+        # s.input.ADF.Solvation.Surf = 'Delley'
     elif task == 'Score':
         s.input.ams.Task = 'Score'
         s.input.ams.InputMaxEnergy = user_settings['score E threshold']
-        s.input.ADF.Basis.Type = user_settings['basis set']
-        s.input.ADF.Basis.Core = user_settings['core']
-        s.input.ADF.Symmetry = 'NOSYM'
-        functional_settings(user_settings['functional'], user_settings['dispersion'], s)
-        s.input.ADF.Relativity.Level = user_settings['relativity']
+        s.input.ams.Equivalence.CREST.RMSDThreshold = user_settings['RMSDscore']
         s.input.ADF.ConceptualDFT.Enabled = 'Yes'
         s.input.ADF.ConceptualDFT.AnalysisLevel = 'Full'
         s.input.ADF.QTAIM.Enabled = 'Yes'
@@ -55,9 +47,20 @@ def task_settings(task, user_settings):
         s.input.ADF.QTAIM.AnalysisLevel = 'Extended'
     return s
 
+def common_settings(user_settings):
+    s = Settings()
+    s.input.ADF.Basis.Type = user_settings['basis set']
+    s.input.ADF.Basis.Core = user_settings['core']
+    s.input.ADF.Symmetry = 'NOSYM'
+    functional_settings(user_settings['functional'], user_settings['dispersion'], s)
+    s.input.ADF.Relativity.Level = user_settings['relativity']
+    return s
+
 def settings_for_task(task, user_settings, solvent=None):
     s = task_settings(task, user_settings)
-    if solvent is not None:
-        s.soft_update(solvent_settings(solvent))
+    if task in ['Optimize', 'Score', 'MolecularDynamics']:
+        s.soft_update(common_settings(user_settings))
+        if solvent is not None:
+            s.soft_update(solvent_settings(solvent))
     return s
 

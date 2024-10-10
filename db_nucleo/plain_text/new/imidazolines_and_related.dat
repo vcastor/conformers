@@ -1,0 +1,13 @@
+# Smiles; solvent; N parameter; Sn parameter; molecule name; n stars
+
+CC1=NCCS1; DCM; 10.20; 0.71; 2-methyl-4,5-dihydrothiazole; 3
+CC1=NCCO1; DCM; 9.81; 0.77; 2-methyl-4,5-dihydro-1,3-oxazole; 3
+CC1=NCCN1; DCM; 12.92; 0.77; 2-methyl-4,5-dihydro-1H-imidazole; 3
+C1(C2=CC=CC=C2)=NCCN1; DCM; 12.31; 0.77; 2-phenyl-4,5-dihydro-1H-imidazole; 3
+O=C(C)N1CCN=C1C; DCM; 10.03; 0.75; 1-(2-methyl-4,5-dihydro-1H-imidazol-1-yl)ethanone; 3
+N1(CC2=CC=CC=C2)CCN=C1C3=CC=CC=C3; DCM; 13.11; 0.83; 1-benzyl-2-phenyl-4,5-dihydro-1H-imidazole; 3
+CC1=NCCCN1; DCM; 15.21; 0.69; 2-methyl-1,4,5,6-tetrahydropyrimidine; 3
+CC1=NCCCN1; MeCN; 14.43; 0.79; 2-methyl-1,4,5,6-tetrahydropyrimidine; 3
+CC1=NCCCN1; DMSO; 14.58; 0.79; 2-methyl-1,4,5,6-tetrahydropyrimidine; 3
+C1(C2=CC=CC=C2)=NCCCN1; DCM; 14.62; 0.72; 2-phenyl-1,4,5,6-tetrahydropyrimidine; 3
+
