@@ -16,17 +16,17 @@ for filename in os.listdir(directory):
                 line = line.strip()
                 if not line or line.startswith('#'):
                     continue
-                parts = line.split()
+                parts = line.split(';')# smiles and names can contain spaces and commas
                 if len(parts) == 6:
                     smiles, solvent, exp_N, exp_Sn, molecule_name, stars = parts
                 elif len(parts) == 7:# comment of the N atom
                     smiles, solvent, exp_N, exp_Sn, molecule_name, stars, _ = parts
                 else:
                     continue
-                cur.execute('''INSERT INTO main (smiles, molecule_name, solvent, family, experimental_N, experimental_Sn)
-                               VALUES (?, ?, ?, ?, ?, ?)''',
-                            (smiles, molecule_name, solvent, family,
-                             float(experimental_N), float(experimental_Sn)))
+                cur.execute('''INSERT INTO main (smiles, molecule_name, solvent, family, experimental_N, experimental_Sn, stars)
+                               VALUES (?, ?, ?, ?, ?, ?, ?)''',
+                            (smiles, molecule_name, solvent.replace(" ", ""), family,
+                             float(exp_N), float(exp_Sn), int(stars)))
 
 con.commit()
 con.close()

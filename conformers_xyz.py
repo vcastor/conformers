@@ -1,10 +1,10 @@
 # -*- coding: UTF-8 -*-
 # Sans la première ligne il n'est pas possible d'utiliser des caractères spéciaux (emojis ☺️ )
-from scm.plams import *
-from scm.conformers import ConformersJob, ConformersResults
 import os
 import sys
 import numpy as np
+from scm.plams import *
+from scm.conformers import ConformersJob, ConformersResults
 from lise_functions import * # local functions
 
 #
@@ -12,29 +12,22 @@ from lise_functions import * # local functions
 
 init()
 
-# From the plain text of all outputs generated until now
-systems = []
-db_plaintxt = backwards_r('lise_plaintextdata.txt')
-with open(db_plaintxt, 'r') as file:
-    for line in file:
-        if not line.startswith('#'):
-            line = line.split()
-            if len(line) == 0:
-                continue
-            smiles  = line[0]
-            solvent = line[-6]
-            plams_dir = line[-5]
-            sp_dir    = line[-4]
-            systems.append((smiles, solvent, os.path.join(plams_dir, sp_dir)))
+# Get the order from the input files
+input_file = get_input_file()
 
-temperature = 298
-counter = 0
+systems, user_settings = input_reader(input_file)
+user_settings = validate_settings(user_settings)
+family = os.path.basename(input_file).split('.')[0]
+
+temperature = user_settings['temperature']
+
 # Main loop
+sys_counter = 0
 for system in systems:
-    counter += 1
-    count_num = str(counter).zfill(3)
-    smiles, solvent, conf = system
-    conf_job = ConformersJob.load_external(conf)
+    sys_counter += 1
+    sys_count_num = str(sys_counter).zfill(3)
+    sp_dir = 'SP_ADF' + sys_count_num if sys_counter > 1 else 'SP_ADF'
+    conf_job = ConformersJob.load_external(os.path.join(family, sp_dir))
     pops = np.array(conf_job.results.get_boltzmann_distribution(temperature))
     nconfs = len(pops)
 
@@ -43,11 +36,10 @@ for system in systems:
 
     # Obtain number of atoms
     adf_SP_job = AMSJob.load_external(score_dirs[0])
-    mol = adf_SP_job.results.get_main_molecule()
-    natoms = len(mol)
+    natoms = len(adf_SP_job.results.get_main_molecule())
 
     # Get the conformers.xyz file
-    xyzfile = os.path.join(conf, 'conformers.xyz')
+    xyzfile = os.path.join(sp_dir, 'conformers.xyz')
     with open(xyzfile, 'r') as file:
         xyzraw = file.readlines()
 
@@ -59,8 +51,13 @@ for system in systems:
         nstart, nend = nstart + natoms + 2, nend + natoms + 2
         # Define the file name for the current conformer
         conf_num = str(conformer+1).zfill(3)
-        file_name = f'system_{count_num}_conformer_{conf_num}.xyz'
+        file_xyz_nconf = f'system_{sys_count_num}_conformer_{conf_num}.xyz'
+        file_xyz_nconf = os.path.join('xyz_conf', family, file_xyz_nconf)
+        # Change the comment line with the smiles, solvent and weight of the conformer
+        nlines[1] = f'{system["smiles"]} {system["solvent"]} {pops[conformer]:.4f}\n'
         # Open the file in write mode and write the selected lines
-        with open(file_name, 'w') as f:
+        with open(file_xyz_nconf, 'w') as f:
             f.write(''.join(nlines))
+
+finish()
 

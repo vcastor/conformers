@@ -9,7 +9,7 @@ cur.execute('''CREATE TABLE main(
     molecule_name TEXT,
     solvent TEXT,
     family TEXT,
-    star INTEGER,
+    stars INTEGER,
     atom_analysed INTEGER,
     experimental_N REAL,
     experimental_Sn REAL,

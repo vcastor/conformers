@@ -4,7 +4,7 @@ CC1=NCCC1; DCM; 13.12; 0.69; 2-methyl-4,5-dihydro-3H-pyrrole; 3
 C1CC2=NCCCN2C1; DCM; 15.50; 0.76; DBN; 3
 C1CC2=NCCCN2C1; MeCN; 15.50; 0.76; DBN; 3
 N\2=C1\N(CCCCC1)CCC/2; MeCN; 15.29; 0.70; DBU; 3
-N\2=C1\N(CCCCC1)CCC/2; TFH; 16.12; 0.67; DBU; 3
+N\2=C1\N(CCCCC1)CCC/2; THF; 16.12; 0.67; DBU; 3
 C/C(C)=N/CC1=CC=CC=C1; DCM; 11.13; 0.73; N-(phenylmethyl)propan-2-imine; 3
 C/N=C/C1=CC=CC=C1; DCM; 8.60; 0.77; N-methyl-1-phenylmethanimine; 3
 C1(/CCCCC1)=N\C2=CC=CC=C2; DCM; 8.80; 1.00; N-phenylcyclohexanimine; 3

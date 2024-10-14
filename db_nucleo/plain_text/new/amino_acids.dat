@@ -1,7 +1,7 @@
 # Smiles; solvent; N parameter; Sn parameter; molecule name; n stars
 
 NCC([O-])=O; water; 13.51; 0.58; glycine; 3
-NC(C)C([O-])=O; water; 13.01; 0.58; alanine;3
+# NC(C)C([O-])=O; water; 13.01; 0.58; alanine;3
 NC(C(C)C)C([O-])=O; water; 13.65; 0.57; valine; 3
 NC(CC(C)C)C([O-])=O; water; 14.01; 0.52; leucine; 3
 NC(CC1=CC=CC=C1)C([O-])=O; water; 14.12; 0.53; phenylalanine; 3
