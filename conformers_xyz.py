@@ -26,8 +26,9 @@ sys_counter = 0
 for system in systems:
     sys_counter += 1
     sys_count_num = str(sys_counter).zfill(3)
-    sp_dir = 'SP_ADF' + sys_count_num if sys_counter > 1 else 'SP_ADF'
-    conf_job = ConformersJob.load_external(os.path.join(family, sp_dir))
+    sp_dir = 'SP_ADF.' + sys_count_num if sys_counter > 1 else 'SP_ADF'
+    sp_dir = os.path.join('inputs', family, sp_dir)
+    conf_job = ConformersJob.load_external(sp_dir)
     pops = np.array(conf_job.results.get_boltzmann_distribution(temperature))
     nconfs = len(pops)
 
@@ -39,7 +40,7 @@ for system in systems:
     natoms = len(adf_SP_job.results.get_main_molecule())
 
     # Get the conformers.xyz file
-    xyzfile = os.path.join(sp_dir, 'conformers.xyz')
+    xyzfile = os.path.join(os.path.abspath(sp_dir), 'conformers.xyz')
     with open(xyzfile, 'r') as file:
         xyzraw = file.readlines()
 
