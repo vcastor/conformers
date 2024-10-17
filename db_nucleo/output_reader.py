@@ -12,11 +12,11 @@ def atomic_reader(file, smiles, solvent):
     for line in data:
         if '===' in line:
             recordsmi = True if smiles == line.split()[1] else False
-        if '***' in line and solvent in line:
+        elif '***' in line and solvent in line:
             recordsol = True
-        if 'Canonical' in line:
+        elif 'Canonical' in line:
             canonical = True
-        if '|   N ' in line and recordsmi and recordsol and canonical:
+        elif '|   N ' in line and recordsmi and recordsol and canonical:
             nline = line.split()
             nitrogen_analysed = int(nline[0])
             atomic_descriptors.update({
@@ -30,9 +30,9 @@ def atomic_reader(file, smiles, solvent):
                 's2': float(nline[18])
             })
             canonical = False
-        if 'Fukui' in line:
+        elif 'Fukui' in line:
             fukui = True
-        if '|   N ' in line and recordsmi and recordsol and fukui:
+        elif '|   N ' in line and recordsmi and recordsol and fukui:
             nline = line.split()
             atomic_descriptors.update({
                 'muplusfplus': float(nline[4]),
@@ -43,18 +43,18 @@ def atomic_reader(file, smiles, solvent):
                 's2f2': float(nline[14])
             })
             fukui = False
-        if 'Charges' in line:
+        elif 'Charges' in line:
             charges = True
-        if '|   N ' in line and recordsmi and recordsol and charges:
+        elif '|   N ' in line and recordsmi and recordsol and charges:
             nline = line.split()
             atomic_descriptors.update({
                 'qtaimq': float(nline[4]),
                 'hirshfeldq': float(nline[6])
             })
             charges = False
-        if 'Condensed' in line:
+        elif 'Condensed' in line:
             condensed = True
-        if '|   N ' in line and recordsmi and recordsol and condensed:
+        elif '|   N ' in line and recordsmi and recordsol and condensed:
             nline = line.split()
             atomic_descriptors.update({
                 'electrophilicity': float(nline[4]),
