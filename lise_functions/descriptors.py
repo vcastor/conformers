@@ -9,6 +9,42 @@ def get_atoms(system):
     type_atoms = [atom.symbol for atom in molecule]
     return len(molecule), type_atoms
 
+def new_descriptors(natoms, pathdir, atomN):
+    """
+    This function extracts::
+    Electrostatic potential and Condensed Linear Response
+    """
+    import os
+    # Open the plain text output file
+    dirname = os.path.basename(pathdir)
+    outfile = os.path.join(pathdir, dirname + '.out')
+    with open(outfile, 'r', encoding="ISO-8859-1") as f:
+        content = f.read()
+    content = content.split('\n')
+
+    return {
+            'electrostatic': electrostatic_potential(natoms, content, atomN),
+            'condensed_linear': condensed_linear_response(natoms, content, atomN)
+            }
+
+def electrostatic_potential(natoms, content, atomN):
+    """
+    Extract the electrostatic potential at the nuclei [ONLY for the N atom]
+    """
+    marker = " Electrostatic potential at the Nuclei due to electrons and other nuclei"
+    marker_index = content.index(marker) + 4 + atomN
+
+    return float(content[marker_index].split()[-1])
+
+def condensed_linear_response(natoms, content, atomN):
+    """
+    Extract the condensed linear response at the nuclei [ONLY for the N atom]
+    """
+    marker = " CONDENSED LINEAR RESPONSE FUNCTION (MATRIX ELEMENTS)"
+    marker_index = content.index(marker) + 2 + atomN + sum((atomN - i*10 - 1)*i for i in range(1, (atomN//10) + 1))
+
+    return float(content[marker_index].split()[-1])
+
 def descriptors(natoms, pathdir, pops):
     """
     This function calls for the extraction of descriptors dynamically from

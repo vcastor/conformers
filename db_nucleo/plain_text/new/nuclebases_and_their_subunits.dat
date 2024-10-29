@@ -1,0 +1,18 @@
+# Smiles; solvent; N parameter; Sn parameter; molecule name; n stars
+
+[N-]1C=NC2=NC=NC=C12; DMSO; 15.03; 0.77; purine anion; 3; charged N
+CN1C2=C([N-]C=N2)C(=O)N(C)C1=O; DMSO; 14.78; 0.71; theophylline anion; 3; charged N
+NC1=C2N=C[N-]C2=NC=N1; 18.00; 0.55; adenine anion; 3; charged N
+O=C1NC(=O)C=C[N-]1; DMSO; 17.04; 0.63; uracil anion; 3; charged N
+CC1=C[N-]C(=O)NC1=O; DMSO; 17.63; 0.62; thymine anion; 3; charged N
+CN1C=CC(=O)[N-]C1=O; DMSO; 16.36; 0.69; 1-methyl uracil anion; 3; charged N
+[N-]1C=NC2=NC=NC=C12; water; 11.00; 0.54; purine anion; 3; charged N
+CN1C2=C([N-]C=N2)C(=O)N(C)C1=O; water; 10.06; 0.71; theophylline anion; 3; charged N
+NC1=C2N=C[N-]C2=NC=N1; 10.93; 0.62; adenine anion; 3; charged N
+NC1=NC2=C(N=C[N-]2)C(=O)N1; water; 11.63; 0.59; guanine anion; 3; charged N
+CN1C=NC2=C1N=C(N)[N-]C2=O; water; 10.77; 0.65; 9-methyl guanine anion; 3; not known N
+NC1=NC2=C(N=CN2[C@@H]2O[C@H](CO)[C@@H](O)[C@H]2O)C(=O)[N-]1; water; 12.09; 0.52; guanosine anion; 3; not known N
+O=C1NC(=O)C=C[N-]1; water; 10.75; 0.53; uracil anion; 3; charged N
+CC1=C[N-]C(=O)NC1=O; water; 11.17; 0.51; thymine anion; 3; charged N
+CN1C=CC(=O)[N-]C1=O; water; 8.54; 0.77; 1-methyl uracil anion; 3; charged N
+

@@ -1,0 +1,13 @@
+# Smiles; solvent; N parameter; Sn parameter; molecule name; n stars
+
+# [S-]C#N; MeCN; 12.13; 0.60; thiocyanate; 1
+[O-]N=O; MeCN; 17.20; 0.72; nitrite ion; 3
+# [N-]=[N+]=[N-]; MeOH/MeCN; 14.54; 0.82; azide ion; 3; mix of solvents 91/9
+# [N-]=[N+]=[N-]; EtOH/MeCN; 16.30; 0.73; azide ion; 3; mix of solvents 91/9
+# [N-]=[N+]=[N-]; nPrOH/MeCN; 16.70; 0.73azide ion; 3; mix of solvents 91/9
+# [N-]=[N+]=[N-]; iPrOH/MeCN; 17.07; 0.71; azide ion; 3; mix of solvents 91/9
+# [N-]=[N+]=[N-]; DMSO; 20.50; 0.59; azide ion; 3
+# [N-]=[N+]=[N-]; MeOH/MeCN; 15.01; 0.80; azide ion; 3; mix of solvents 45/55
+# CC#N; MeCN; 2.23; 0.84; acetonitrile; 3
+N#C[O-]; MeCN; 13.60; 0.84; cyanate; 3
+

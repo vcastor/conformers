@@ -1,0 +1,24 @@
+# Smiles; solvent; N parameter; Sn parameter; molecule name; n stars; comment
+
+C1=CC=C2C(=C1)C(=O)[N-]C2=O; DMSO; 15.52; 0.67; phthalimide anion; 3; charge -1
+C1CC(=O)[N-]C1=O; DMSO; 16.03; 0.66; succinimide anion; 3; charge -1
+C1=CC(=O)[N-]C1=O; DMSO; 14.87; 0.76; maleimide anion; 3; charge -1
+C(=O)(C(F)(F)F)[N-]H; DMSO; 15.81; 0.64; trifluoroacetamide anion; 3; charge -1
+C(=O)(C(F)(F)F)[N-]C; DMSO; 15.70; 0.71; N-methyl-trifluoroacetamide anion; 3; charge -1
+CC1(CC(=O)[N-]C(=O)C1)C; DMSO; 17.52; 0.63; 4,4-dimethyl-glutarimide anion; 3; charge -1
+CC(=O)[N-]C(=O)C; DMSO; 16.05; 0.70; diacetamide anion; 3; charge -1
+C(#N)[N-]H; DMSO; 20.33; 0.64; cyanamide anion; 3; NH
+CC1=CC=C(C=C1)S(=O)(=O)[N-]H; DMSO; 17.14; 0.60; p-toluenesulfonamide anion; 3; charge -1
+CS(=O)(=O)[N-]H; DMSO; 18.61; 0.53; methanesulfonamide anion; 3; charge -1
+C1C(=O)[N-]C(=O)N1; DMSO; 17.52; 0.55; hydantoin anion; 3; charge -1
+C1COC(=O)[N-]1; DMSO; 22.40; 0.59; 1,3-oxazolidin-2-one anion; 3; charge -1
+C1[C@@H]([N-]C(=O)O1)CC2=CC=CC=C2; DMSO; 22.67; 0.54; (S)-4-benzyl-1,3-oxazolidin-2-one anion; 3; charge -1
+CCOC(=O)[N-]C; DMSO; 15.99; 0.70; ethyl N-acetylcarbamate anion; 3; charge -1
+C1=CC(=O)[N-]C=C1; DMSO; 19.91; 0.60; 2-pyridone anion; 3; charge -1
+C1=CC(=O)[N-]C=C1; MeCN; 20.11; 0.57; 2-pyridone anion; 3; charge -1
+C1=CC(=O)[N-]C=C1; water; 12.47; 0.52; 2-pyridone anion; 3; charge -1
+C1=C[N-]C=CC1=O; DMSO; 18.97; 0.62; 4-pyridone; 3; charge -1
+C1=C[N-]C=CC1=O; MeCN; 20.22; 0.49; 4-pyridone; 3; charge -1
+C1=C[N-]C=CC1=O; water; 14.76; 0.48; 4-pyridone; 3; charge -1
+C1=CC=C2C(=C1)C(=O)[N-]S2(=O)=O; MeCN; 10.78; 0.89; saccharin anion; 3; charge -1
+
