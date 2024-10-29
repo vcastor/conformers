@@ -14,3 +14,6 @@ plams_workdir
 *t15*
 *.pyc
 *.DS_Store
+*.bkup
+*.pkl
+hall_of_fame*
