@@ -1,0 +1,13 @@
+# Smiles; solvent; N parameter; Sn parameter; molecule name; n stars
+
+ClC1=CC=NC=C1; DCM; 11.70; 0.67; 4-chloropyridine; 1
+ClC1=CC=NC=C1; water; 10.50; 0.73; 4-chloropyridine; 1
+N1=CC=CC=C1; DCM; 12.90; 0.67; pyridine; 1
+CC1=CC=NC=C1; DCM; 13.70; 0.67; 4-methylpyridine; 1
+COC1=CC=NC=C1; DCM; 13.70; 0.67; 4-methoxypyridine; 1
+NC1=CC=NC=C1; DCM; 15.20; 0.67; 4-aminopyridine; 1
+CN(C1=CC=NC=C1)C; MeOH/MeCN; 13.20; 0.67; 4-(dimethylamino)pyridine; 1; mix of solvents 91/9
+CN(C1=CC=NC=C1)C; DMSO; 14.80; 0.67; 4-(dimethylamino)pyridine; 1
+CN(C1=CC=NC=C1)C; DMF; 14.90; 0.67; 4-(dimethylamino)pyridine; 1
+C1(N2CCCC2)=CC=NC=C1; DCM; 15.90; 0.67; 4-pyrrolidinopyridine; 1
+

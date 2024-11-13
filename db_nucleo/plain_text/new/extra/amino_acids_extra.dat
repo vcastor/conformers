@@ -1,0 +1,13 @@
+# Smiles; solvent; N parameter; Sn parameter; molecule name; n stars; comment
+
+NC(C)C([O-])=O; water; 13.01; 0.58; alanine;3; not computed
+NC(CC(N)=O)C([O-])=O; water; 13.03; 0.53; asparagine; 3; N near to the CCO group
+NC(CCC(N)=O)C([O-])=O; water; 13.45; 0.54; glutamine; 3; N near to the CCO group
+NC(CCCNC(N)=[NH2+])C([O-])=O; water; 12.96; 0.57; arginine; 3; N near to the CCO group
+NC(CC1=CNC=N1)C([O-])=O; water; 13.83; 0.54; histidine; 3; N near to the CCO group
+NC(CC([O-])=O)C([O-])=O; water; 13.81; 0.53; aspartate; 3; not computed
+NC(CCC([O-])=O)C([O-])=O; water; 13.96; 0.54; glutamate; 3; not computed
+NC(C[S-])C([O-])=O; water; 23.43; 0.42; cysteine; 3; not computed
+O=C([O-])CNC(CN)=O; water; 12.91; 0.59; glycylglycine; 3; 
+O=C([O-])CNC(CNC(CN)=O)=O; water; 12.26; 0.63; glycylglycylglycine; 3;
+

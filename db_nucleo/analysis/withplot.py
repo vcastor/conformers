@@ -31,6 +31,7 @@ cursor.execute('''SELECT
                     fplus, fminus, fzero, f2, sfplus, sfminus, sfzero, s2,
                     muplusfplus, muminusfminus, wfplus, wf2, Sf2, s2f2, electro, nucleo,
                     q_qtaim, q_hirshfeld,
+                    electrostatic_potential, condensed_liner_response,
                     family
                   FROM main WHERE atom_analysed > 0 AND nconformers not null''')
 rawdata = cursor.fetchall()
@@ -47,11 +48,42 @@ data_f = {}
 for family in families:
     data_f[family] = [row for row in rawdata if row[-1] == family]
 
-# Model for apliphatic amines and pyridines quinine
-ali_py = [data_f['aliphatic_amines'], data_f['pyridines_quinolines_etc']]
-n_exp = np.array([val[0] for val in ali_py[0]])
-sn_exp = np.array([val[1] for val in ali_py[0]])
-X = np.array([val[2:-1] for val in ali_py[0]])
+# # Model for apliphatic amines and pyridines quinine
+# ali_py = [data_f['aliphatic_amines'], data_f['pyridines_quinolines_etc']]
+# n_exp = np.array([val[0] for val in ali_py[0]])
+# sn_exp = np.array([val[1] for val in ali_py[0]])
+# X = np.array([val[2:-1] for val in ali_py[0]])
+# nsn = n_exp*sn_exp
+# # Targets
+# targets = {'N': n_exp, 'Sn': sn_exp, 'N*Sn': nsn}
+# fig, ax = plt.subplots(1, 3, figsize=(15, 5))
+# for i, (target, y) in enumerate(targets.items()):
+#     print(f'Predicting {target}:\n')
+#     model = create_pysr_model()
+#     model.fit(X, y)
+#     # Display best three equations
+#     print('Top 3 equations:')
+#     top_eqs = model.equations_.sort_values('score', ascending=False).head(3)
+#     for j, eq in top_eqs.iterrows():
+#         print(f'{j+1}. {eq["equation"]}')
+#     # Predictions and MAE calculation
+#     pred = model.predict(X)
+#     mae = np.absolute(pred - y).mean()
+#     print(f'MAE: {mae}\n')
+#     # Plot Experimental vs. Predicted values
+#     ax[i].scatter(y, pred, label="Predicted vs. Experimental", color="blue")
+#     ax[i].plot([min(y), max(y)], [min(y), max(y)], color='red', label="y=x")
+#     ax[i].set_xlabel(f'Experimental {target}')
+#     ax[i].set_ylabel(f'Predicted {target}')
+#     ax[i].legend()
+#     ax[i].set_title(f'Experimental vs. Predicted {target}')
+#     plt.tight_layout()
+#     plt.show()
+
+# One Model for all families
+n_exp = np.array([val[0] for val in rawdata])
+sn_exp = np.array([val[1] for val in rawdata])
+X = np.array([val[2:-1] for val in rawdata])
 nsn = n_exp*sn_exp
 # Targets
 targets = {'N': n_exp, 'Sn': sn_exp, 'N*Sn': nsn}
@@ -76,10 +108,10 @@ for i, (target, y) in enumerate(targets.items()):
     ax[i].set_ylabel(f'Predicted {target}')
     ax[i].legend()
     ax[i].set_title(f'Experimental vs. Predicted {target}')
-    plt.tight_layout()
-    plt.show()
+plt.tight_layout()
+plt.show()
 
-quit()# Stop here FOR NOW
+quit()
 
 # Model for every family
 for family in families:
@@ -104,11 +136,11 @@ for family in families:
         # model = PySRRegressor()
         model.fit(X, y)
 
-        # Display best three equations
-        print('Top 3 equations:')
+        # # Display best three equations
+        # print('Top 3 equations:')
         top_eqs = model.equations_.sort_values('score', ascending=False).head(3)
-        for j, eq in top_eqs.iterrows():
-            print(f'{j+1}. {eq["equation"]}')
+        # for j, eq in top_eqs.iterrows():
+        #     print(f'{j+1}. {eq["equation"]}')
 
         # Predictions and MAE calculation
         pred = model.predict(X)
@@ -120,8 +152,11 @@ for family in families:
         ax[i].plot([min(y), max(y)], [min(y), max(y)], color='red', label="y=x")
         ax[i].set_xlabel(f'Experimental {target}')
         ax[i].set_ylabel(f'Predicted {target}')
-        ax[i].legend()
+        # Display top 3 equations in a box on the plot
+        eq_text = "\n".join([f"{j+1}. {eq['equation']}" for j, eq in top_eqs.iterrows()])
+        ax[i].text(0.05, 0.95, eq_text, transform=ax[i].transAxes, fontsize=10,
+                   verticalalignment='top', bbox=dict(boxstyle="round,pad=0.3", edgecolor="black", facecolor="white", alpha=0.7))
         ax[i].set_title(f'Experimental vs. Predicted {target}')
     plt.tight_layout()
-    # plt.savefig(f'{family}_plot.pdf')
+    plt.savefig(f'{family}_plot.pdf')
 

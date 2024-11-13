@@ -2,10 +2,19 @@
 # Just settings for the solvent in ADF
 from scm.plams import Settings
 
-def solvent_name(solvent):
+def solvent_name(molecule, solvent):
     """
     ADF input case insensitive, but the solvent name must be correct.
     """
+    if "/" in list(solvent.split()):
+        dbfile = '/home/vcastor/Documents/nucleo/nucleo_data.db'
+        conn = sqlite3.connect(dbfile)
+        cursor = conn.cursor()
+        query = 'SELECT epsilon, rad FROM main WHERE smiles = ? AND solvent = ?'
+        cursor.execute(query, (molecule, solvent))
+        result = cursor.fetchone()
+        conn.close()
+        return f'epsilon={result[0]} rad={result[1]}'
     solvent_mapping = {
         'thf' : 'Tetrahydrofuran',
         'mecn': 'Acetonitrile',

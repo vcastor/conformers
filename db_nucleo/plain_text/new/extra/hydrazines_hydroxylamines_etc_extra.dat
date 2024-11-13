@@ -1,0 +1,12 @@
+# Smiles; solvent; N parameter; Sn parameter; molecule name; n stars; N atom [written as comment]
+
+NC(NN)=O; water; 11.05; 0.52; semicarbazide; 3; -> NH2-N...
+NN; MeOH/MeCN; 13.47; 0.70; hydrazine; 3; mix of solvents 91/9
+NO; MeOH/MeCN; 12.23; 0.66; hydroxylamine; 3; mix of solvents 91/9
+CNN; water; 17.23; 0.45; methylhydrazine; 3; -> NH-NH2
+CNN; MeCN; 17.73; 0.58; methylhydrazine; 3; -> NH-NH2
+C(=O)NN; MeCN; 10.35; 0.76; formohydrazide; 3; NH2
+CN(C)NC=O; MeCN; 15.69; 0.51; N'-N'-dimethylformohydrazide; 3; N(CH3)2
+CC(C)(C)OC(=O)NN; MeCN; 11.40; 0.70; tert-butyl hydrazinecarboxylate; 3; NH2
+C1=CC=C(C=C1)C(=O)NN; MeCN; 12.49; 0.66; benzohydrazide; 3; NH2
+

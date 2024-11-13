@@ -5,14 +5,15 @@ import sqlite3
 conn = sqlite3.connect('nucleo_data.db')
 cur = conn.cursor()
 
-directory = './plain_text/new'
+directory = './plain_text/new/extra'
 
 for filename in os.listdir(directory):
     if filename.endswith('.dat'):
-        family = os.path.splitext(filename)[0]
-        cur.execute(f"SELECT smiles, solvent FROM main WHERE family = '{family}'")
+        family = os.path.splitext(filename)[0].replace("_extra", "")
+        # cur.execute(f"SELECT smiles, solvent FROM main WHERE family = '{family}'")
+        cur.execute(f"SELECT smiles, solvent FROM main WHERE family='{family}' AND atom_analysed IS NULL")
         rows = cur.fetchall()
-        with open(f'{family}.csv', 'w') as f:
+        with open(f'{family}_extra.csv', 'w') as f:
             f.write(f"# molecule, solvent\n")
             for row in rows:
                 f.write(f"{row[0]}, {row[1]}\n")

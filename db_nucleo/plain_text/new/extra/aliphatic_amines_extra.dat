@@ -1,0 +1,42 @@
+# Smiles; solvent; N parameter; Sn parameter; molecule name; n stars; comment
+
+C1CCNC1; MeOH/MeCN; 15.97; 0.63; pyrrolidine; 3; mix of solvents 91/9
+C1CNCCC1; MeOH/MeCN; 15.63; 0.64; piperidine; 3; mix of solvents 91/9
+C1CNCCO1; MeOH/MeCN; 15.40; 0.65; morpholine; 3; mix of solvents 91/9
+OCCNCCO; MeOH/MeCN; 13.71; 0.67; diethanolamine; 3; mix of solvents 91/9
+NCC(F)(F)F; MeOH/MeCN; 10.20; 0.92; 2,2,2-trifluoroethylamine; 3; mix of solvents 91/9
+NCCO; MeOH/MeCN; 13.23; 0.65; ethanolamine; 3; mix of solvents 91/9
+NCC1=CC=CC=C1; MeOH/MeCN; 13.46; 0.62; benzylamine; 3; mix of solvents 91/9
+NCCC; MeOH/MeCN; 13.41; 0.66; n-propylamine; 3; mix of solvents 91/9
+NCC#N; water; 10.80; 0.61; glycinenitrile; 3; NH2
+CNCC#N; water; 13.50; 0.59; N-methylglycinenitrile; 3; NH
+NCC(N)=O; water; 12.29; 0.58; glycineamide; 3; -> NCC(=O)N
+CCN(CC)CC; MeCN; 17.10; 0.52; triethylamine; 1
+CCN(CC)CC; DCM; 17.30; 0.52; triethylamine; 1
+CN1CCCC1; DCM; 20.60; 0.52; N-methyl-pyrrolidine; 1
+CN1CCCCC1; DCM; 18.90; 0.52; N-methyl-piperidine; 1
+CN1CCOCC1; MeCN; 16.80; 0.52; N-methyl-morpholine; 1
+CN1CCOCC1; DCM; 16.50; 0.52; N-methyl-morpholine; 1
+O=C([O-])[C@H]1NCCC1; MeCN; 19.95; 0.68; prolinate; 3
+CC1NCCC1; MeCN; 16.78; 0.71; 2-methylpyrrolidine; 3
+CC(C)[C@@H]1NCCC1; MeCN; 16.44; 0.71; (R)-2-isopropylpyrrolidine; 3
+CC1(C)NCCC1; MeCN; 13.96; 0.76; 2,2-dimethylpyrrolidine; 3
+C1(CC2=CC=CC=C2)NCCC1; MeCN; 17.43; 0.66; 2-phenylpyrrolidine; 3
+[C@H]1(C(C2=CC=CC=C2)C3=CC=CC=C3)NCCC1; MeCN; 16.61; 0.67; (S)-2-benzhydrylpyrrolidine; 3
+NC[C@H]1NCCC1; MeCN; 17.24; 0.67; (S)-pyrrolidin-2-ylmethanamine; 3
+CN(C[C@H]1NCCC1)C; MeCN; 17.41; 0.68; (S)-N,N-dimethyl-1-(pyrrolidin-2-yl)methanamine; 3; -> NH in cycle
+(S)-N,N-dimethyl-1-(pyrrolidin-2-yl)methanamine; MeCN; 18.33; 0.64; (S)-1-(pyrrolidin-2-ylmethyl)pyrrolidine; 3; -> NH in cycle
+[N-]=[N+]=NC[C@H]1NCCC1; MeCN; 15.43; 0.73; (S)-2-(azidomethyl)pyrrolidine; 3; -> NH in cycle
+O=C(NCCC)[C@H]1NCCC1; MeCN; 15.20; 0.73; (S)-N-propylpyrrolidine-2-carboxamide; 3; -> NH in cycle
+O=C1C2=C(C=CC=C2)C(N1C[C@H]3NCCC3)=O; MeCN; 15.90; 0.77; (S)-2-(pyrrolidin-2-ylmethyl)isoindoline-1,3-dione; 3; -> NH in cycle
+[C@H]1(CN2N=NC(C3=CC=CC=C3)=C2)NCCC1; MeCN; 15.32; 0.72; (S)-4-phenyl-1-(pyrrolidin-2-ylmethyl)-1H-1,2,3-triazole; 3; -> NH in cycle
+[C@H]1(CN2C=NC=C2)NCCC1; MeCN; 15.55; 0.69; (S)-1-(pyrrolidin-2-ylmethyl)-1H-imidazole; 3; -> NH in cycle
+CCCC[N+]1=CN(C[C@H]2NCCC2)C=C1.O=S(C(F)(F)F)([O-])=O; MeCN; 13.57; 0.53; (S)-3-butyl-1-(pyrrolidin-2-ylmethyl)-1H-imidazol-3-ium trifluoromethanesulfonate; 3; -> NH in cycle
+S=C(NC1=CC(C(F)(F)F)=CC(C(F)(F)F)=C1)NC[C@H]2NCCC2; MeCN; 14.97; 0.69; (S)-1-(3,5-bis(trifluoromethyl)phenyl)-3-(pyrrolidin-2-ylmethyl)thiourea; 3; -> NH in cycle
+O=C(NC1=CC(C(F)(F)F)=CC(C(F)(F)F)=C1)NC[C@H]2NCCC2; MeCN; 17.50; 0.64; (S)-1-(3,5-bis(trifluoromethyl)phenyl)-3-(pyrrolidin-2-ylmethyl)urea; 3; -> NH in cycle
+[N-]=[N+]=NC(C1=CC=CC=C1)(C2=CC=CC=C2)[C@H]3NCCC3; MeCN; 9.90; 1.22; (S)-2-(azidodiphenylmethyl)pyrrolidine; 3; -> NH in cycle
+O=C1[C@H](CC2=CC=CC=C2)NC(C)(C)N1C; MeCN; 6.04; 0.92; (S)-5-benzyl-2,2,3-trimethylimidazolidin-4-one; 3; -> NH
+O=C1[C@H](CC2=CC=CC=C2)N[C@H](C(C)(C)C)N1C; MeCN; 5.44; 1.12; (2S,5S)-5-benzyl-2-(tert-butyl)-3-methylimidazolidin-4-one; 3; -> NH
+O=C1[C@H](CC2=CC=CC=C2)N[C@H](C3=CC=C(C)O3)N1C; MeCN; 8.76; 0.89; (2S,5S)-5-benzyl-3-methyl-2-(5-methylfuran-2-yl)imidazolidin-4-one; 3; -> NH
+O=C1[C@H](CC2=CC=CC=C2)N[C@@H](C3=CC=C(C)O3)N1C; MeCN; 7.39; 1.00; (2R,5S)-5-benzyl-3-methyl-2-(5-methylfuran-2-yl)imidazolidin-4-one; 3; -> NH
+

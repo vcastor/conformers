@@ -60,11 +60,16 @@ for system in systems:
     for atom_N in atomN:
         if atom_N[0] == 0:
             continue
-        ele = sum(new_descriptors(natoms, s, atom_N[0])[0]*p for s, p in zip(score_dirs, pops))
-        cond = sum(new_descriptors(natoms, s, atom_N[0])[1]*p for s, p in zip(score_dirs, pops))
+        ele = sum(new_descriptors(natoms, s, atom_N[0])['electrostatic']*p for s, p in zip(score_dirs, pops))
+        cond = sum(new_descriptors(natoms, s, atom_N[0])['condensed_linear']*p for s, p in zip(score_dirs, pops))
+        cur.execute('''UPDATE main SET
+                        electrostatic_potential = ?,
+                        condensed_liner_response = ?
+                        WHERE smiles = ? AND solvent = ? AND atom_analysed = ?''',
+                        (ele, cond, system['smiles'], system['solvent'], atom_N[0]))
 
-    print(sp_dir)
-    print(ele, cond)
+con.commit()
+con.close()
 
 finish()
 

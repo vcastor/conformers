@@ -56,11 +56,11 @@ def common_settings(user_settings):
     s.input.ADF.Relativity.Level = user_settings['relativity']
     return s
 
-def settings_for_task(task, user_settings, solvent=None):
+def settings_for_task(task, user_settings, molecule=None, solvent=None):
     s = task_settings(task, user_settings)
     if task in ['Optimize', 'Score', 'MolecularDynamics']:
         s.soft_update(common_settings(user_settings))
-        if solvent is not None:
-            s.soft_update(solvent_settings(solvent))
+        if all([solvent, molecule]):
+            s.soft_update(solvent_settings(molecule, solvent))
     return s
 

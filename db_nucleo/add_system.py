@@ -5,11 +5,11 @@ import os
 con = sqlite3.connect('nucleo_data.db')
 cur = con.cursor()
 
-directory = './plain_text/new'
+directory = './plain_text/new/extra'
 
 for filename in os.listdir(directory):
     if filename.endswith('.dat'):
-        family = os.path.splitext(filename)[0]
+        family = os.path.splitext(filename)[0].replace("_extra", "")
         filepath = os.path.join(directory, filename)
         with open(filepath, 'r') as f:
             for line in f:
