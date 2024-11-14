@@ -24,7 +24,7 @@ for system in systems:
     natoms, atoms = get_atoms(system['smiles'])
 
     # DFTB and DFT calculation
-    adf_SP_job = run_jobs(from_smiles(system['smiles']), system['solvent'], user_settings)
+    adf_SP_job = run_jobs(system['smiles'], system['solvent'], user_settings)
     adf_results = adf_SP_job.run()
 
     pops = np.array(adf_SP_job.results.get_boltzmann_distribution(temperature))

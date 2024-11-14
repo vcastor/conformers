@@ -7,18 +7,19 @@ import subprocess
 
 #
 # Funtion to run the calculations ✨
-def run_jobs(molecule, solvent, user_settings):
+def run_jobs(smiles, solvent, user_settings):
+    molecule = from_smiles(smiles)
     # RDKit generator
     generate_settings = settings_for_task('Generate', user_settings)
     generate_job = ConformersJob(name='generate', molecule=molecule, settings=generate_settings)
     generate_job.run()
     # ADF reoptimization
-    reoptimize_settings = settings_for_task('Optimize', user_settings, molecule, solvent)
+    reoptimize_settings = settings_for_task('Optimize', user_settings, smiles, solvent)
     reoptimize_settings.input.ams.InputConformersSet = os.path.abspath(generate_job.results.rkfpath())
     reoptimize_ADF_job = ConformersJob(name='reoptimize_ADF', settings=reoptimize_settings)
     reoptimize_ADF_job.run()
     # ADF Score
-    adf_SP_settings = settings_for_task('Score', user_settings, molecule, solvent)
+    adf_SP_settings = settings_for_task('Score', user_settings, smiles, solvent)
     adf_SP_settings.input.ams.InputConformersSet = os.path.abspath(reoptimize_ADF_job.results.rkfpath())
     adf_SP_job = ConformersJob(name='SP_ADF', settings=adf_SP_settings)
     return adf_SP_job

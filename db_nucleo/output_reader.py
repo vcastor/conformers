@@ -120,7 +120,7 @@ outdir = 'outputs'
 
 # loop to read all the files in the directory
 for file in os.listdir(outdir):
-    if file.endswith('.out'):
+    if file.endswith('_extra.out'):
         smiles, solvents, ncoformers, global_descriptors = global_reader(os.path.join(outdir, file))
 
         for i in range(len(smiles)):
