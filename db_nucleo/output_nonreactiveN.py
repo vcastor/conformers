@@ -30,6 +30,8 @@ def atomic_reader(file, smiles, solvent, atomN):
                     's2': float(nline[18])
                 })
                 canonical = False
+            else:
+                continue
         elif 'Fukui' in line:
             fukui = True
         elif '|   N ' in line and recordsmi and recordsol and fukui:
@@ -44,6 +46,8 @@ def atomic_reader(file, smiles, solvent, atomN):
                     's2f2': float(nline[14])
                 })
                 fukui = False
+            else:
+                continue
         elif 'Charges' in line:
             charges = True
         elif '|   N ' in line and recordsmi and recordsol and charges:
@@ -54,6 +58,8 @@ def atomic_reader(file, smiles, solvent, atomN):
                     'hirshfeldq': float(nline[6])
                 })
                 charges = False
+            else:
+                continue
         elif 'Condensed' in line:
             condensed = True
         elif '|   N ' in line and recordsmi and recordsol and condensed:
@@ -65,6 +71,8 @@ def atomic_reader(file, smiles, solvent, atomN):
                 })
                 condensed = False
                 break
+            else:
+                continue
     return atomic_descriptors
 
 # function to read the global information of the system
@@ -79,7 +87,7 @@ def global_reader(file):
             solvents.append(line.split()[1])
         elif 'number_conformers' in line:
             ncoformers.append(int(line.split()[1]))
-    return smiles, solvents, ncoformers
+    return smiles, solvents
 
 # Main script starts here 🚀
 
@@ -91,18 +99,20 @@ outdir = 'outputs'
 # loop to read all the files in the directory
 for file in os.listdir(outdir):
     if file.endswith('.out'):
-        smiles, solvents, ncoformers = global_reader(os.path.join(outdir, file))
+        smiles, solvents = global_reader(os.path.join(outdir, file))
         for i in range(len(smiles)):
-            if smiles[i].count('N') > 1:
-                # get from the database the atom to be analysed
-                cur.execute('SELECT atom_analysed FROM main WHERE smiles = ? AND solvent = ?', (smiles[i], solvents[i]))
-                atomN = cur.fetchall()
-                # some systems have more than one N atom to be analysed
-                for atom_N in atomN:
-                    if atom_N[0] == 0:
-                        continue
-                    atomic = atomic_reader(os.path.join(outdir, file), smiles[i], solvents[i], atom_N[0])
-                    cur.execute('''UPDATE main SET
+            if smiles[i].count('N') + smiles[i].count('n') > 1:
+                # try to get the atoms analysed else skip
+                try:
+                    cur.execute('SELECT atom_analysed FROM non_reactive_N WHERE smiles = ? AND solvent = ?', (smiles[i], solvents[i]))
+                except sqlite3.OperationalError:
+                    continue
+                atoms = cur.fetchall()
+                atoms = [x[0] for x in atoms]
+                for atom in atoms:
+                    atomic = atomic_reader(os.path.join(outdir, file), smiles[i], solvents[i], atom)
+                    # Update the atom analysed
+                    cur.execute('''UPDATE non_reactive_N SET
                                     fplus = ?, fminus = ?, fzero = ?, f2 = ?,
                                     sfplus = ?, sfminus = ?, sfzero = ?, s2 = ?,
                                     muplusfplus = ?, muminusfminus = ?,
@@ -118,7 +128,7 @@ for file in os.listdir(outdir):
                                  atomic['Sf2'], atomic['s2f2'],
                                  atomic['qtaimq'], atomic['hirshfeldq'],
                                  atomic['electrophilicity'], atomic['nucleophilicity'],
-                                 smiles[i], solvents[i], atom_N[0]))
+                                 smiles[i], solvents[i], atom))
 
 con.commit()
 con.close()

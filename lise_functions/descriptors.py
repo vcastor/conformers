@@ -9,42 +9,6 @@ def get_atoms(system):
     type_atoms = [atom.symbol for atom in molecule]
     return len(molecule), type_atoms
 
-def new_descriptors(natoms, pathdir, atomN):
-    """
-    This function extracts::
-    Electrostatic potential and Condensed Linear Response
-    """
-    import os
-    # Open the plain text output file
-    dirname = os.path.basename(pathdir)
-    outfile = os.path.join(pathdir, dirname + '.out')
-    with open(outfile, 'r', encoding="ISO-8859-1") as f:
-        content = f.read()
-    content = content.split('\n')
-
-    return {
-            'electrostatic': electrostatic_potential(natoms, content, atomN),
-            'condensed_linear': condensed_linear_response(natoms, content, atomN)
-            }
-
-def electrostatic_potential(natoms, content, atomN):
-    """
-    Extract the electrostatic potential at the nuclei [ONLY for the N atom]
-    """
-    marker = " Electrostatic potential at the Nuclei due to electrons and other nuclei"
-    marker_index = content.index(marker) + 4 + atomN
-
-    return float(content[marker_index].split()[-1])
-
-def condensed_linear_response(natoms, content, atomN):
-    """
-    Extract the condensed linear response at the nuclei [ONLY for the N atom]
-    """
-    marker = " CONDENSED LINEAR RESPONSE FUNCTION (MATRIX ELEMENTS)"
-    marker_index = content.index(marker) + 2 + atomN + sum((atomN - i*10 - 1)*i for i in range(1, (atomN//10) + 1))
-
-    return float(content[marker_index].split()[-1])
-
 def descriptors(natoms, pathdir, pops):
     """
     This function calls for the extraction of descriptors dynamically from
@@ -89,7 +53,9 @@ def descriptors(natoms, pathdir, pops):
         'cdfta': canonical_grandcanonical(natoms, content),
         'fukui': fukui_functions(natoms, content),
         'dual': dual_descriptor(natoms, content),
-        'condensed': condensed_local(natoms, content)
+        'condensed': condensed_local(natoms, content),
+        'electrostatic': electrostatic_potential(natoms, content),
+        'condensed_linear': condensed_linear_response(natoms, content)
     }
 
     return description
@@ -111,6 +77,8 @@ def orbital_energies(content):
     for line in content[marker_index:]:
         parts = line.split()
         if parts[1] == '2.000':
+            E_ev.append(parts[3])
+        elif parts[1] == '1.000':
             E_ev.append(parts[3])
         else:
             break
@@ -205,6 +173,36 @@ def condensed_local(natoms, content):
 
     return condensed_local
 
+def electrostatic_potential(natoms, content):
+    """
+    Extract the electrostatic potential at the nuclei
+    """
+    marker = " Electrostatic potential at the Nuclei due to electrons and other nuclei"
+    marker_index = content.index(marker) + 5
+
+    potential = content[marker_index:marker_index+natoms]
+    potential = [float(p.split()[-1]) for p in potential]
+
+    return np.array(potential)
+
+def condensed_linear_response(natoms, content):
+    """
+    Extract the condensed linear response at the nuclei [diagonal]
+    """
+    marker = " CONDENSED LINEAR RESPONSE FUNCTION (MATRIX ELEMENTS)"
+    marker_index = content.index(marker) + 3    
+
+    lines_needed = sum((natoms - i + 9)//10 for i in range(natoms))
+
+    matrix = content[marker_index:marker_index+lines_needed]
+
+    diagonal = np.zeros(natoms)
+    for i in range(natoms):
+        idx = sum((i - j + 10)//10 for j in range(i))
+        diagonal[i] = float(matrix[idx].split()[-1])
+
+    return diagonal
+
 def average_properties(molecule):
     weights = molecule['conformers']['weights']
     nconformers = len(weights)
@@ -218,7 +216,9 @@ def average_properties(molecule):
         'cdfta': np.zeros((molecule['number_atoms'], 8)),
         'fukui': np.zeros((molecule['number_atoms'], 3)),
         'dual': np.zeros((molecule['number_atoms'], 3)),
-        'condensed': np.zeros((molecule['number_atoms'], 2))
+        'condensed': np.zeros((molecule['number_atoms'], 2)),
+        'electrostatic': np.zeros(molecule['number_atoms']),
+        'condensed_linear': np.zeros(molecule['number_atoms'])
     }
 
     # Loop through each conformer property to calculate weighted averages

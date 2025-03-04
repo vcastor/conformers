@@ -1,6 +1,7 @@
 *.png
 *.pdf
 *.txt
+*.xyz
 *.csv
 *.out
 *.json

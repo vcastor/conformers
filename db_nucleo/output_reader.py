@@ -8,6 +8,7 @@ def atomic_reader(file, smiles, solvent):
         data = f.readlines()
     record, recordsmi, recordsol = False, False, False
     canonical, fukui, charges, condensed = False, False, False, False
+    elepot_conlr = False
     atomic_descriptors = {}
     for line in data:
         if '===' in line:
@@ -52,7 +53,7 @@ def atomic_reader(file, smiles, solvent):
                 'hirshfeldq': float(nline[6])
             })
             charges = False
-        elif 'Condensed' in line:
+        elif 'Condensed electrophilicity' in line:
             condensed = True
         elif '|   N ' in line and recordsmi and recordsol and condensed:
             nline = line.split()
@@ -61,6 +62,15 @@ def atomic_reader(file, smiles, solvent):
                 'nucleophilicity': float(nline[6])
             })
             condensed = False
+        elif 'Electrostatic potential at the nuclei and Condensed linear' in line:
+            elepot_conlr = True
+        elif 'N ' in line and recordsmi and recordsol and elepot_conlr:
+            nline = line.split()
+            atomic_descriptors.update({
+                'electrostatic': float(nline[4]),
+                'condensed_lresponse': float(nline[6])
+            })
+            elepot_conlr = False
             break
     return nitrogen_analysed, atomic_descriptors
 
@@ -120,19 +130,19 @@ outdir = 'outputs'
 
 # loop to read all the files in the directory
 for file in os.listdir(outdir):
-    if file.endswith('_extra.out'):
+    if file.endswith('.out'):
         smiles, solvents, ncoformers, global_descriptors = global_reader(os.path.join(outdir, file))
 
         for i in range(len(smiles)):
-            cur.execute('''UPDATE main SET
-                            nconformers = ?,
+            cur.execute('SELECT table_name FROM paramters WHERE smiles = ? AND solvent = ?', (smiles[i], solvents[i]))
+            table = cur.fetchall()
+            cur.execute(f'''UPDATE {table} SET
                             mu = ?, eta = ?, softness = ?, hyperhardness = ?,
                             omega = ?,
                             nucleofuge = ?, electrofuge = ?,
                             electrodonating = ?, electroaccepting = ?
                             WHERE smiles = ? AND solvent = ?''',
-                        (ncoformers[i],
-                         global_descriptors[i]['Electronic chemical potential'],
+                        (global_descriptors[i]['Electronic chemical potential'],
                          global_descriptors[i]['Hardness'],
                          global_descriptors[i]['Softness'],
                          global_descriptors[i]['Hyperhardness'],
@@ -143,7 +153,7 @@ for file in os.listdir(outdir):
                          global_descriptors[i]['Electroaccepting'],
                          smiles[i], solvents[i]))
 
-            if smiles[i].count('N') == 1:
+            if smiles[i].count('N') == 1 + smiles[i].count('n') == 1:
                 atom_N, atomic = atomic_reader(os.path.join(outdir, file), smiles[i], solvents[i])
                 cur.execute('''UPDATE main SET
                                 atom_analysed = ?,
@@ -153,7 +163,8 @@ for file in os.listdir(outdir):
                                 wfplus = ?, wf2 = ?,
                                 Sf2 = ?, s2f2 = ?,
                                 q_qtaim = ?, q_hirshfeld = ?,
-                                electro = ?, nucleo = ?
+                                electro = ?, nucleo = ?,
+                                electrostatic_potential = ?, condensed_linear_response = ?
                                 WHERE smiles = ? AND solvent = ?''',
                             (atom_N,
                              atomic['fplus'], atomic['fminus'], atomic['fzero'], atomic['f2'],
@@ -163,6 +174,7 @@ for file in os.listdir(outdir):
                              atomic['Sf2'], atomic['s2f2'],
                              atomic['qtaimq'], atomic['hirshfeldq'],
                              atomic['electrophilicity'], atomic['nucleophilicity'],
+                             atomic['electrostatic'], atomic['condensed_lresponse'],
                              smiles[i], solvents[i]))
 
 con.commit()

@@ -11,7 +11,7 @@ def solvent_name(molecule, solvent):
         dbfile = '/home/vcastor/Documents/nucleo/nucleo_data.db'
         with sqlite3.connect(dbfile) as conn:
             cursor = conn.cursor()
-            cursor.execute('SELECT epsilon, rad FROM main WHERE smiles = ? AND solvent = ?', (molecule, solvent))
+            cursor.execute('SELECT epsilon, rad FROM parameters WHERE smiles = ? AND solvent = ?', (molecule, solvent))
             result = cursor.fetchone()
         return f'epsilon={result[0]} rad={result[1]}'
     solvent_mapping = {

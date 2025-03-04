@@ -5,3 +5,4 @@ from .run_jobs import run_jobs
 from .descriptors import *
 from .settings_task import settings_for_task
 from .small_functions import rkf_paths
+from .ponderated import ponderated

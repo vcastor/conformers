@@ -52,21 +52,28 @@ for system in systems:
                 'average' : {},
                 'conformers': {}}
 
-    # Call the database
-    cur.execute('SELECT atom_analysed FROM main WHERE smiles = ? AND solvent = ?', (system['smiles'], system['solvent']))
-    atomN = cur.fetchall()
+    # Skip when the molecule has only one conformer
+    if nconfs == 1:
+        continue
 
-    # Descriptors and average for each conformer and N atom
-    for atom_N in atomN:
-        if atom_N[0] == 0:
-            continue
-        ele = sum(new_descriptors(natoms, s, atom_N[0])['electrostatic']*p for s, p in zip(score_dirs, pops))
-        cond = sum(new_descriptors(natoms, s, atom_N[0])['condensed_linear']*p for s, p in zip(score_dirs, pops))
-        cur.execute('''UPDATE main SET
+    # Call the database
+    cur.execute('SELECT atom_analysed FROM parameters WHERE smiles = ? AND solvent = ?', (system['smiles'], system['solvent']))
+    atom_analysed = cur.fetchall()
+    for atom in atom_analysed:
+        cur.execute('SELECT peculiar FROM parameters WHERE smiles = ? AND solvent = ? AND atom_analysed = ?', (system['smiles'], system['solvent'], atom[0]))
+        peculiar = cur.fetchone()
+        table = 'reactive_msc' if peculiar[0] == 0 else 'peculiar_msc'
+        table = 'no_reactive_msc' if peculiar[0] == 3 else table
+        ele = new_descriptors(natoms, score_dirs[0], atom[0])['electrostatic']
+        cond = new_descriptors(natoms, score_dirs[0], atom[0])['condensed_linear']
+        cur.execute(f'''UPDATE {table} SET
                         electrostatic_potential = ?,
                         condensed_liner_response = ?
                         WHERE smiles = ? AND solvent = ? AND atom_analysed = ?''',
-                        (ele, cond, system['smiles'], system['solvent'], atom_N[0]))
+                        (ele, cond, system['smiles'], system['solvent'], atom[0]))
+
+    # ele = sum(new_descriptors(natoms, s, atom_N[0])['electrostatic']*p for s, p in zip(score_dirs, pops))
+    # cond = sum(new_descriptors(natoms, s, atom_N[0])['condensed_linear']*p for s, p in zip(score_dirs, pops))
 
 con.commit()
 con.close()

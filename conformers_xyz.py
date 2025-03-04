@@ -33,7 +33,7 @@ for system in systems:
     nconfs = len(pops)
 
     # As in the main filter,
-    score_dirs = rkf_paths(os.path.abspath(conf_job.results.rkfpath()))
+    score_dirs = rkf_paths(os.path.abspath(conf_job.results.rkfpath()))[:nconfs]
 
     # Obtain number of atoms
     adf_SP_job = AMSJob.load_external(score_dirs[0])
@@ -43,6 +43,9 @@ for system in systems:
     xyzfile = os.path.join(os.path.abspath(sp_dir), 'conformers.xyz')
     with open(xyzfile, 'r') as file:
         xyzraw = file.readlines()
+
+    # Be sure the directory exists
+    os.makedirs(os.path.join('xyz_conf', family), exist_ok=True)
 
     # Divide the xyzraw into conformers
     nstart, nend = 0, natoms + 2

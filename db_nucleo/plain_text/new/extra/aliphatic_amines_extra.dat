@@ -32,7 +32,7 @@ O=C1C2=C(C=CC=C2)C(N1C[C@H]3NCCC3)=O; MeCN; 15.90; 0.77; (S)-2-(pyrrolidin-2-ylm
 [C@H]1(CN2N=NC(C3=CC=CC=C3)=C2)NCCC1; MeCN; 15.32; 0.72; (S)-4-phenyl-1-(pyrrolidin-2-ylmethyl)-1H-1,2,3-triazole; 3; -> NH in cycle
 [C@H]1(CN2C=NC=C2)NCCC1; MeCN; 15.55; 0.69; (S)-1-(pyrrolidin-2-ylmethyl)-1H-imidazole; 3; -> NH in cycle
 CCCC[N+]1=CN(C[C@H]2NCCC2)C=C1.O=S(C(F)(F)F)([O-])=O; MeCN; 13.57; 0.53; (S)-3-butyl-1-(pyrrolidin-2-ylmethyl)-1H-imidazol-3-ium trifluoromethanesulfonate; 3; -> NH in cycle
-S=C(NC1=CC(C(F)(F)F)=CC(C(F)(F)F)=C1)NC[C@H]2NCCC2; MeCN; 14.97; 0.69; (S)-1-(3,5-bis(trifluoromethyl)phenyl)-3-(pyrrolidin-2-ylmethyl)thiourea; 3; -> NH in cycle
+# S=C(NC1=CC(C(F)(F)F)=CC(C(F)(F)F)=C1)NC[C@H]2NCCC2; MeCN; 14.97; 0.69; (S)-1-(3,5-bis(trifluoromethyl)phenyl)-3-(pyrrolidin-2-ylmethyl)thiourea; 3; -> NH in cycle
 O=C(NC1=CC(C(F)(F)F)=CC(C(F)(F)F)=C1)NC[C@H]2NCCC2; MeCN; 17.50; 0.64; (S)-1-(3,5-bis(trifluoromethyl)phenyl)-3-(pyrrolidin-2-ylmethyl)urea; 3; -> NH in cycle
 [N-]=[N+]=NC(C1=CC=CC=C1)(C2=CC=CC=C2)[C@H]3NCCC3; MeCN; 9.90; 1.22; (S)-2-(azidodiphenylmethyl)pyrrolidine; 3; -> NH in cycle
 O=C1[C@H](CC2=CC=CC=C2)NC(C)(C)N1C; MeCN; 6.04; 0.92; (S)-5-benzyl-2,2,3-trimethylimidazolidin-4-one; 3; -> NH

@@ -52,6 +52,12 @@ def table_formatter(atoms, properties):
     for i, atom in enumerate(atoms):
         condensed_line += f" {i+1:>2} |   {atom}   | {properties['condensed'][i][0]:^20.4f} | {properties['condensed'][i][1]:^20.4f}\n"
 
-    formatted_str = oe_line + cdftp_line + cdfta_line + fukui_line + charges_line + condensed_line
+    # Electrostatic potential at the nuclei and Condensed linear response
+    electrostatic_line = "Electrostatic potential at the nuclei and Condensed linear response\n"
+    electrostatic_line += f"  N |  Atom  |   Electrostatic potential   |   Condensed linear response\n"
+    for i, atom in enumerate(atoms):
+        electrostatic_line += f" {i+1:>2} |   {atom}   |  {properties['electrostatic'][i]:^26.4f} | {properties['condensed_linear'][i]:^30.4f}\n"
+
+    formatted_str = oe_line + cdftp_line + cdfta_line + fukui_line + charges_line + condensed_line + electrostatic_line
     return formatted_str
 

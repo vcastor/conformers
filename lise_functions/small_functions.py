@@ -15,6 +15,8 @@ def rkf_paths(path):
         # Filter directoires. Sanity check [just Score_*/ directories]
         score_dirs = [os.path.join(root, d) for d in dirs if d.startswith('Score')]
         score_directories.extend(score_dirs)
+        break
+    score_directories.sort(key=lambda d: int(d.split('_')[-1]))
     return score_directories
 
 
