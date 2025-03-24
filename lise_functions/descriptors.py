@@ -55,7 +55,8 @@ def descriptors(natoms, pathdir, pops):
         'dual': dual_descriptor(natoms, content),
         'condensed': condensed_local(natoms, content),
         'electrostatic': electrostatic_potential(natoms, content),
-        'condensed_linear': condensed_linear_response(natoms, content)
+        'condensed_linear': condensed_linear_response(natoms, content),
+        'population': popultion(natoms, content)
     }
 
     return description
@@ -203,6 +204,19 @@ def condensed_linear_response(natoms, content):
 
     return diagonal
 
+def popultion(natoms, content):
+    """
+    Extract the QTAIM population 
+    """
+    marker = "   Atom         Population     Net charge    Spin density      Laplacian"
+    marker_index = content.index(marker) + 2
+
+    population = np.zeros(natoms)
+    for i in range(natoms):
+        population[i] = float(content[marker_index+i].split()[3])
+
+    return population
+
 def average_properties(molecule):
     weights = molecule['conformers']['weights']
     nconformers = len(weights)
@@ -218,7 +232,8 @@ def average_properties(molecule):
         'dual': np.zeros((molecule['number_atoms'], 3)),
         'condensed': np.zeros((molecule['number_atoms'], 2)),
         'electrostatic': np.zeros(molecule['number_atoms']),
-        'condensed_linear': np.zeros(molecule['number_atoms'])
+        'condensed_linear': np.zeros(molecule['number_atoms']),
+        'population': np.zeros(molecule['number_atoms'])
     }
 
     # Loop through each conformer property to calculate weighted averages

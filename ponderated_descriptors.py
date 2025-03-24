@@ -13,6 +13,10 @@ from lise_functions import * # local functions
 
 init()
 
+# Direct connection to the database
+con = sqlite3.connect('nucleo_data.db')
+cur = con.cursor()
+
 # Get the order from the input files
 input_file = get_input_file()
 
@@ -40,27 +44,32 @@ for system in systems:
     # Obtain number of atoms
     natoms, atoms = get_atoms(system['smiles'])
 
-    # Molecule dictionary
-    molecule = {'smiles': system['smiles'],
-                'solvent': system['solvent'],
-                'number_atoms': natoms,
-                'atoms': atoms,
-                'number_conformers': nconfs,
-                'average' : {},
-                'conformers': {}}
-
-    # Ponderated descriptor for each conformer
-    for j, score in enumerate(score_dirs):
-        conformer_data = ponderated(descriptors(natoms, score, pops[j]))
-        for key in conformer_data:
-            molecule['conformers'].setdefault(key, []).append(conformer_data[key])
-
-    molecule['average'] = average_properties(molecule)
-
-    system_results[(system['smiles'], system['solvent'])] = molecule
+    # Get the atom analysed from the DB
+    cur.execute(f'''
+        SELECT atom_analysed, experimental_N, experimental_Sn
+        FROM parameters
+        WHERE smiles = "{system['smiles']}" AND solvent = "{system['solvent']}" AND table_name = "reactive"
+    ''')
+    for atom_analysed, expN, expSn in cur.fetchall():
+        # Molecule dictionary
+        molecule = {'expN': expN,
+                    'expSn': expSn,
+                    'atom_analysed': atom_analysed,
+                    'number_atoms': natoms,
+                    'number_conformers': nconfs,
+                    'average' : {},
+                    'conformers': {}}
+        # Get the descriptors for each conformer
+        for j, score in enumerate(score_dirs):
+            conf_data = ponderated(descriptors(natoms, score, pops[j]), atom_analysed)
+            for key in conf_data:
+                molecule['conformers'].setdefault(key, []).append(conf_data[key])
+        
+        molecule['average'] = average_pond(molecule)
+        system_results[(system['smiles'], system['solvent'], atom_analysed)] = molecule
 
 # plain text output
-output_writer(system_results)
+pond_output(system_results)
 
 finish()
 

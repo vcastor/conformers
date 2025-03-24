@@ -8,7 +8,7 @@ def atomic_reader(file, smiles, solvent, atomN):
         data = f.readlines()
     recordsmi, recordsol = False, False
     canonical, fukui, charges, condensed = False, False, False, False
-    elepot_conlr = False
+    elepot_conlr, popq = False, False
     atomic_descriptors = {}
     for line in data:
         if '===' in line:
@@ -83,6 +83,17 @@ def atomic_reader(file, smiles, solvent, atomN):
                     'condensed_lresponse': float(nline[6])
                 })
                 elepot_conlr = False
+            else:
+                continue
+        elif 'QTAIM Population' in line:
+            popq = True
+        elif '|   N ' in line and recordsmi and recordsol and popq:
+            if atomN == int(line.split()[0]):
+                nline = line.split()
+                atomic_descriptors.update({
+                    'population': float(nline[4]),
+                })
+                popq = False
                 break
             else:
                 continue
@@ -166,7 +177,8 @@ UPDATE {} SET
     Sf2 = ?, s2f2 = ?,
     q_qtaim = ?, q_hirshfeld = ?,
     electro = ?, nucleo = ?,
-    electrostatic_potential = ?, condensed_linear_response = ?
+    electrostatic_potential = ?, condensed_linear_response = ?,
+    population = ?
 WHERE smiles = ? AND solvent = ? AND atom_analysed = ?
 '''
 
@@ -209,6 +221,7 @@ for file in os.listdir(outdir):
                 atomic['qtaimq'], atomic['hirshfeldq'],
                 atomic['electrophilicity'], atomic['nucleophilicity'],
                 atomic['electrostatic'], atomic['condensed_lresponse'],
+                atomic['population'],
                 smiles, solvent, atom
             ))
 

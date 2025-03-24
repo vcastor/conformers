@@ -58,6 +58,13 @@ def table_formatter(atoms, properties):
     for i, atom in enumerate(atoms):
         electrostatic_line += f" {i+1:>2} |   {atom}   |  {properties['electrostatic'][i]:^26.4f} | {properties['condensed_linear'][i]:^30.4f}\n"
 
-    formatted_str = oe_line + cdftp_line + cdfta_line + fukui_line + charges_line + condensed_line + electrostatic_line
+    # Population
+    population_line = "QTAIM Population\n"
+    population_line += "  N |  Atom  |   Population\n"
+    for i, atom in enumerate(atoms):
+        population_line += f" {i+1:>2} |   {atom}   | {properties['population'][i]:^10.4f}\n"
+
+    formatted_str = oe_line + cdftp_line + cdfta_line + fukui_line + charges_line + condensed_line + electrostatic_line + population_line
+
     return formatted_str
 

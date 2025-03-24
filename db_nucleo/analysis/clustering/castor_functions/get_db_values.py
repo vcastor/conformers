@@ -3,86 +3,56 @@ import sqlite3
 import pandas as pd
 
 # ==============================
+# Update table names
+def update_tablename(table, case):
+    if case == 'msc':
+        table += '_msc'
+    elif case == 'ponderated':
+        table += '_ponderated'
+    return table
+
+# ==============================
 # Connect to the database
-def connect_db(exp, cols, dynamic=True):
+def connect_db(exp, cols, case='conformers'):
     """
-    if dynamic Flase just the most stable conformer
+    Connect to the database and retrieve data for each table
+    adding a 'source column to indicate its origin.
     """
+    if not case in ['msc', 'peculiar', 'ponderated', 'conformers']:
+        raise ValueError('Case must be either "msc", "peculiar", "ponderated" or "conformers".')
+
     conn = sqlite3.connect('/Users/vcastor/Documents/PhD_Rouen/plamsfilter/db_nucleo/nucleo_data.db')
     cursor = conn.cursor()
 
-    react_table = 'reactive' if dynamic else 'reactive_msc'
-    non_react_table = 'no_reactive' if dynamic else 'no_reactive_msc'
-
-    # New queries
-    keys = ['smiles', 'solvent', 'atom_analysed']
-
-
+    params = ['smiles', 'solvent', 'atom_analysed', 'table_name'] + exp
     queryParams = f'''
-    SELECT {", ".join(keys)}
+    SELECT {', '.join(params)}
     FROM parameters
+    WHERE nconformers > 0 AND (comment IS NULL OR comment != 'exclude')
     '''
+    cursor.execute(queryParams)
+    params = cursor.fetchall()
 
-    queryReact = f'''
-    SELECT {", ".join(cols)}
-    FROM {react_table}
-    '''
+    all_data = []
+    for smiles, solvent, atom, table, expN, expSn in params:
+        query = f'''
+        SELECT {', '.join(cols)}
+        FROM {update_tablename(table, case)}
+        WHERE smiles = '{smiles}' AND solvent = '{solvent}' AND atom_analysed = '{atom}'
+        '''
+        cursor.execute(query)
+        data = cursor.fetchone()
 
-    # Queries:
-    queryReact = f'''
-    SELECT {", ".join(exp)}, {", ".join(cols)} 
-    FROM {react_table}
-    WHERE nconformers IS NOT NULL
-    AND (
-      comment NOT LIKE "%&%"
-      OR comment LIKE "%[&]"
-      OR comment IS NULL
-    )
-    AND (
-      smiles NOT LIKE "%-%"
-      AND smiles NOT LIKE "%+%"
-    )
-    '''
-
-    queryNoReac = f'SELECT {", ".join(cols)} FROM {non_react_table}'
-
-    queryPeculiar = f'''
-    SELECT {", ".join(exp)}, {", ".join(cols)} 
-    FROM {react_table}
-    WHERE nconformers IS NOT NULL
-    AND comment LIKE "%&%"
-    AND comment NOT LIKE "%[&]"
-    OR smiles LIKE "%-%"
-    OR smiles LIKE "%+%"
-    '''
-
-    cursor.execute(queryReact)
-    reactive_data = cursor.fetchall()
-
-    cursor.execute(queryPeculiar)
-    peculiar_data = cursor.fetchall()
-
-    cursor.execute(queryNoReac)
-    non_reactive_data = cursor.fetchall()
+        df = pd.DataFrame([data], columns=cols)
+        df['smiles'] = smiles
+        df['solvent'] = solvent
+        df['atom_analysed'] = atom
+        df['source'] = table
+        df['experimental_N'] = expN
+        df['experimental_Sn'] = expSn
+        all_data.append(df)
 
     conn.close()
 
-    # ==============================
-    # Organize data into DataFrames
-    reactive_df = pd.DataFrame(reactive_data, columns=exp+cols)
-    peculiar_df = pd.DataFrame(peculiar_data, columns=exp+cols)
-    noreactive_df = pd.DataFrame(non_reactive_data, columns=cols)
-
-    # For non-reactive, define experimental values = 0
-    noreactive_df[exp] = 0
-
-    # Tag dataframes by source
-    reactive_df['source'] = 'reactive'
-    peculiar_df['source'] = 'peculiar'
-    noreactive_df['source'] = 'non_reactive'
-
-    # Combine into one DataFrame
-    df = pd.concat([reactive_df, peculiar_df, noreactive_df], ignore_index=True)
-
-    return df
+    return pd.concat(all_data, ignore_index=True)
 

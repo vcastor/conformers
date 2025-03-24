@@ -4,53 +4,39 @@ import pandas as pd
 def reactivity_classifier(df, exp_par, spliter):
     """
     exp_par :: 'experimental_N' or 'experimental_Sn'
-    spliter :: [non-reactive/reactive] or [non-reactive/bad/good/very good]
+    spliter :: [reactive/no-reactive] or [non-reactive/bad/good/very good]
     """
-    # Ensure the category is None in every call
+    # Every loop restart the category column
     df['category'] = None
 
     # Assign categories
-    df.loc[(df['source'] == 'non_reactive') & (df['category'].isnull()), 'category'] = 'No Reactive'
-    df.loc[(df['source'] == 'peculiar') & (df['category'].isnull()), 'category'] = 'Peculiar'
+    df.loc[df['source'] == 'no_reactive', 'category'] = 'No Reactive'
+    df.loc[df['source'] == 'peculiar', 'category'] = 'Peculiar'
 
     # Quantiles for the spliter only for the reactive ones and not peculiar
-    mask_for_quantiles = ((df['source'] != 'peculiar') & (df['source'] != 'non_reactive'))
+    mask_for_quantiles = ((df['source'] != 'peculiar') & (df['source'] != 'no_reactive'))
     q1 = df.loc[mask_for_quantiles, exp_par].quantile(0.25)
-    q2 = df.loc[mask_for_quantiles, exp_par].quantile(0.75)
+    q2 = df.loc[mask_for_quantiles, exp_par].quantile(0.5)
+    q3 = df.loc[mask_for_quantiles, exp_par].quantile(0.75)
 
-    q3 = df.loc[mask_for_quantiles, exp_par].quantile(0.50) # axuiliar
+    if spliter == 'reactive/no-reactive':
+        df.loc[(df[exp_par] > 0) & mask_for_quantiles, 'category'] = 'Nucleophile'
 
-    # Encode categories
-    cat_to_num = {
-        'No Reactive': 0,
-    }
+        cat_to_num = {
+            'No Reactive': 0,
+            'Nucleophile': 1,
+        }
 
-    # For the remaining (reactive ones):
-    remaining_mask = df['category'].isnull()
-
-    if spliter == 2:
-        df.loc[(remaining_mask) & (df[exp_par] > 0), 'category'] = 'Nucleophile'
-        cat_to_num.update({'Nucleophile': 1})
-
-    elif spliter == 3:
-        df.loc[(remaining_mask) & (df[exp_par] > 0) & (df[exp_par] <= q3), 'category'] = 'Bad Nucleophile'
-        df.loc[(remaining_mask) & (df[exp_par] > q3), 'category'] = 'Good Nucleophile'
+    elif spliter == 'good/bad':
+        df = df[df['source'] != 'no_reactive']
+        df = df[df['source'] != 'peculiar']
+        df.loc[(df[exp_par] > 0) & (df[exp_par] <= q2) & mask_for_quantiles, 'category'] = 'Bad Nucleophile'
+        df.loc[(df[exp_par] > q2) & mask_for_quantiles, 'category'] = 'Good Nucleophile'
 
         cat_to_num = {
             'Bad Nucleophile': 0,
             'Good Nucleophile': 1,
         }
-
-    elif spliter == 4:
-        df.loc[(remaining_mask) & (df[exp_par] > 0) & (df[exp_par] <= q1), 'category'] = 'Bad Nucleophile'
-        df.loc[(remaining_mask) & (df[exp_par] > q1) & (df[exp_par] <= q2), 'category'] = 'Good Nucleophile'
-        df.loc[(remaining_mask) & (df[exp_par] > q2), 'category'] = 'Very Good Nucleophile'
-
-        cat_to_num.update({
-            'Bad Nucleophile': 1,
-            'Good Nucleophile': 2,
-            'Very Good Nucleophile': 3
-        })
 
     else:
         raise ValueError('Invalid spliter value')
