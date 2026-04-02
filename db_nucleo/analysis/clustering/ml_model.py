@@ -43,7 +43,6 @@ key = ['smiles', 'solvent', 'atom_analysed', 'experimental_N', 'experimental_Sn'
 cursor.execute(f'''
     SELECT {', '.join(key)}
     FROM parameters WHERE table_name = 'reactive'
-    AND family != 'pyridines_quinolines_etc'
     AND (comment IS NULL OR comment != 'exclude')
 ''')
 #    AND family = 'aliphatic_amines'
@@ -117,7 +116,7 @@ model.fit(X, n_exp)
 #-----------------------------------------------------------------------
 # Best models
 pred = model.predict(X)
-mae = np.mean(np.abs(n_exp - pred))
+mae = np.mean(np.abs(sn_exp - pred))
 print('Best model:\n')
 print(model.sympy())
 print(f'MAE: {mae}')

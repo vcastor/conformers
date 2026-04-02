@@ -12,10 +12,15 @@ def parameters(dbpath):
         SELECT {', '.join(key)}
         FROM parameters
         WHERE table_name = 'reactive'
+          AND family = 'aliphatic_amines'
+          AND experimental_N > 10
+          AND experimental_N < 20
           AND (comment IS NULL OR comment != 'exclude')
     ''')
     # AND family != 'pyridines_quinolines_etc'
     # AND family != 'aliphatic_amines'
+    #     AND experimental_N > 12
+    #     AND experimental_N < 20
     params = cursor.fetchall()
     
     cursor.close()
@@ -24,8 +29,8 @@ def parameters(dbpath):
 def region(dbpath, region):
     smiles_list, solvents, atoms, exp_n, exp_sn = zip(*parameters(dbpath))
 
-    features = ['electrofuge', 'nucleofuge', 'q_qtaim', 'P', 'region']
-    electrofuge, nucleofuge, q_qtaim, p = [], [], [], []
+    features = ['electrofuge', 'nucleofuge', 'q_qtaim', 'P', 'HOMO', 'region']
+    electrofuge, nucleofuge, q_qtaim, p, homo = [], [], [], [], []
     idx = []
 
     conn = sqlite3.connect(dbpath)
@@ -44,6 +49,7 @@ def region(dbpath, region):
         nucleofuge.append(data[1])
         q_qtaim.append(data[2])
         p.append(data[3])
+        homo.append(data[4])
         if data[-1] == region:
             idx.append(i)
 
@@ -53,51 +59,58 @@ def region(dbpath, region):
     nucleofuge  = np.array(nucleofuge)[idx]
     q_qtaim = np.array(q_qtaim)[idx]
     p       = np.array(p)[idx]
+    homo    = np.array(homo)[idx]
 
     exp_n  = np.array(exp_n)[idx]
     exp_sn = np.array(exp_sn)[idx]
 
-    return electrofuge, nucleofuge, q_qtaim, p, exp_n, exp_sn
+    return electrofuge, nucleofuge, q_qtaim, p, homo, exp_n, exp_sn
 
 # -------------------------
 # Objective functions
 # -------------------------
 
-def obj_inverse(coeff, electrofuge, nucleofuge, q_qtaim, p, exp_n):
+def obj_inverse(coeff, electrofuge, nucleofuge, q_qtaim, p, homo, exp_n):
     """ N = α/electrofuge """
     alpha = coeff[0]
     prediction = alpha/electrofuge
     return np.sum((exp_n - prediction)**2)
 
-def obj_charge(coeff, electrofuge, nucleofuge, q_qtaim, p, exp_n):
+def obj_charge(coeff, electrofuge, nucleofuge, q_qtaim, p, homo, exp_n):
     """ N = α/electrofuge + β*nucleofuge + γ*q_qtaim + δ"""
     alpha, beta, gamma, delta = coeff
     prediction = alpha/electrofuge + beta*nucleofuge + gamma*q_qtaim + delta
     return np.sum((exp_n - prediction)**2)
 
-def obj_betap(coeff, electrofuge, nucleofuge, q_qtaim, p, exp_n):
+def obj_betap(coeff, electrofuge, nucleofuge, q_qtaim, p, homo, exp_n):
     """ N = (α + β*P)/electrofuge + γ"""
     alpha, beta, gamma = coeff
     prediction = (alpha + beta*p)/electrofuge + gamma
     return np.sum((exp_n - prediction)**2)
 
-def obj_mult(coeff, electrofuge, nucleofuge, q_qtaim, p, exp_n):
+def obj_mult(coeff, electrofuge, nucleofuge, q_qtaim, p, homo, exp_n):
     """ N = α/(electrofuge*q_qtaim) + β"""
     alpha, beta = coeff
     prediction = alpha/(electrofuge*q_qtaim) + beta
     return np.sum((exp_n - prediction)**2)
 
-def obj_log(coeff, electrofuge, nucleofuge, q_qtaim, p, exp_n):
+def obj_log(coeff, electrofuge, nucleofuge, q_qtaim, p, homo, exp_n):
     """ N = (-log(abs(α*electrofuge + β)) + γ)/δ*q_qtaim"""
     alpha, beta, gamma, delta = coeff
     prediction = (-np.log(np.abs(alpha*electrofuge + beta)) + gamma)/(delta*q_qtaim)
+    return np.sum((exp_n - prediction)**2)
+
+def obj_homo(coeff, electrofuge, nucleofuge, q_qtaim, p, homo, exp_n):
+    """ N = α/nucleofuge + β/HOMO + γ*q_qtaim + delta"""
+    alpha, beta, gamma, delta = coeff
+    prediction = alpha/(nucleofuge+1e-8) + beta/homo + gamma*q_qtaim + delta
     return np.sum((exp_n - prediction)**2)
 
 # -------------------------
 # Objective functions
 # -------------------------
 
-def opt_model(electrofuge, nucleofuge, q_qtaim, exp_n, model, bounds):
+def opt_model(electrofuge, nucleofuge, q_qtaim, p, homo, exp_n, model, bounds):
     best_score, best_result = np.inf, None
 
     if model == 'inverse':
@@ -115,6 +128,9 @@ def opt_model(electrofuge, nucleofuge, q_qtaim, exp_n, model, bounds):
     elif model == 'log':
         obj_model = obj_log
         print("N = (-log(abs(α*electrofuge + β)) + γ)/(δ*q_qtaim)")
+    elif model == 'homo':
+        obj_model = obj_homo
+        print("N = α/nucleofuge + β/HOMO + γ*q_qtaim + δ")
 
     for _ in range(50):
         initial_guess = [
@@ -124,7 +140,7 @@ def opt_model(electrofuge, nucleofuge, q_qtaim, exp_n, model, bounds):
         result = minimize(
             obj_model,
             x0=initial_guess,
-            args=(electrofuge, nucleofuge, q_qtaim, p, exp_n),
+            args=(electrofuge, nucleofuge, q_qtaim, p, homo, exp_n),
             bounds=bounds,
             method='L-BFGS-B'
         )
@@ -151,25 +167,26 @@ if __name__ == "__main__":
     conn = sqlite3.connect(dbpath)
     cursor = conn.cursor()
 
-    models = ['inverse', 'charge', 'betap', 'mult', 'log']
+    models = ['inverse', 'charge', 'betap', 'mult', 'log', 'homo']
     bounds = [[(50,150)],
               [(50,150), (-10, 10), (-50,50), (-30,30)],
               [(50,150), (-10, 10), (-50,50)],
               [(50,150), (-20, 20)],
-              [(-10,10), (-20, 20), (-50,50), (-30,30)]]
-
-    """ N = (-log(abs(α*electrofuge + β)) + γ)/δ*q_qtaim"""
+              [(-10,10), (-20, 20), (-50,50), (-30,30)],
+              [(-80,80), (-200, 200), (-50,59), (-30,30)]]
 
     # Loop for Regions
     for regionval in ['1', '2']:
         print(f"===Region: {regionval}===")
-        electrofuge, nucleofuge, q_qtaim, p, exp_n, exp_sn = region(dbpath, regionval)
+        electrofuge, nucleofuge, q_qtaim, p, homo, exp_n, exp_sn = region(dbpath, regionval)
         if (len(electrofuge) < 2):
             continue
+        else:
+            print(len(electrofuge))
 
         # Loop for models
         for model, bound in zip(models, bounds):
-            results = opt_model(electrofuge, nucleofuge, q_qtaim, exp_n, model, bound)
+            results = opt_model(electrofuge, nucleofuge, q_qtaim, p, homo, exp_n, model, bound)
 
             print_coeffs(results.x)
             mae = results.fun/len(exp_n)

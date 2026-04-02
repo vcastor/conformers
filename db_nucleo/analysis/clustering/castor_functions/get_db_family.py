@@ -11,7 +11,7 @@ def update_tablename(table, case):
 
 # ==============================
 # Connect to the database
-def all_families(cols, case='conformers'):
+def connect_fam(cols, case='conformers'):
     """
     Connect to the database and retrieve data for each table
     adding a 'source column to indicate its origin.
@@ -27,9 +27,9 @@ def all_families(cols, case='conformers'):
     SELECT {', '.join(params)}
     FROM parameters
     WHERE nconformers > 0
+      AND table_name = 'reactive'
       AND (comment != 'exclude' OR comment IS NULL)
     '''
-    # AND table_name = 'reactive'
     # AND table_name != 'no_reactive'
     cursor.execute(queryParams)
     params = cursor.fetchall()

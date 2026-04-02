@@ -13,10 +13,11 @@ def parameters(dbpath):
         SELECT {', '.join(key)}
         FROM parameters
         WHERE table_name = 'reactive'
+          AND experimental_N > 10
           AND (comment IS NULL OR comment != 'exclude')
     ''')
-    # AND family != 'aliphatic_amines'
-    # AND family != 'pyridines_quinolines_etc'
+    #     AND family = 'aliphatic_amines'
+    #     AND family != 'pyridines_quinolines_etc'
     params = cursor.fetchall()
     
     cursor.close()
@@ -84,7 +85,7 @@ def region(dbpath, region, msc=False):
 # -------------------------
 
 def obj_charge(coeff, electrofuge, nucleofuge, distances, q_qtaim, clr, elep, population, homo, exp_n):
-    """ N = α/electrofuge - β*nucleofuge - γ*Σe^(-δd)q_qtaim + ε*Σe^(-ζd)clr + η*Σe^(-θd)*elp/pop + ι + κ*HOMO"""""
+    """ N = α/electrofuge - β*nucleofuge - γ*Σe^(-δd)q_qtaim + ε*Σe^(-ζd)clr + η*Σe^(-θd)*elp/pop + ι + κ*HOMO"""
     alpha, beta, gamma, delta, epsilon, zeta, eta, theta, iot, kappa = coeff
 
     prediction = []
@@ -96,7 +97,8 @@ def obj_charge(coeff, electrofuge, nucleofuge, distances, q_qtaim, clr, elep, po
         sum_q     = np.dot(delta_dis, q)
         sum_clr   = np.dot(delta_clr, clrv)
         sum_elp   = np.dot(delta_elp, elp/pop)
-        prediction.append(alpha/ele - beta*nuc - gamma*sum_q + epsilon*sum_clr + eta*sum_elp + iot+ kappa/hom)
+        # prediction.append(alpha/ele - beta*nuc - gamma*sum_q + epsilon*sum_clr + eta*sum_elp + iot+ kappa*hom)
+        prediction.append(alpha/ele - beta*nuc - gamma*sum_q + iot)
 
     prediction = np.array(prediction)
     return np.sum((exp_n - prediction)**2)
@@ -141,13 +143,13 @@ if __name__ == "__main__":
     cursor = conn.cursor()
 
     """ N = α/electrofuge - β*nucleofuge - γ*Σe^(-δd)q_qtaim + ε*Σe^(-ζd)clr + η*Σe^(-θd)*elp/pop + ι + κ*HOMO"""
-    bounds = [(50,180), (0, 10), (0,2000), (0.00, 3.99), (-2000, 2000), (0.00, 3.99), (-2000, 2000), (0.00, 3.99), (-2000, 2000), (-200,200)]
+    bounds = [(-200,200), (0, 10), (0,2000), (0.00, 3.99), (-2000, 2000), (0.00, 3.99), (-2000, 2000), (0.00, 3.99), (-2000, 2000), (-200,200)]
 
     print('Equation: N = α/electrofuge - β*nucleofuge - γ*Σe^(-δd)q_qtaim + ε*Σe^(-ζd)clr + η*Σe^(-θd)*elp/pop + ι + κ/HOMO\n')
     # Loop for Regions
-    for regionval in ['1', '2']:
+    for regionval in ['1']:
         print(f"===Region: {regionval}===")
-        for msc in [True, False]:
+        for msc in [False]:
             if msc:
                 pout = poutbase + 'msc_pond.pout'
                 print("Most Satble Conformer")

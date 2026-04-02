@@ -47,19 +47,21 @@ for case in ['conformers']:
     spliter = 'reactive/no-reactive'; ndim = 2; nclusters = 2
     dfclass = reactivity_classifier(df_scaled, exp[0], spliter)
     nan_in_df(dfclass)
-    results = kmeans_all_clusters(dfclass, cols, ndim, nclusters)
+    # kernels = ['linear', 'rbf', 'poly', 'sigmoid']
+    kernels = ['rbf']
+    for kernel in kernels:
+        print(f'Using kernel: {kernel}')
+        results = kmeans_all_clusters(dfclass, cols, ndim, nclusters, kernel=kernel)
 
-    print('==============================')
-    print(f'Classification for {case} data')
-    for res in results:
-        accuracy, feats = res
-        print(f'Accuracy: {accuracy:.4f}')
-        print(f'Features: {feats}')
+        # print('==============================')
+        # print(f'Classification for {case} data')
+        for res in results:
+            accuracy, std, feats = res
+            print(f'Accuracy: {accuracy:.4f}')
+            print(f'Standard Deviation: {std:.4f}')
+            print(f'Features: {feats}')
 
-    # plot the best two clustering
-    plot_cluster(dfclass, df_clustering, ndim, nclusters, res[0][1])
-    # for res in results:
-    #     plot_cluster(dfclass, df_clustering, ndim, nclusters, res[1])
+    # plot_cluster(dfclass, df_clustering, ndim, nclusters, results[0][1])
 
     # Split the two regions of reactivity
     # regions_reactivity(dfclass, ndim, nclusters, results[0][1])

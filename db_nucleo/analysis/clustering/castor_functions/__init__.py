@@ -6,3 +6,5 @@ from .regions_react import *
 from .get_db_family import *
 from .kmeans_fam import *
 from .family_class import *
+from .plot_fam import *
+from .plot_kernels import *

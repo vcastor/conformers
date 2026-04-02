@@ -2,6 +2,7 @@
 import sqlite3
 import numpy as np
 from scipy.optimize import minimize
+from sklearn.metrics import r2_score
 
 def parameters(dbpath):
     conn = sqlite3.connect(dbpath)
@@ -54,11 +55,11 @@ def q_homo_vals(dbpath):
 # Objective functions
 # -------------------------
 
-def obj_charge(coeff, homo, q_qtaim, exp_n):
+def obj_charge(coeff, homo, q_qtaim, exp):
     """ N = α*homo + β*q_qtaim + γ"""
     alpha, beta, gamma = coeff
     prediction = alpha*homo + beta*q_qtaim + gamma
-    return np.sum((exp_n - prediction)**2)
+    return np.sum((exp - prediction)**2)
 
 # -------------------------
 # Objective functions
@@ -107,14 +108,14 @@ if __name__ == "__main__":
     homo, q_qtaim, exp_n, exp_sn = q_homo_vals(dbpath)
     exp_name = ['N', 'Sn']
 
-    print("N = α*homo + β*q_qtaim + γ")
+    print("N = α/homo + β*q_qtaim + γ")
     for i, exp in enumerate([exp_n, exp_sn]):
         results = opt_model(homo, q_qtaim, exp, bounds)
         print(f"modeling for {exp_name[i]}")
         print_coeffs(results.x)
-        mae = results.fun/len(exp_n)
-        print(f"MAE: {mae}")
-        ss_tot = np.sum((exp_n - np.mean(exp_n))**2)
-        r2 = 1 - results.fun/ss_tot
-        print(f"R^2: {r2}\n")
+        pred_val = homo*results.x[0] + q_qtaim*results.x[1] + results.x[2]
+        mae = np.mean(np.abs(exp - pred_val))
+        r2 = r2_score(exp, pred_val)
+        print(f"MAE: {mae:.4f}")
+        print(f"R2: {r2:.2f}")
 

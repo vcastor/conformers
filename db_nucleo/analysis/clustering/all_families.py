@@ -55,7 +55,7 @@ for case in ['msc', 'conformers']:
         print(f'Features: {feats}')
 
     # plot the best two clustering
-    plot_cluster(dfclass, df, ndim, nclusters, results[0][1])
+    # plot_cluster(dfclass, df, ndim, nclusters, results[0][1])
     # for res in results:
     #     plot_cluster(dfclass, df_clustering, ndim, nclusters, res[1])
 
