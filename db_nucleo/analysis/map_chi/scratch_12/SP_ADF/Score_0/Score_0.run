@@ -1,0 +1,6 @@
+#!/bin/sh
+
+unset AMS_SWITCH_LOGFILE_AND_STDOUT
+unset SCM_LOGFILE
+AMS_JOBNAME="Score_0" AMS_RESULTSDIR=. $AMSBIN/ams -n 32 --input="Score_0.in" < /dev/null
+

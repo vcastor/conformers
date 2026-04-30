@@ -12,7 +12,7 @@ cols = [
     'electrodonating', 'electroaccepting', 'fplus', 'fminus', 'fzero', 'f2',
     'sfplus', 'sfminus', 'sfzero', 's2', 'muplusfplus', 'muminusfminus', 'wfplus',
     'wf2', 'Sf2', 's2f2', 'nucleo', 'q_qtaim', 'q_hirshfeld', 'electrostatic_potential',
-    'condensed_linear_response', 'P', 'Pf2'
+    'condensed_linear_response', 'P', 'Pf2', 'eigenchi'
 ]
 
 # ==============================

@@ -19,3 +19,4 @@ plams_workdir
 *.bkup
 *.pkl
 hall_of_fame*
+*.joblib

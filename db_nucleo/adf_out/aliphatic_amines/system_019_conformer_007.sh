@@ -1,0 +1,46 @@
+#!/bin/sh
+
+AMS_JOBNAME="system_019_conformer_007" $AMSBIN/ams << eor
+Task SinglePoint
+System
+    Atoms
+        N         1.6599009275        -0.1012476694         0.1087689211
+        C         0.4036320814         0.3314513163        -0.5341105334
+        C        -0.7315095834        -0.6003096687        -0.1205138090
+        O        -1.9746959710        -0.2786410182        -0.7806056830
+        H         2.4251702377         0.4860067586        -0.2362072708
+        H         1.6064400518         0.1043332576         1.1124461879
+        H         0.5332534404         0.2744457329        -1.6254283066
+        H         0.1205045879         1.3744875975        -0.2897365224
+        H        -0.4924554620        -1.6331907040        -0.4099464300
+        H        -0.8608689409        -0.5746850851         0.9767385882
+        H        -2.2344201171         0.6147199196        -0.4821320047
+    End
+End
+
+Engine ADF
+    TotalEnergy Yes
+    Basis
+        Type TZP
+        Core None
+    End
+    Symmetry nosym
+    XC
+       GGA PBE
+       DISPERSION Grimme3 BJDAMP
+    End
+    QTAIM
+        AnalysisLevel Full
+        Spacing 0.1
+    End
+    ConceptualDFT
+        Enabled YES
+        AnalysisLevel Full
+    End
+    Relativity
+        Level None
+    End
+    NumericalQuality VeryGood
+EndEngine
+
+eor

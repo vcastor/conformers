@@ -11,7 +11,8 @@ families = ['aliphatic_amines', 'pyridines_quinolines_etc', 'azoles_and_azole_an
 cols = [
     'fminus', 
     'q_qtaim', 
-    'condensed_linear_response', 
+    # 'condensed_linear_response',
+    'eigenchi'
 ]
 
 # cols = [

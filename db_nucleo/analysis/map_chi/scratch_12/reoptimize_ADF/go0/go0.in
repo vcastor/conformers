@@ -1,0 +1,59 @@
+GeometryOptimization
+  Convergence
+    Quality Normal
+  End
+  Method Quasi-Newton
+End
+
+Task GeometryOptimization
+
+system
+  Atoms
+             Cl      -0.8221737965       1.9979836473       0.1709906003 rdkit.charge=0 rdkit.origNoImplicit=False
+              C      -0.1699504084       0.4129957707       0.0353459923 rdkit.charge=0 rdkit.origNoImplicit=False
+              C      -1.0070870520      -0.6922880426      -0.0225838749 rdkit.charge=0 rdkit.origNoImplicit=False
+              C      -0.4314633472      -1.9494321579      -0.1318233868 rdkit.charge=0 rdkit.origNoImplicit=False
+              N       0.8819217904      -2.1431759718      -0.1834212605 rdkit.charge=0 rdkit.origNoImplicit=False
+              C       1.6786835131      -1.0814646313      -0.1275624397 rdkit.charge=0 rdkit.origNoImplicit=False
+              C       1.2027923346       0.2167003732      -0.0181158486 rdkit.charge=0 rdkit.origNoImplicit=False
+              H      -2.0827209594      -0.5762177135       0.0165149846 rdkit.charge=0 rdkit.isImplicit=1
+              H      -1.0559294662      -2.8362912014      -0.1796445223 rdkit.charge=0 rdkit.isImplicit=1
+              H       2.7465835001      -1.2722048384      -0.1719657321 rdkit.charge=0 rdkit.isImplicit=1
+              H       1.8853049863       1.0559535844       0.0245352854 rdkit.charge=0 rdkit.isImplicit=1
+  End
+  BondOrders
+     1 2 1.0
+     2 3 2.0
+     3 4 1.0
+     4 5 2.0
+     5 6 1.0
+     6 7 2.0
+     2 7 1.0
+     3 8 1.0
+     4 9 1.0
+     6 10 1.0
+     7 11 1.0
+  End
+End
+
+Engine ADF
+  basis
+    core None
+    type TZP
+  End
+  relativity
+    level None
+  End
+  solvation
+    charged method=CONJ
+    scf VAR ALL
+    solv name=Dichloromethane cav0=0.0 cav1=0.0067639
+    surf Delley
+  End
+  symmetry NOSYM
+  xc
+    dispersion GRIMME3 BJDAMP
+    gga PBE
+  End
+EndEngine
+

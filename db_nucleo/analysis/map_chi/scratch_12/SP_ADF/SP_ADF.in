@@ -1,0 +1,41 @@
+Equivalence
+  CREST
+    RMSDThreshold 1.5
+  End
+End
+
+InputConformersSet /home/victoria/Documents/nucleo/plams/scratch_12/reoptimize_ADF/conformers.rkf
+
+InputMaxEnergy 2.5
+
+Task Score
+
+Engine ADF
+  Basis
+    Core None
+    Type TZP
+  End
+  ConceptualDFT
+    AnalysisLevel Full
+    Enabled Yes
+  End
+  QTAIM
+    AnalysisLevel Extended
+    Enabled Yes
+  End
+  Relativity
+    Level None
+  End
+  Solvation
+    Charged method=CONJ
+    SCF VAR ALL
+    Solv name=Dichloromethane cav0=0.0 cav1=0.0067639
+    Surf Delley
+  End
+  Symmetry NOSYM
+  XC
+    DISPERSION GRIMME3 BJDAMP
+    GGA PBE
+  End
+EndEngine
+

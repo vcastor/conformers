@@ -1,0 +1,47 @@
+Equivalence
+  Method AMS
+End
+
+Generator
+  Method RDKit
+  RDKit
+    InitialNConformers 20
+  End
+End
+
+Task Generate
+
+system
+  Atoms
+             Cl      -1.0512556578       2.6517101947      -0.0565015555 rdkit.charge=0 rdkit.origNoImplicit=False
+              C      -0.4078215996       1.0139215001      -0.1020478293 rdkit.charge=0 rdkit.origNoImplicit=False
+              C      -1.2343831367      -0.1001023125      -0.1682300643 rdkit.charge=0 rdkit.origNoImplicit=False
+              C      -0.7233687467      -1.3822587614      -0.0024067177 rdkit.charge=0 rdkit.origNoImplicit=False
+              N       0.6048261791      -1.5158724855      -0.2255166288 rdkit.charge=0 rdkit.origNoImplicit=False
+              C       1.4206825353      -0.4341789039      -0.2644811135 rdkit.charge=0 rdkit.origNoImplicit=False
+              C       0.9540868268       0.8174563794       0.0965291016 rdkit.charge=0 rdkit.origNoImplicit=False
+              H      -2.2919192664       0.0355226746      -0.2837450847 rdkit.charge=0 rdkit.isImplicit=1
+              H      -1.2729853719      -2.0618032896       0.6554194677 rdkit.charge=0 rdkit.isImplicit=1
+              H       2.5009697665      -0.5231937869      -0.3853197117 rdkit.charge=0 rdkit.isImplicit=1
+              H       1.5011684713       1.4987987909       0.7363001362 rdkit.charge=0 rdkit.isImplicit=1
+  End
+  BondOrders
+     1 2 1.0
+     2 3 2.0
+     3 4 1.0
+     4 5 2.0
+     5 6 1.0
+     6 7 2.0
+     7 2 1.0
+     3 8 1.0
+     4 9 1.0
+     6 10 1.0
+     7 11 1.0
+  End
+  Charge 0
+End
+
+Engine DFTB
+  Model GFN1-xTB
+EndEngine
+
