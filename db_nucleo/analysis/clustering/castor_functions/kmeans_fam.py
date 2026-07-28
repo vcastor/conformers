@@ -16,7 +16,9 @@ def kmeans_fam(df, cols, ndim, nclusters, use_svc=True):
     class_true = df['category'].values
     results = []
 
-    random_states = [0, 1, 7, 21, 99]
+    # random_states = [0, 1, 7, 21, 99]
+    # 20 random states
+    random_states = list(range(20))
     le = LabelEncoder()
     class_true = le.fit_transform(class_true)
 

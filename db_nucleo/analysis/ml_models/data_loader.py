@@ -9,7 +9,8 @@ def load_data(
         'electrodonating', 'electroaccepting', 'fplus', 'fminus', 'fzero', 'f2',
         'sfplus', 'sfminus', 'sfzero', 's2', 'muplusfplus', 'muminusfminus', 'wfplus',
         'wf2', 'Sf2', 's2f2', 'nucleo', 'q_qtaim', 'q_hirshfeld', 'electrostatic_potential',
-        'condensed_linear_response', 'P', 'Pf2', 'HOMO'
+        'condensed_linear_response', 'P', 'Pf2', 'HOMO', 'eigenchi',
+        'q_qtaim_w', 'condensed_linear_response_w'
     ]):
 
     key = ['smiles', 'solvent', 'atom_analysed', 'experimental_N', 'experimental_Sn']

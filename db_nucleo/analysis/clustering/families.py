@@ -9,26 +9,47 @@ from sklearn.preprocessing import StandardScaler
 families = ['aliphatic_amines', 'pyridines_quinolines_etc', 'azoles_and_azole_anions']
 
 cols = [
-    'fminus', 
-    'q_qtaim', 
-    # 'condensed_linear_response',
+    'fminus',
+    'q_qtaim',
+    'condensed_linear_response',
     'eigenchi'
 ]
 
-# cols = [
-#     'mu', 'eta', 'softness', 'hyperhardness', 'omega', 'nucleofuge', 'electrofuge',
-#     'electrodonating', 'electroaccepting', 'fplus', 'fminus', 'fzero', 'f2',
-#     'sfplus', 'sfminus', 'sfzero', 's2', 'muplusfplus', 'muminusfminus', 'wfplus',
-#     'wf2', 'Sf2', 's2f2', 'nucleo', 'q_qtaim', 'q_hirshfeld', 'electrostatic_potential',
-#     'condensed_linear_response', 'P', 'Pf2'
-# ]
+# Per-family plotting configuration: feature pair to display, axis limits in
+# original (un-standardised) space, axis labels and the cross-validated
+# accuracy/std to surface in the badge.
+fam_config = {
+    'aliphatic_amines': dict(
+        comb=('q_qtaim', 'condensed_linear_response'),
+        xlim=(-1.24, -0.40),
+        ylim=(-6.24, -1.12),
+        xlabel=r'$q(N)$',
+        ylabel=r'$\chi(N)$',
+        accuracy_text=r'97.0 $\pm$ 1.9 %',
+    ),
+    'pyridines_quinolines_etc': dict(
+        comb=('fminus', 'condensed_linear_response'),
+        xlim=(0.00, 1.10),
+        ylim=(-6.24, -1.12),
+        xlabel=r'$f^{-}(N)$',
+        ylabel=r'$\chi(N)$',
+        accuracy_text=r'92.1 $\pm$ 4 %',
+    ),
+    'azoles_and_azole_anions': dict(
+        comb=('q_qtaim', 'condensed_linear_response'),
+        xlim=(-1.24, -0.40),
+        ylim=(-6.24, -1.12),
+        xlabel=r'$q(N)$',
+        ylabel=r'$\chi(N)$',
+        accuracy_text=r'96.9 $\pm$ 2.0 %',
+    ),
+}
 
 # ==============================
-# Here the main code starts
+# Here the main code starts
 print('*****************************************')
-print('Calssification: reactive and non-reactive')
+print('Calssification: family vs. rest')
 print('*****************************************')
-# for case in ['msc', 'conformers']:
 for fam in families:
     df = connect_fam(cols)
 
@@ -50,8 +71,10 @@ for fam in families:
         print(f'Standard Deviation: {std:.4f}')
         print(f'Features: {feats}')
 
-    # plot the best two clustering
-    # plot_fam(dfclass, df, ndim, nclusters, fam, results[0][1])
-    # for res in results:
-    #     plot_cluster(dfclass, df_clustering, ndim, nclusters, res[1])
-
+    # Render the family plot using the manually chosen feature pair and
+    # cross-validated accuracy band, not the optimizer's pick.
+    cfg = fam_config[fam]
+    plot_fam(dfclass, df, ndim, nclusters, fam, cfg['comb'],
+             xlim=cfg['xlim'], ylim=cfg['ylim'],
+             xlabel=cfg['xlabel'], ylabel=cfg['ylabel'],
+             accuracy_text=cfg['accuracy_text'])

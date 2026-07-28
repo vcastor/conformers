@@ -13,11 +13,12 @@ def accuracy_cluster(y_true, y_pred):
 
 # ==============================
 # Researcher over combinations
-def kmeans_all_clusters(df, cols, ndim, nclusters, use_svc=True, kernel='linear'):
+def kmeans_all_clusters(df, cols, ndim, nclusters, use_svc=True, kernel='linear', random_states=None):
     class_true = df['category'].values
     results = []
 
-    random_states = [0, 1, 7, 21, 99]
+    if random_states is None:
+        random_states = [0, 1, 7, 21, 99]
     combs = combinations(cols, ndim)
 
     for comb in combs:
@@ -26,7 +27,7 @@ def kmeans_all_clusters(df, cols, ndim, nclusters, use_svc=True, kernel='linear'
         accs = []
         for rs in random_states:
             X_train, X_test, y_train, y_test = train_test_split(
-                X, class_true, test_size=0.3, random_state=rs)
+                X, class_true, test_size=0.2, random_state=rs)
             model = SVC(kernel=kernel, random_state=rs)
             pred = model.fit(X_train, y_train).predict(X_test)
             acc  = accuracy_cluster(y_test, pred)

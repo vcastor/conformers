@@ -20,3 +20,4 @@ plams_workdir
 *.pkl
 hall_of_fame*
 *.joblib
+*.bak_*

@@ -2,7 +2,9 @@ import numpy as np
 from sklearn.neural_network import MLPRegressor
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split, GridSearchCV, RandomizedSearchCV
+from sklearn.model_selection import (
+    train_test_split, GridSearchCV, RandomizedSearchCV, KFold, RepeatedKFold,
+)
 from sklearn.metrics import mean_absolute_error, r2_score
 
 LIGHT_GRID = [
@@ -48,34 +50,39 @@ def _build():
 def _find_best(X, y, robust, search_seed=42):
     X_tr, _, y_tr, _ = train_test_split(X, y, test_size=0.2, random_state=search_seed)
     if robust:
+        cv = RepeatedKFold(n_splits=5, n_repeats=2, random_state=42)
         search = RandomizedSearchCV(
-            _build(), ROBUST_GRID, n_iter=500, cv=5,
+            _build(), ROBUST_GRID, n_iter=800, cv=cv,
             scoring='neg_mean_absolute_error', n_jobs=-1,
             random_state=42, verbose=0,
         )
     else:
+        cv = KFold(n_splits=5, shuffle=True, random_state=42)
         search = GridSearchCV(
-            _build(), LIGHT_GRID, cv=5,
+            _build(), LIGHT_GRID, cv=cv,
             scoring='neg_mean_absolute_error', n_jobs=-1, verbose=0,
         )
     search.fit(X_tr, y_tr)
     return search.best_params_
 
-def run_model(X, y, n_splits=30, robust=False, feature_names=None):
+def run_model(X, y, n_splits=30, robust=False, feature_names=None, tag=''):
     best_params = _find_best(X, y, robust)
     print(f'MLP best params: {best_params}')
 
-    y_tests, y_preds, maes, r2s = [], [], [], []
+    indices = np.arange(len(X))
+    y_tests, y_preds, test_idxs, maes, r2s = [], [], [], [], []
     for seed in range(n_splits):
-        X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, random_state=seed)
+        tr, te = train_test_split(indices, test_size=0.2, random_state=seed)
+        X_tr, X_te = X.iloc[tr], X.iloc[te]
+        y_tr, y_te = y.iloc[tr], y.iloc[te]
         m = _build()
         m.set_params(**best_params)
         m.fit(X_tr, y_tr)
         y_pred = m.predict(X_te)
         y_tests.append(np.asarray(y_te))
         y_preds.append(y_pred)
+        test_idxs.append(np.asarray(te))
         maes.append(mean_absolute_error(y_te, y_pred))
         r2s.append(r2_score(y_te, y_pred))
 
-    return y_tests, y_preds, maes, r2s, 'MLP NN'
-
+    return y_tests, y_preds, test_idxs, maes, r2s, 'MLP NN'
