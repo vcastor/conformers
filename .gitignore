@@ -6,6 +6,7 @@
 *.out
 *.json
 *.pyc
+__*__/
 plams_workdi*/
 plams_workdir
 *log
