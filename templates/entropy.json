@@ -1,0 +1,21 @@
+{
+    "properties": ["entropy"],
+    "database": {
+        "path": "../database_entropies/entropiesCOSMO.db",
+        "table": "results",
+        "solvents": "SELECT epsilon, rad FROM PBE0 WHERE molecule_name = ?"
+    },
+    "systems": [
+        {"smiles": "CCC(=O)C", "solvent": "BUTANONE"}
+    ],
+    "temperature": 298.15,
+    "conformers": 20,
+    "model": "GFN1-xTB",
+    "Eopt": 5.0,
+    "RMSDopt": 3.0,
+    "Escore": 2.5,
+    "RMSDscore": 1.5,
+    "functional": "PBE0",
+    "basis": "TZP",
+    "dispersion": "GRIMME3 BJDAMP"
+}
