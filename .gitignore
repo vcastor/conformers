@@ -23,5 +23,13 @@ plams_workdir
 hall_of_fame*
 *.joblib
 *.bak_*
+*.db
+*.err
+*.in
+*.run
+*.sdf
+*logfile
+*input
+*bkup
 !templates/entropy.json
 !templates/nucleophilicity.json
