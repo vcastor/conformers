@@ -30,7 +30,7 @@ simulations closer to experimental conditions (or at least that's we hope 😬).
 2. Run it as:
 
    ```sh
-   $ASMBIN/plams filter.py -v [your input].csv
+   $AMSBIN/plams filter.py -v [your config].json
    ```
 
 ### Limitations

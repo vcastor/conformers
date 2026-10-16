@@ -15,10 +15,10 @@ def _build_base_models():
     estimators = [
         ('rf',   RandomForestRegressor(
                      n_estimators=600, max_features='sqrt',
-                     random_state=42, n_jobs=10)),
+                     random_state=42, n_jobs=1)),
         ('et',   ExtraTreesRegressor(
                      n_estimators=600, max_features='sqrt',
-                     random_state=42, n_jobs=10)),
+                     random_state=42, n_jobs=1)),
         ('hgbr', HistGradientBoostingRegressor(
                      max_iter=600, learning_rate=0.05,
                      max_leaf_nodes=63, random_state=42)),
@@ -31,7 +31,7 @@ def _build_base_models():
             ('xgb', xgb.XGBRegressor(
                 n_estimators=600, learning_rate=0.05, max_depth=5,
                 subsample=0.8, colsample_bytree=0.8,
-                random_state=42, n_jobs=10, verbosity=0))
+                random_state=42, n_jobs=1, verbosity=0))
         )
     except ImportError:
         pass
@@ -40,7 +40,7 @@ def _build_base_models():
         estimators.append(
             ('lgbm', lgb.LGBMRegressor(
                 n_estimators=600, learning_rate=0.05, num_leaves=31,
-                random_state=42, n_jobs=10, verbose=-1))
+                random_state=42, n_jobs=1, verbose=-1))
         )
     except ImportError:
         pass
@@ -56,7 +56,7 @@ def _find_best_alpha(X, y, robust, search_seed=42):
         stack = StackingRegressor(
             estimators=_build_base_models(),
             final_estimator=Ridge(alpha=alpha),
-            cv=cv_inner, n_jobs=1, passthrough=False,
+            cv=cv_inner, n_jobs=-1, passthrough=False,
         )
         stack.fit(X_tr, y_tr)
         mae = mean_absolute_error(y_te, stack.predict(X_te))
@@ -82,7 +82,7 @@ def run_model(X, y, n_splits=30, robust=False, feature_names=None, tag=''):
         m = StackingRegressor(
             estimators=_build_base_models(),
             final_estimator=Ridge(alpha=best_alpha),
-            cv=cv_stacking, n_jobs=10, passthrough=False,
+            cv=cv_stacking, n_jobs=-1, passthrough=False,
         )
         m.fit(X_tr, y_tr)
         y_pred = m.predict(X_te)

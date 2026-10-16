@@ -163,10 +163,10 @@ def objective_function(params, data, labels):
     
     # Train SVM model
     model = SVC(kernel='rbf', random_state=42)
-    model.fit(X_scaled, labels)
+    model.fit(X_scaled[:,:2], labels)
     
     # Predict and calculate accuracy
-    pred = model.predict(X_scaled)
+    pred = model.predict(X_scaled[:,:2])
     accuracy = accuracy_score(labels, pred)
     
     # Return negative accuracy (we want to minimize)
@@ -313,19 +313,21 @@ def plot_best_classification(results, save_fig=False, fig_name='best_classificat
     plt.yticks(np.linspace(y_min, y_max, num=5), ytickslables, fontsize=22)
 
     # colors = ["purple", "yellow"]
-    # colors = ["yellow", "purple"]
-    # cmap = ListedColormap(colors)
+    colors = ["yellow", "purple"]
+    cmap = ListedColormap(colors)
     
     # Plot decision boundary
     # plt.contourf(xx, yy, Z, alpha=0.3, extend='both', cmap=cmap)
-    plt.contourf(xx, yy, Z, alpha=0.3, levels=[0, 0.5, 1], cmap='viridis')
+    plt.contourf(xx, yy, Z, alpha=0.3, levels=[0, 0.5, 1], cmap=cmap)
+    # plt.contourf(xx, yy, Z, alpha=0.3, levels=[0, 0.5, 1], cmap='viridis')
     plt.contour(xx, yy, Z, linewidths=1, alpha=0.4)
     
     # Plot points
     for i in range(2):
         mask = labels == i
         plt.scatter(q_weighted[mask], clr_weighted[mask], 
-                    cmap=cmap, c=colors[i],
+                    c=colors[i],
+                    # cmap=cmap, c=colors[i],
                     edgecolor='k',
                     # label=labels_text[i], edgecolor='k',
                     alpha=0.7, linewidth=0.5, s=50)
@@ -338,8 +340,8 @@ def plot_best_classification(results, save_fig=False, fig_name='best_classificat
                    label='Misclassified',
                    marker='x', s=150, c='black', linewidth=3)
     
-    plt.xlabel(r'$q(N)$', fontsize=26)
-    plt.ylabel(r'$\chi (N)$', fontsize=26)
+    plt.xlabel(r'$q_w (N)$', fontsize=26)
+    plt.ylabel(r'$\chi_w (N)$', fontsize=26)
     plt.title('Neighbour Weighted Clustering', fontsize=30, fontweight='bold')
     # plt.legend(loc='best', fontsize=18)
     plt.grid(True, alpha=0.3)
@@ -409,7 +411,7 @@ if __name__ == "__main__":
     # Run optimization
     results = optimize_decay_parameters(react_data, noreact_data)
 
-    plot_best_classification(results, save_fig=False)
+    plot_best_classification(results, save_fig=True)
     # You can now use the optimal parameters for predictions on new data
     print("\n" + "=" * 50)
     print("You can now use these optimal parameters:")

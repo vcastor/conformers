@@ -11,53 +11,61 @@ import numpy as np
 
 init()
 
-input_file = get_input_file()
+config_file = get_input_file()
+config = input_reader(config_file)
+create_tables(config)
 
-systems, user_settings = input_reader(input_file)
-user_settings = validate_settings(user_settings)
+temperature = config['temperature']
 
-temperature = user_settings['temperature']
-
-system_results = {}
+system_results = {prop: {} for prop in config['properties']}
 # Main loop
-for system in systems:
+for system in config['systems']:
     natoms, atoms = get_atoms(system['smiles'])
+    solvent = solvent_name(system['solvent'], config['database']) if system['solvent'] else None
 
     # DFTB and DFT calculation
-    adf_SP_job = run_jobs(system['smiles'], system['solvent'], user_settings)
+    adf_SP_job = run_jobs(system['smiles'], solvent, config)
     adf_results = adf_SP_job.run()
 
     pops = np.array(adf_SP_job.results.get_boltzmann_distribution(temperature))
     nconfs = len(pops)
 
-    # # for now we'll compute dynamics just if we have one conformer
-    # if nconfs == 1:
-    #     dynamics = adf_SP_job.results.get_dynamics(temperature)
-
     score_dirs = rkf_paths(os.path.abspath(adf_SP_job.results.rkfpath()))[:nconfs]
-    # sp_dirs = pol_jobs(score_dirs, system['solvent'], user_settings)
 
-    # Molecule dictionary
-    molecule = {'smiles': system['smiles'],
-                'solvent': system['solvent'],
-                'number_atoms': natoms,
-                'atoms': atoms,
-                'number_conformers': nconfs,
-                'average' : {},
-                'conformers': {}}
+    molecules = {}
+    for prop in config['properties']:
+        if prop == 'entropy':
+            conformer_dirs, reader, average = freq_jobs(score_dirs, solvent, config), entropy_cdft, average_entropy
+        else:
+            conformer_dirs, reader, average = score_dirs, descriptors, average_properties
 
-    # Conformers loop
-    for j, sp in enumerate(score_dirs):
-        conformer_data = descriptors(natoms, sp, pops[j])
-        for key in conformer_data:
-            molecule['conformers'].setdefault(key, []).append(conformer_data[key])
+        # Molecule dictionary
+        molecule = {'smiles': system['smiles'],
+                    'solvent': system['solvent'],
+                    'number_atoms': natoms,
+                    'atoms': atoms,
+                    'number_conformers': nconfs,
+                    'average' : {},
+                    'conformers': {}}
 
-    molecule['average'] = average_properties(molecule)
+        # Conformers loop
+        for j, path in enumerate(conformer_dirs):
+            conformer_data = reader(natoms, path, pops[j])
+            for key in conformer_data:
+                molecule['conformers'].setdefault(key, []).append(conformer_data[key])
 
-    system_results[(system['smiles'], system['solvent'])] = molecule
+        molecule['average'] = average(molecule)
+
+        molecules[prop] = molecule
+        system_results[prop][(system['smiles'], system['solvent'])] = molecule
+
+    store(molecules, config)
 
 # Output
-output_writer(system_results)
+name = os.path.splitext(config_file)[0]
+if 'entropy' in config['properties']:
+    entropy_writer(system_results['entropy'], name + '.entropy')
+if 'nucleophilicity' in config['properties']:
+    output_writer(system_results['nucleophilicity'], name + '.nucleophilicity')
 
 finish()
-

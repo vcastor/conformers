@@ -4,8 +4,7 @@ from scm.plams import *
 from .small_functions import *
 
 def get_atoms(system):
-    """ Number of atoms and atom types """
-    molecule = from_smiles(system)
+    molecule   = from_smiles(system)
     type_atoms = [atom.symbol for atom in molecule]
     return len(molecule), type_atoms
 
@@ -18,7 +17,7 @@ def descriptors(natoms, pathdir, pops):
     from scm.plams.tools.units import Units
     # Open the TAPE 21
     resultpath = os.path.join(pathdir, 'ams.rkf')
-    amsrkf = AMSJob.load_external(resultpath)
+    amsrkf     = AMSJob.load_external(resultpath)
     amsresults = amsrkf.results
     # Open the plain text output file
     dirname = os.path.basename(pathdir)
@@ -42,7 +41,6 @@ def descriptors(natoms, pathdir, pops):
     hirshfeld = np.array(amsresults.readrkf('Properties', 'FragmentCharge Hirshfeld', file='adf'))
     hirshfeld = hirshfeld[atom_order]
 
-    # should we read everything from the TAPE21?
     description = {
         'weights' : pops,
         'distances': idm,
@@ -68,7 +66,7 @@ def orbital_energies(content):
     goes wrong in ADF calculations.
     """
     marker = " Orbital Energies, per Irrep and Spin:" 
-    E_ev = []
+    E_ev   = []
 
     try:
         marker_index = content.index(marker) + 5

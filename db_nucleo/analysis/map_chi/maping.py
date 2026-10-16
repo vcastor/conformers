@@ -38,13 +38,15 @@ def read_out_file(path, natoms):
         extra += block
     return matrix
 
+ZERO = 1e-3   # the uniform eigenvector (sum rule) has a null eigenvalue and is excluded from the assignment
+
 def fallback_eigen_for_atom(w, P, atom_idx):
-    k = np.argmax(P[atom_idx, :])
+    k = np.argmax(np.where(np.abs(w) > ZERO, P[atom_idx, :], -1.0))
     return w[k]
 
 def mapping_for_atom(w, P, atom_idx):
     main_idx = np.argmax(P, axis=0)
-    candidates = np.where(main_idx == atom_idx)[0]
+    candidates = np.where((main_idx == atom_idx) & (np.abs(w) > ZERO))[0]
     if candidates.size == 0:
         return 0, fallback_eigen_for_atom(w, P, atom_idx)
     return candidates.size, np.mean(w[candidates])
@@ -76,66 +78,65 @@ def ensure_eigenchi_column(cur, table):
     if 'eigenchi' not in cols:
         cur.execute("ALTER TABLE {} ADD COLUMN eigenchi REAL".format(table))
 
-# MAIN
+if __name__ == '__main__':
+    conn = sqlite3.connect(DB)
+    cur  = conn.cursor()
 
-conn = sqlite3.connect(DB)
-cur  = conn.cursor()
+    cur.execute("SELECT DISTINCT smiles, solvent FROM parameters")
+    pairs = cur.fetchall()
 
-cur.execute("SELECT DISTINCT smiles, solvent FROM parameters")
-pairs = cur.fetchall()
+    for smiles, solvent in pairs:
+        cur.execute("SELECT family, raw_out, nconformers FROM parameters WHERE smiles=? AND solvent=?",
+                    (smiles, solvent))
+        fam, raw, nconf = cur.fetchone()
 
-for smiles, solvent in pairs:
-    cur.execute("SELECT family, raw_out, nconformers FROM parameters WHERE smiles=? AND solvent=?",
-                (smiles, solvent))
-    fam, raw, nconf = cur.fetchone()
+        fam_path = os.path.join(DIR_OUTS, fam)
+        base     = 'system_{}_conformer_'.format(raw)
+        xyz_path = os.path.join(DIR_XYZ, fam, base + '001.xyz')
 
-    fam_path = os.path.join(DIR_OUTS, fam)
-    base     = 'system_{}_conformer_'.format(raw)
-    xyz_path = os.path.join(DIR_XYZ, fam, base + '001.xyz')
+        if not os.path.exists(xyz_path):
+            continue
 
-    if not os.path.exists(xyz_path):
-        continue
+        if nconf > 1:
+            files = []
+            for i in range(1, nconf + 1):
+                f = os.path.join(fam_path, base + str(i).zfill(3) + '.out')
+                if os.path.exists(f):
+                    files.append(f)
+        else:
+            files = [os.path.join(fam_path, base + '001.out')]
 
-    if nconf > 1:
-        files = []
-        for i in range(1, nconf + 1):
-            f = os.path.join(fam_path, base + str(i).zfill(3) + '.out')
-            if os.path.exists(f):
-                files.append(f)
-    else:
-        files = [os.path.join(fam_path, base + '001.out')]
+        if not files:
+            continue
 
-    if not files:
-        continue
+        natoms = get_natoms(xyz_path)
+        nconf  = len(files)
 
-    natoms = get_natoms(xyz_path)
-    nconf  = len(files)
+        targets = get_targets(cur, smiles, solvent)
+        if not targets:
+            continue
 
-    targets = get_targets(cur, smiles, solvent)
-    if not targets:
-        continue
+        eigen_per_conf = {key: np.zeros(nconf) for key in targets}
 
-    eigen_per_conf = {key: np.zeros(nconf) for key in targets}
+        for i, f in enumerate(files):
+            M = read_out_file(f, natoms)
+            w, V = np.linalg.eigh(M)
+            P = V**2
+            eigens = np.zeros(natoms)
+            for atom in range(natoms):
+                _, e = mapping_for_atom(w, P, atom)
+                eigens[atom] = e
+            for table, atom_db in targets:
+                eigen_per_conf[(table, atom_db)][i] = eigens[atom_db - 1]
 
-    for i, f in enumerate(files):
-        M = read_out_file(f, natoms)
-        w, V = np.linalg.eigh(M)
-        P = V**2
-        eigens = np.zeros(natoms)
-        for atom in range(natoms):
-            _, e = mapping_for_atom(w, P, atom)
-            eigens[atom] = e
-        for table, atom_db in targets:
-            eigen_per_conf[(table, atom_db)][i] = eigens[atom_db - 1]
+        for (table, atom_db), arr in eigen_per_conf.items():
+            ensure_eigenchi_column(cur, table)
+            eigen_avg = float(np.mean(arr))
+            cur.execute(
+                "UPDATE {} SET eigenchi=? WHERE smiles=? AND solvent=? AND atom_analysed=?".format(table),
+                (eigen_avg, smiles, solvent, atom_db)
+            )
 
-    for (table, atom_db), arr in eigen_per_conf.items():
-        ensure_eigenchi_column(cur, table)
-        eigen_avg = float(np.mean(arr))
-        cur.execute(
-            "UPDATE {} SET eigenchi=? WHERE smiles=? AND solvent=? AND atom_analysed=?".format(table),
-            (eigen_avg, smiles, solvent, atom_db)
-        )
-
-conn.commit()
-conn.close()
+    conn.commit()
+    conn.close()
 

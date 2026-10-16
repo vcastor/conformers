@@ -19,7 +19,6 @@ def rkf_paths(path):
     score_directories.sort(key=lambda d: int(d.split('_')[-1]))
     return score_directories
 
-
 def conversion(dic):
     """
     Exporting the results as needed by json.dumps
@@ -35,7 +34,6 @@ def conversion(dic):
         return dic
 
 def to_lower_dict(d):
-    """Converts dictionary keys to lowercase."""
     return {key.lower(): value for key, value in d.items()}
 
 def format_list(key, values, max_values_per_line=5):

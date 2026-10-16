@@ -13,7 +13,7 @@ import models_dv.histgbr as hgbr
 import models_dv.xgb as xgb
 import models_dv.lgbm as lgbm
 import models_dv.stacking as stacking
-from data_loader import load_data
+from data_loader import load_data, load_keys
 
 Y_MIN, Y_MAX = 8, 20
 N_OUTLIERS   = 5
@@ -32,7 +32,7 @@ elif hostname in ('rameau', 'aragorn'):
         'mu', 'eta', 'softness', 'hyperhardness', 'omega', 'nucleofuge', 'electrofuge',
         'electrodonating', 'electroaccepting', 'fplus', 'fminus', 'fzero', 'f2',
         'sfplus', 'sfminus', 'sfzero', 's2', 'muplusfplus', 'muminusfminus', 'wfplus',
-        'wf2', 'Sf2', 's2f2', 'nucleo', 'q_qtaim', 'q_hirshfeld', 'electrostatic_potential',
+        'wf2', 'Sf2', 's2f2', 'nucleo', 'q_qtaim', 'electrostatic_potential',
         'P', 'Pf2', 'HOMO', 'eigenchi', 'condensed_linear_response',
         'q_qtaim_w', 'condensed_linear_response_w',
     ]
@@ -44,6 +44,7 @@ X, y, _ = load_data(db_path, features=features)
 mask = (y >= Y_MIN) & (y <= Y_MAX)
 X = X[mask].reset_index(drop=True)
 y = y[mask].reset_index(drop=True)
+keys = load_keys(db_path, features=features)[mask].reset_index(drop=True)
 print(f'Filtered to N_Mayr in [{Y_MIN}, {Y_MAX}]: {len(y)} systems')
 
 
@@ -152,7 +153,7 @@ max_err = np.where(all_nan, -1.0, np.nanmax(err_matrix, axis=0))
 outlier_idx = np.argsort(max_err)[-N_OUTLIERS:][::-1]
 
 print(f'\n=== Top {N_OUTLIERS} outliers (worst per-model error) ===')
-header = f'{"idx":>5}  {"y_true":>7}  {"worst_model":>20}  {"|err|":>6}  {"mean_err":>8}'
+header = f'{"idx":>5}  {"y_true":>7}  {"worst_model":>20}  {"|err|":>6}  {"mean_err":>8}  smiles  name'
 print(header)
 for i in outlier_idx:
     j = int(i)
@@ -160,7 +161,7 @@ for i in outlier_idx:
     finite = ~np.isnan(col)
     k_worst = int(np.argmax(np.where(finite, col, -np.inf)))
     print(f'{j:5d}  {y_arr[j]:7.2f}  {labels[k_worst]:>20}  '
-          f'{col[k_worst]:6.2f}  {np.nanmean(col):8.2f}')
+          f'{col[k_worst]:6.2f}  {np.nanmean(col):8.2f}  {keys["smiles"][j]}  {keys["name"][j]}')
 
 # Second pass: drop outliers, retrain
 keep_mask = np.ones(len(y), dtype=bool)

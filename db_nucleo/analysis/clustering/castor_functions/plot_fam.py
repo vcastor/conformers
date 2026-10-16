@@ -11,7 +11,8 @@ from .plot_clusters import FEATURE_LABELS
 
 def plot_fam(df_scaled, df_noscaled, ndim, nclusters, fam, comb,
              xlim=None, ylim=None, accuracy_text=None,
-             xlabel=None, ylabel=None, title=None):
+             xlabel=None, ylabel=None, title=None, C=1.0, gamma='scale', class_weight=None,
+             save=None):
     """
     2D family classification plot in the original (un-standardised) feature
     space.  Limits, axis labels, title and accuracy badge are caller-supplied.
@@ -33,7 +34,7 @@ def plot_fam(df_scaled, df_noscaled, ndim, nclusters, fam, comb,
     class_true = le.fit_transform(class_true)
     # RBF matches the kernel used in kmeans_fam, so the in-sample boundary
     # tracks the cross-validated performance reported in the badge.
-    model = SVC(kernel='rbf', random_state=42)
+    model = SVC(kernel='rbf', C=C, gamma=gamma, class_weight=class_weight, random_state=42)
     model.fit(X_scaled, class_true)
     pred = model.predict(X_scaled)
 
@@ -55,9 +56,8 @@ def plot_fam(df_scaled, df_noscaled, ndim, nclusters, fam, comb,
     mean_x, std_x = X_orig[:, 0].mean(), X_orig[:, 0].std()
     mean_y, std_y = X_orig[:, 1].mean(), X_orig[:, 1].std()
 
-    step = max(x_max - x_min, y_max - y_min) / 400
-    xx, yy = np.meshgrid(np.arange(x_min, x_max + step, step),
-                         np.arange(y_min, y_max + step, step))
+    xx, yy = np.meshgrid(np.linspace(x_min, x_max, 600),
+                         np.linspace(y_min, y_max, 600))
 
     xx_s = (xx - mean_x) / std_x
     yy_s = (yy - mean_y) / std_y
@@ -100,4 +100,6 @@ def plot_fam(df_scaled, df_noscaled, ndim, nclusters, fam, comb,
                        boxstyle='round,pad=0.4', alpha=0.8))
 
     plt.tight_layout()
+    if save:
+        plt.savefig(save)
     plt.show()

@@ -51,14 +51,14 @@ def _optuna_search(X_tr, y_tr, n_trials=300):
         m = GradientBoostingRegressor(random_state=42, **params)
         cv = RepeatedKFold(n_splits=5, n_repeats=3, random_state=42)
         scores = cross_val_score(m, X_tr, y_tr, cv=cv,
-                                 scoring='neg_mean_absolute_error', n_jobs=10)
+                                 scoring='neg_mean_absolute_error', n_jobs=-1)
         return -scores.mean()
 
     study = optuna.create_study(
         direction='minimize',
         sampler=optuna.samplers.TPESampler(seed=42),
     )
-    study.optimize(objective, n_trials=n_trials, show_progress_bar=False)
+    study.optimize(objective, n_trials=n_trials, n_jobs=4, show_progress_bar=False)
     return study.best_params
 
 
@@ -73,14 +73,14 @@ def _find_best(X, y, robust, search_seed=42):
         cv = RepeatedKFold(n_splits=5, n_repeats=2, random_state=42)
         search = RandomizedSearchCV(
             base, ROBUST_GRID, n_iter=800, cv=cv,
-            scoring='neg_mean_absolute_error', n_jobs=10,
+            scoring='neg_mean_absolute_error', n_jobs=-1,
             random_state=42, verbose=0,
         )
     else:
         cv = KFold(n_splits=5, shuffle=True, random_state=42)
         search = GridSearchCV(
             base, LIGHT_GRID, cv=cv,
-            scoring='neg_mean_absolute_error', n_jobs=10, verbose=0,
+            scoring='neg_mean_absolute_error', n_jobs=-1, verbose=0,
         )
     search.fit(X_tr, y_tr)
     return search.best_params_

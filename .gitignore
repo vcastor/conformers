@@ -17,8 +17,11 @@ plams_workdir
 *t15*
 *.pyc
 *.DS_Store
+**/*.DS_Store
 *.bkup
 *.pkl
 hall_of_fame*
 *.joblib
 *.bak_*
+!templates/entropy.json
+!templates/nucleophilicity.json

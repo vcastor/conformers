@@ -6,10 +6,10 @@ import matplotlib.pyplot as plt
 from bs4 import BeautifulSoup
 
 urls = {
-    'C': 'https://www.cup.lmu.de/oc/mayr/reaktionsdatenbank2/fe/showclass/10?num=0',
-    'H': 'https://www.cup.lmu.de/oc/mayr/reaktionsdatenbank2/fe/showclass/34?num=0',
-    'O': 'https://www.cup.lmu.de/oc/mayr/reaktionsdatenbank2/fe/showclass/50?num=0',
-    'N': 'https://www.cup.lmu.de/oc/mayr/reaktionsdatenbank2/fe/showclass/40?num=0'
+    'C': 'https://www.cup.lmu.de/oc/mayr/reaktionsdatenbank2/fe/showclass/10?num=10000&page=1',
+    'H': 'https://www.cup.lmu.de/oc/mayr/reaktionsdatenbank2/fe/showclass/34?num=10000&page=1',
+    'O': 'https://www.cup.lmu.de/oc/mayr/reaktionsdatenbank2/fe/showclass/50?num=10000&page=1',
+    'N': 'https://www.cup.lmu.de/oc/mayr/reaktionsdatenbank2/fe/showclass/40?num=10000&page=1'
 }
 
 def get_from_url(url, atom):
@@ -45,9 +45,10 @@ all_data.to_csv('all_data.csv', index=False)
 # Plot using seaborn
 plt.figure(figsize=(10, 6))
 sns.histplot(data=all_data, x='N', hue='Atom', bins=50, kde=True, element='step', stat='count')
-plt.title('Distribution of N values by Atom')
-plt.xlabel('N value')
-plt.ylabel('Frequency')
+plt.title(r'Distribution of $N_{Mayr}$ values by Atom', fontsize=18)
+plt.xlabel(r'$N_{Mayr}$ value', fontsize=16)
+plt.ylabel('Count', fontsize=16)
+plt.tick_params(axis='both',labelsize=14)
 plt.tight_layout()
 plt.show()
 
