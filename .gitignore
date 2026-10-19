@@ -31,5 +31,5 @@ hall_of_fame*
 *logfile
 *input
 *bkup
-!templates/entropy.json
-!templates/nucleophilicity.json
+!calculations/entropy/entropy.json
+!calculations/nucleo/nucleophilicity.json

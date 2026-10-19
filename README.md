@@ -45,8 +45,8 @@ simulations closer to experimental conditions (or at least that's we hope 😬).
 
 ### Examples
 
-In the subdirectory templates you can find some templates of how you can write
-the inputs for your calculations.
+In calculations/entropy and calculations/nucleo you can find the configurations
+of the calculations.
 
 The Results will be written in the same directory where the input file lies. 
 

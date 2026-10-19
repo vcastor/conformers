@@ -188,6 +188,7 @@ def condensed_linear_response(natoms, content):
     """
     Extract the condensed linear response at the nuclei [diagonal]
     """
+    # TODO: newer ADF prints the eigenvalues and eigenvectors of this matrix, read them for eigenchi
     marker = " CONDENSED LINEAR RESPONSE FUNCTION (MATRIX ELEMENTS)"
     marker_index = content.index(marker) + 3    
 

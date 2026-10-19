@@ -9,6 +9,8 @@ from sklearn.linear_model import LinearRegression
 from sklearn.tree import DecisionTreeRegressor, export_text
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 
+DB = '../calculations/entropy/entropiesCOSMO.db'
+
 def prepare_data(data):
     data.dropna(inplace=True)
     return data
@@ -136,7 +138,7 @@ def no_opt_models(data):
     print(f"  {np.mean(np.abs(data['experimental_S'] - twothirds)):6.2f}  | S = 2/3*(S_r + S_t) + S_v")
     print(f'          |')
 
-def cross_validation(db):
+def cross_validation(db=DB):
     functionals = ['PBE', 'PBE0']
     for functional in functionals:
         data = fetch_data_cross_validation(db, table_name=functional)
@@ -199,7 +201,7 @@ def models_highest_errors(data, functional):
         print(f' Functional: {functional:<4} | Model: {model:<13} |     MAE: {mean_absolute_error(s_exp, predictions):.2f}')
         worst_case_predictions(predictions, s_exp)
 
-def highest_errors(db):
+def highest_errors(db=DB):
     functionals = ['PBE', 'PBE0']
     print(f'    Predictions   |      Experimental    |    Difference    |   Description')
     print(f'------------------+----------------------+------------------+-----------------')
@@ -224,7 +226,7 @@ def plot_subplot_final_regressions(position, title, ylabel, y, predictions, equa
     plt.plot([y.min(), y.max()], [y.min(), y.max()], 'k--', lw=2)
     plt.grid(True)
 
-def final_regressions(db):
+def final_regressions(db=DB):
     plt.figure(figsize=(18, 6))
     data = fetch_data_final_regressions(db)
     data = prepare_data(data)
@@ -282,7 +284,7 @@ def fetch_data_anharmonic_contributions(db_file_path):
     with sqlite3.connect(db_file_path) as conn:
         return pd.read_sql('SELECT trans_S, rot_S, vib_S, epsilon, experimental_S, correctionS FROM PBE0', conn)
 
-def anharmonic_contributions(db):
+def anharmonic_contributions(db=DB):
     data = fetch_data_anharmonic_contributions(db)
     data = prepare_data(data)
     srot, strans, svib = data['rot_S'], data['trans_S'], data['vib_S']
@@ -311,7 +313,7 @@ def fetch_data_anharmonic(db_file_path):
     with sqlite3.connect(db_file_path) as conn:
         return pd.read_sql('SELECT vib_S, correctionS FROM PBE0', conn)
 
-def anharmonic(db):
+def anharmonic(db=DB):
     data = fetch_data_anharmonic(db)
     data = prepare_data(data)
     vib, corr = data['vib_S'], data['correctionS']
@@ -327,7 +329,7 @@ def fetch_data_models_figure(db_file_path):
     with sqlite3.connect(db_file_path) as conn:
         return pd.read_sql('SELECT trans_S, rot_S, vib_S, epsilon, experimental_S, correctionS, rad FROM PBE', conn)
 
-def models_figure(db):
+def models_figure(db=DB):
     data = fetch_data_models_figure(db)
     data = prepare_data(data)
     srot, strans, svib = data['rot_S'], data['trans_S'], data['vib_S']
@@ -457,7 +459,7 @@ def plot_subplot_cdft_models(position, title, model, db, ybox=0.77):
     plt.legend()
     plt.grid(True)
 
-def plotting(db):
+def plotting(db=DB):
     plt.figure(figsize=(8, 8))
     plot_subplot_cdft_models(1, r'$\alpha S_r + \beta S_t + (\delta S_v + \zeta\epsilon)*e^{-\theta\gamma}$', model1, db)
     plot_subplot_cdft_models(2, r'$\alpha(S_r + S_t)e^{-\delta\eta} + \beta S_v e^{\zeta\gamma}$', model2, db)
@@ -466,7 +468,7 @@ def plotting(db):
     plt.savefig('cdft_models.pdf')
     plt.show()
 
-def cdft_models(db):
+def cdft_models(db=DB):
     print('''
  Model 1 | α*Sr + β*St + (γ*Sv + δ*epsilon)*e^(-ζ*gamma)
  Model 2 | α*(Sr + St)*exp(-γ*eta) + β*Sv*exp(δ*gamma)
@@ -649,7 +651,7 @@ def no_model(data):
     mae = np.mean(np.abs(s_exp - pred))
     print(f'  {mae:6.2f}  | (Sr + Sv)**cosh(gamma) + 43.268063')
 
-def cdft_regressions(db):
+def cdft_regressions(db=DB):
     data = fetch_data_cdft_regressions(db)
     data = prepare_data(data)
     print('    MAE   |  Model')
@@ -706,7 +708,7 @@ def print_and_return_mae(model, X, y, mae_indices, interaction_type):
 
     return y_predict0, y_predict1, y_predict2
 
-def pysr_model(db):
+def pysr_model(db=DB):
     conn = sqlite3.connect(db)
     cursor = conn.cursor()
     cursor.execute('SELECT trans_S, rot_S, vib_S, epsilon, rad, correctionS, mu, eta, gamma, omega, experimental_S FROM PBE WHERE nconformers = 1')
@@ -738,7 +740,7 @@ def pysr_model(db):
     mae = np.absolute(pred - s_exp).mean()
     print(f'MAE: {mae}\n')
 
-def pysr_figure(db):
+def pysr_figure(db=DB):
     conn = sqlite3.connect(db)
     cursor = conn.cursor()
     cursor.execute('SELECT trans_S, rot_S, vib_S, epsilon, rad, correctionS, mu, eta, gamma, omega, experimental_S FROM PBE')
@@ -769,7 +771,7 @@ def pysr_figure(db):
     # plt.show()
     plt.savefig('plot_no_physical_interpretation.pdf')
 
-def ml_cdft(db):
+def ml_cdft(db=DB):
     conn = sqlite3.connect(db)
     cursor = conn.cursor()
     cursor.execute('SELECT trans_S, rot_S, vib_S, epsilon, rad, correctionS, mu, eta, gamma, omega, experimental_S FROM PBE0 WHERE nconformers = 1')
@@ -805,7 +807,7 @@ def fetch_data_random_forest(db_file_path):
     with sqlite3.connect(db_file_path) as conn:
         return pd.read_sql('SELECT trans_S, rot_S, vib_S, epsilon, rad, correctionS, mu, eta, gamma, omega, experimental_S FROM PBE', conn)
 
-def random_forest(db):
+def random_forest(db=DB):
     data = fetch_data_random_forest(db)
     data = prepare_data(data)
     X = data[['trans_S', 'rot_S', 'vib_S', 'epsilon', 'rad', 'correctionS', 'mu', 'eta', 'gamma', 'omega']]
@@ -820,7 +822,7 @@ def random_forest(db):
     tree = random_forest_model.estimators_[0]
     tree_rules = export_text(tree, feature_names=['trans_S', 'rot_S', 'vib_S', 'epsilon', 'rad', 'correctionS', 'mu', 'eta', 'gamma', 'omega'])
 
-def fig1(db):
+def fig1(db=DB):
     import seaborn as sns
     conn=sqlite3.connect(db)
     df=pd.read_sql_query('SELECT epsilon,experimental_S FROM PBE',conn)
